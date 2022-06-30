@@ -2,18 +2,21 @@
 <html>
   <head>
     <meta charset="UTF-8">
-    <title>My Portfolio</title>
+    <meta name = "theme-color" content = "#0000000">
+    <!-- <title>My Portfolio</title> -->
+    <title>Car Collision</title>
     <link rel="stylesheet" href="style.css">
     <script src="script.js"></script>
   </head>
   <body>
     <div id="content">
-      <h1>My Portfolio</h1>
-      <p>This is my portfolio.</p>
-      <p>Click <a href="/hello">here</a> to see content created by server code.</p>
-      <p>Click here to get a random message:</p>
-      <button onclick="addRandomGreeting()">Hello</button>
-      <div id="greeting-container"></div>
-    </div>
-  </body>
+      <h1 style= "color: rgb(63, 63, 209);">Car Collision Map:</h1>
+    </body>
+    <script async
+src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDbskcye9gWYfKt8nHzuRaPudtpo2yr0so&region=US&language=en&callback=initMap">
+</script>
+    <body onload="createMap();">
+    <div id="map"></div>
+</body>
+</div>
 </html>
