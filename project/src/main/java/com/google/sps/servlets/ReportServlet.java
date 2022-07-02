@@ -16,7 +16,7 @@ import java.io.IOException;
 
 
 @WebServlet("/report")
-public class ReportsServlet extends HttpServlet {
+public class ReportServlet extends HttpServlet {
 
 
     @Override
