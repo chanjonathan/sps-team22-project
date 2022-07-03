@@ -163,11 +163,11 @@ function createMap(){
     for (i = 0; i < locations.length; i++) {  
       marker = new google.maps.Marker({
         position: new google.maps.LatLng(locations[i]),
-        map: map
+        map: map,
+        animation:google.maps.Animation.DROP
       });
     }
 }
-
 // function create_markers(params){ 
 //     for (i = 0; i < params.length; i++) {  
 //         marker = new google.maps.Marker({
