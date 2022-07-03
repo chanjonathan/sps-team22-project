@@ -151,33 +151,93 @@ function createMap(){
         {lat: -5.344, lng: 110.031},
       ];
 
+      var markers = [
+        {
+            "title": 'Aksa Beach',
+            "lat": '-25.344',
+            "lng": '131.031',
+            "description": 'Aksa Beach is a popular beach and a vacation spot in Aksa village at Malad, Mumbai.'
+        },
+        {
+            "title": 'Juhu Beach',
+            "lat": '-10.344',
+            "lng": '120.031',
+            "description": 'Juhu Beach is one of favourite tourist attractions situated in Mumbai.'
+        },
+        {
+            "title": 'Girgaum Beach',
+            "lat": '18.9542149',
+            "lng": '72.81203529999993',
+            "description": 'Girgaum Beach commonly known as just Chaupati is one of the most famous public beaches in Mumbai.'
+        },
+        {
+            "title": 'Jijamata Udyan',
+            "lat": '-5.344',
+            "lng": '110.031',
+            "description": 'Jijamata Udyan is situated near Byculla station is famous as Mumbai (Bombay) Zoo.'
+        }
+        ];
+
     //   create_markers(locations);
 
-    for (var i = 0; i < locations.length; i++) {  
+    
+    for (var i = 0; i < locations.length; i++) { 
+        var data = markers[i]; //
+        var myLatlng = new google.maps.LatLng(data.lat, data.lng); //
       marker = new google.maps.Marker({
-        position: new google.maps.LatLng(locations[i]),
+        // position: new google.maps.LatLng(locations[i]),
+        position: myLatlng,
         map: map,
         url:'/',
+        titel:data.title,
         animation:google.maps.Animation.DROP
+        
       });
 
-      var infowindow = new google.maps.InfoWindow({	
-          content:"click to view coordinates",
-      });	
+      var infoWindow = new google.maps.InfoWindow();
+      //Attach click event to the marker.
+      (function (marker, data) {
+        google.maps.event.addListener(marker, "click", function (e) {
+            //Wrap the content inside an HTML DIV in order to set height and width of InfoWindow.
+            infoWindow.setContent("<div style = 'width:200px;min-height:40px'>" + data.description + "</div>");
+            infoWindow.open(map, marker);
+        });
+    })(marker, data);	
+    //   infowindow.open(map);	
+    //   marker.addListener("click", (mapsMouseEvent) => {	
+    //     infowindow.close();	
+    //     infowindow = new google.maps.InfoWindow({	
+    //         content:"hello",    	
+    //         position: mapsMouseEvent.latLng,     	
+    //     });	
 
-      infowindow.open(map);	
-      marker.addListener("click", (mapsMouseEvent) => {	
-        infowindow.close();	
-        infowindow = new google.maps.InfoWindow({	
-            content:"hello",    	
-            position: mapsMouseEvent.latLng,
-            // position:new google.maps.LatLng(locations[i])       	
-        });	
+    //     infowindow.setContent(JSON.stringify(mapsMouseEvent.latLng.toJSON(), null,2));	
+    //     infowindow.setPosition(mapsMouseEvent.latLng)
+    //     infowindow.open(map);
+    //   });
 
-        infowindow.setContent(JSON.stringify(mapsMouseEvent.latLng.toJSON(), null,2));	
-        infowindow.setPosition(mapsMouseEvent.latLng)
-        infowindow.open(map);
-      });	
+        // attachSecretMessage(marker, secretMessages[i]);	
+
       }	 
     }	
+
+    // function attachSecretMessage(marker,secretMessage) {
+    //     var infowindow = new google.maps.InfoWindow({
+    //         content: secretMessage,
+    //     });
+  
+    //     infowindow.open(map);	
+    //     marker.addListener("click", (mapsMouseEvent) => {	
+    //       infowindow.close();	
+    //       infowindow = new google.maps.InfoWindow({	
+    //           content:"hello",    	
+    //           position: mapsMouseEvent.latLng,
+    //           // position:new google.maps.LatLng(locations[i])       	
+    //       });	
+  
+    //     //   infowindow.setContent(secretMessage, null,2);	
+    //       infowindow.setPosition(mapsMouseEvent.latLng)
+    //       infowindow.open(map);
+    //     });
+    //   }
 window.createMap = createMap
