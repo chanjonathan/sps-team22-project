@@ -201,8 +201,6 @@ async function placeMarkers() {
         markers.push(marker);
     }
 }
-
-
 window.createMap = createMap
 
 function initialize() {
