@@ -139,19 +139,12 @@ function createMap(){
         {center: {lat: 0, lng: 0}, zoom: 1,
         mapTypeControlOptions: {
             mapTypeIds: ["roadmap", "satellite", "hybrid", "terrain", "styled_map"],
-          },
+          }
         }
     );   
     map.mapTypes.set("styled_map", styledMapType);
-    map.setMapTypeId("styled_map"); 
-    // const cor_1 = {lat: -25.344, lng: 131.031};
-    // const marker = new google.maps.Marker(
-    //     {
-    //         position:cor_1,
-    //         map:map,
-    //     }
-    // );
-     
+    map.setMapTypeId("styled_map");
+
     var locations = [
         {lat: -25.344, lng: 131.031},
         {lat: -10.344, lng: 120.031},
@@ -160,21 +153,33 @@ function createMap(){
 
     //   create_markers(locations);
 
-    for (i = 0; i < locations.length; i++) {  
+    for (var i = 0; i < locations.length; i++) {  
       marker = new google.maps.Marker({
         position: new google.maps.LatLng(locations[i]),
         map: map,
+        url:'/',
         animation:google.maps.Animation.DROP
       });
-    }
-}
-// function create_markers(params){ 
-//     for (i = 0; i < params.length; i++) {  
-//         marker = new google.maps.Marker({
-//           position: new google.maps.LatLng(params[i]),
-//           map: map
-//         });
-//     }
-// }
-window.createMap = createMap
 
+      var infowindow = new google.maps.InfoWindow({	
+        // content:"Click to view details!",	
+        // position:new google.maps.LatLng(locations[i]),	
+        // animation:google.maps.Animation.DROP, 	
+      });	
+
+      infowindow.open(map);	
+
+      marker.addListener("click", (mapsMouseEvent) => {	
+        infowindow.close();	
+        infowindow = new google.maps.InfoWindow({	
+            content:"hello",    	
+            position:new google.maps.LatLng(locations[i])       	
+        });	
+
+        infowindow.setContent(JSON.stringify(mapsMouseEvent.latLng.toJSON(), null,2));	
+
+        infowindow.open(map);
+      });	
+      }	 
+    }	
+window.createMap = createMap
