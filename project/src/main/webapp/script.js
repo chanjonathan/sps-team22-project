@@ -162,22 +162,20 @@ function createMap(){
       });
 
       var infowindow = new google.maps.InfoWindow({	
-        // content:"Click to view details!",	
-        // position:new google.maps.LatLng(locations[i]),	
-        // animation:google.maps.Animation.DROP, 	
+          content:"click to view coordinates",
       });	
 
       infowindow.open(map);	
-
       marker.addListener("click", (mapsMouseEvent) => {	
         infowindow.close();	
         infowindow = new google.maps.InfoWindow({	
             content:"hello",    	
-            position:new google.maps.LatLng(locations[i])       	
+            position: mapsMouseEvent.latLng,
+            // position:new google.maps.LatLng(locations[i])       	
         });	
 
         infowindow.setContent(JSON.stringify(mapsMouseEvent.latLng.toJSON(), null,2));	
-
+        infowindow.setPosition(mapsMouseEvent.latLng)
         infowindow.open(map);
       });	
       }	 
