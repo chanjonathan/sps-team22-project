@@ -21,7 +21,7 @@ import java.util.ArrayList;
  */
 
 
-@WebServlet("/report")
+@WebServlet("/report-handler")
 public class ReportServlet extends HttpServlet {
 
     JDBCLib database;
