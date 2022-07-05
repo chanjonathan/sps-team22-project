@@ -6,6 +6,7 @@ import com.google.sps.database.JDBCLib;
 import com.google.sps.objects.Report;
 
 import javax.servlet.ServletException;
+import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -22,6 +23,8 @@ import java.util.ArrayList;
 
 
 @WebServlet("/report-handler")
+@MultipartConfig
+
 public class ReportServlet extends HttpServlet {
 
     JDBCLib database;
@@ -77,7 +80,7 @@ public class ReportServlet extends HttpServlet {
         database = new JDBCLib();
 
         String requestType = getParameter(request, "requestType", "");
-        String redirectURL = getParameter(request, "redirectURL", "");
+//        String redirectURL = getParameter(request, "redirectURL", "");
 
         if (requestType.compareTo("create") == 0) {
             String title = getParameter(request, "title", "");
@@ -149,7 +152,7 @@ public class ReportServlet extends HttpServlet {
             }
         }
 
-        response.sendRedirect(redirectURL);
+//        response.sendRedirect(redirectURL);
     }
 
     private static String uploadToCloudStorage(String fileName, InputStream fileInputStream) {
