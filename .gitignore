@@ -3,4 +3,5 @@
 .project
 .settings/
 target/
-pom.xml
+/project/lib/
+/out/
