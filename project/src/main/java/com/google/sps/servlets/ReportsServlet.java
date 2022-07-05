@@ -20,7 +20,7 @@ import src.main.java.com.google.sps.objects.Report;
 
 
 @WebServlet("/reports")
-public class ReportServlet extends HttpServlet {
+public class ReportsServlet extends HttpServlet {
 
 
     @Override
