@@ -1,6 +1,7 @@
 package com.google.sps.servlets;
 
 import com.google.gson.Gson;
+import com.google.sps.database.JDBCLib;
 import com.google.sps.objects.Report;
 
 import javax.servlet.annotation.WebServlet;
