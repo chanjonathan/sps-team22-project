@@ -18,13 +18,13 @@ import java.util.ArrayList;
 @WebServlet("/report")
 public class ReportServlet extends HttpServlet {
 
-    //    JDBCLib database;
+    JDBCLib database;
     Gson gson;
 
     @Override
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
 
-//        database = new JDBCLib();
+        database = new JDBCLib();
         gson = new Gson();
 
         String requestType = getParameter(request, "requestType", "");
@@ -54,6 +54,8 @@ public class ReportServlet extends HttpServlet {
     @Override
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
 
+        database = new JDBCLib();
+
         String requestType = getParameter(request, "requestType", "");
         String redirectURL = getParameter(request, "redirectURL", "");
 
@@ -69,7 +71,7 @@ public class ReportServlet extends HttpServlet {
 
             Report report = new Report(title, latitude, longitude, date, description, contactDetails, imageURL, entryID);
 
-//            database.insert(report);
+            database.insert(report);
         } else if (requestType.compareTo("update") == 0) {
             String title = getParameter(request, "title", "");
             String latitude = getParameter(request, "latitude", "");
@@ -83,11 +85,11 @@ public class ReportServlet extends HttpServlet {
 
             Report report = new Report(title, latitude, longitude, date, description, contactDetails, imageURL, entryID);
 
-//            database.update(report);
+            database.update(report);
         } else if (requestType.compareTo("delete") == 0) {
             String entryID = getParameter(request, "postID", "");
 
-//            database.delete(entryID);
+            database.delete(entryID);
         } else {
             if (requestType.compareTo("") == 0) {
                 throw new IOException("No request type specified");
