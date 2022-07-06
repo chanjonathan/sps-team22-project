@@ -80,7 +80,7 @@ public class ReportServlet extends HttpServlet {
         database = new JDBCLib();
 
         String requestType = getParameter(request, "requestType", "");
-//        String redirectURL = getParameter(request, "redirectURL", "");
+        String redirectURL = getParameter(request, "redirectURL", "");
 
         if (requestType.compareTo("create") == 0) {
             String title = getParameter(request, "title", "");
@@ -152,7 +152,7 @@ public class ReportServlet extends HttpServlet {
             }
         }
 
-//        response.sendRedirect(redirectURL);
+        response.sendRedirect(redirectURL);
     }
 
     private static String uploadToCloudStorage(String fileName, InputStream fileInputStream) {
