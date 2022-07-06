@@ -89,7 +89,7 @@ public class ReportServlet extends HttpServlet {
             String date = getParameter(request, "date", "");
             String description = getParameter(request, "description", "");
             String contactDetails = getParameter(request, "contactDetails", "");
-            String entryID = getParameter(request, "entryID", "");
+            String entryID = "";
 
             Part filePart = request.getPart("image");
             String fileName = filePart.getSubmittedFileName();
