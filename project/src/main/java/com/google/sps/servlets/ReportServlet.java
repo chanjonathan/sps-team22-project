@@ -43,10 +43,10 @@ public class ReportServlet extends HttpServlet {
             Report report = null;
             try {
                 report = database.getEntry(entryID);
-            } catch (SQLException e) {
-                IOException e2 = new IOException(e.getMessage());
-                e2.setStackTrace(e.getStackTrace());
-                throw e2;
+            } catch (SQLException sqlException) {
+                IOException servletException = new IOException(sqlException.getMessage());
+                servletException.setStackTrace(sqlException.getStackTrace());
+                throw servletException;
             }
             String jsonReport = gson.toJson(report);
 
@@ -56,10 +56,10 @@ public class ReportServlet extends HttpServlet {
             ArrayList<Report> reports = null;
             try {
                 reports = database.getEntries();
-            } catch (SQLException exception) {
-                IOException newException = new IOException(exception.getMessage());
-                newException.setStackTrace(exception.getStackTrace());
-                throw newException;
+            } catch (SQLException sqlException) {
+                IOException servletException = new IOException(sqlException.getMessage());
+                servletException.setStackTrace(sqlException.getStackTrace());
+                throw servletException;
             }
             String jsonReports = gson.toJson(reports);
 
@@ -100,10 +100,10 @@ public class ReportServlet extends HttpServlet {
 
             try {
                 database.insert(report);
-            } catch (SQLException exception) {
-                IOException newException = new IOException(exception.getMessage());
-                newException.setStackTrace(exception.getStackTrace());
-                throw newException;
+            } catch (SQLException sqlException) {
+                IOException servletException = new IOException(sqlException.getMessage());
+                servletException.setStackTrace(sqlException.getStackTrace());
+                throw servletException;
             }
 
         } else if (requestType.compareTo("update") == 0) {
@@ -127,10 +127,10 @@ public class ReportServlet extends HttpServlet {
 
             try {
                 database.update(report);
-            } catch (SQLException exception) {
-                IOException newException = new IOException(exception.getMessage());
-                newException.setStackTrace(exception.getStackTrace());
-                throw newException;
+            } catch (SQLException sqlException) {
+                IOException servletException = new IOException(sqlException.getMessage());
+                servletException.setStackTrace(sqlException.getStackTrace());
+                throw servletException;
             }
 
         } else if (requestType.compareTo("delete") == 0) {
@@ -138,10 +138,10 @@ public class ReportServlet extends HttpServlet {
 
             try {
                 database.delete(entryID);
-            } catch (SQLException exception) {
-                IOException newException = new IOException(exception.getMessage());
-                newException.setStackTrace(exception.getStackTrace());
-                throw newException;
+            } catch (SQLException sqlException) {
+                IOException servletException = new IOException(sqlException.getMessage());
+                servletException.setStackTrace(sqlException.getStackTrace());
+                throw servletException;
             }
 
         } else {
