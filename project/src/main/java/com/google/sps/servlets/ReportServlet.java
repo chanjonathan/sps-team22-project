@@ -1,5 +1,4 @@
-package src.main.java.com.google.sps.servlets;
-
+package com.google.sps.servlets;
 import com.google.gson.Gson;
 import src.main.java.com.google.sps.objects.Report;
 
