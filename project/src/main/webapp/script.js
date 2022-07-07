@@ -206,42 +206,7 @@ function createMap(){
             infoWindow.setContent(contents);
             infoWindow.open(map, marker);
         });
-    })(marker, data);	
-    //   infowindow.open(map);	
-    //   marker.addListener("click", (mapsMouseEvent) => {	
-    //     infowindow.close();	
-    //     infowindow = new google.maps.InfoWindow({	
-    //         content:"hello",    	
-    //         position: mapsMouseEvent.latLng,     	
-    //     });	
-
-    //     infowindow.setContent(JSON.stringify(mapsMouseEvent.latLng.toJSON(), null,2));	
-    //     infowindow.setPosition(mapsMouseEvent.latLng)
-    //     infowindow.open(map);
-    //   });
-
-    // attachSecretMessage(marker, secretMessages[i]);	
-
-      }	 
-    }	
-
-    // function attachSecretMessage(marker,secretMessage) {
-    //     var infowindow = new google.maps.InfoWindow({
-    //         content: secretMessage,
-    //     });
-  
-    //     infowindow.open(map);	
-    //     marker.addListener("click", (mapsMouseEvent) => {	
-    //       infowindow.close();	
-    //       infowindow = new google.maps.InfoWindow({	
-    //           content:"hello",    	
-    //           position: mapsMouseEvent.latLng,
-    //           // position:new google.maps.LatLng(locations[i])       	
-    //       });	
-  
-    //     //   infowindow.setContent(secretMessage, null,2);	
-    //       infowindow.setPosition(mapsMouseEvent.latLng)
-    //       infowindow.open(map);
-    //     });
-    //   }
+    })(marker, data);
+    }	 
+}	
 window.createMap = createMap
