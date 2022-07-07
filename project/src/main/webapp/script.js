@@ -13,7 +13,9 @@
 // limitations under the License.
 
 
-
+/**
+ * creatMap function create a map on the homepage
+ */
 function createMap(){
     // Create a new StyledMapType object, passing it an array of styles,
     // and the name to be displayed on the map type control.
@@ -137,78 +139,26 @@ function createMap(){
         {center: {lat: 0, lng: 0}, zoom: 1,
         mapTypeControlOptions: {
             mapTypeIds: ["roadmap", "satellite", "hybrid", "terrain", "styled_map"],
-          },
+          }
         }
     );   
     map.mapTypes.set("styled_map", styledMapType);
     map.setMapTypeId("styled_map");
+     
+    var locations = [
+        {lat: -25.344, lng: 131.031},
+        {lat: -10.344, lng: 120.031},
+        {lat: -5.344, lng: 110.031},
+      ];
 
-//     var infowindow = new google.maps.Infowindow();
-//     var service = new google.maps.places.PlacesService(map);
-//     var PlaceResult = [];
-//     var results = google.maps.places.PlaceResult;
-//     var status = google.maps.places.PlacesServiceStatus;
-//     service.findPlaceFromQuery(
-//         request,(result,status)=>{
-//             if(status === google.maps.places.PlacesServiceStatus.OK && results){
-//                 for(let i = 0; i < results.length; i++){
-//                     creaetMarker(result[i]);
-//                 }
-//                 map.setCenter(results[0].geometry.location);
-//             }
-//         }
-//     );
-// }
-// var place = google.maps.places.PlaceResult;
+    for (var i = 0; i < locations.length; i++) {  
+      marker = new google.maps.Marker({
+        position: new google.maps.LatLng(locations[i]),
+        map: map,
+        url: '/',
+        animation:google.maps.Animation.DROP
+      });
+      }
+    }
+window.createMap = createMap
 
-// function createMarker(place){
-//     if(!place.geometry || !place.geometry.location)return;
-//     const marker = new goolge.maps.Marker({
-//         map,
-//         position = place.geometry.loaction,
-//     });
-//     google.maps.event.addListener(marker, "click",() =>{
-//         infowindow.setContent(places.name || "");
-//         infowindow.open(map);
-//     });
-// }
-// window.createMap = createMap;
-// export{};
-
-
-
-
-
-
-    // var searchBox = new google.maps.places.SearchBox(document.getElementsById('place-input'));
-
-    // map.mapTypeControls[google.maps.ControlPosition.TOP_CENTER].push(document.getElementById('place-input'));
-
-    // google.maps.event.addListener(searchBox,'places-changed',function(){
-
-    //     var places = searchBox.getPlaces();
-
-    //     var bounds = new google.maps.LatLngBounds();
-    //     var i, place;
-    //     for(i = 0; place = places[i]; i++){
-
-    //         (function(place){
-    //             var marker = new google.maps.Marker(
-    //                 {
-    //                 position: place.geometry.location
-    //                 }
-    //             );
-    //             marker.bindTo('map',searchBox,'map');
-    //             google.maps.event.addListener(marker,'map_changed', function(){
-    //                 if(!this.getMap()){
-    //                     this.unbindAll();
-    //                 }
-    //             });
-    //             bounds.extend(place.geometry.location);
-    //         }(place));
-    //     }
-    //     map.fitBounds(bounds);
-    //     searchBox.set('map',map);
-    //     map.setZoom(Math.min(map.getZoom(),12));
-    // });
-}

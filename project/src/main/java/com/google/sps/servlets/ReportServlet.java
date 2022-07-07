@@ -1,15 +1,14 @@
 package com.google.sps.servlets;
-
 import com.google.gson.Gson;
 import com.google.sps.database.JDBCLib;
 import com.google.sps.objects.Report;
 import com.google.sps.database.JDBCLib;
-
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+
 import java.util.ArrayList;
 
 /**
@@ -25,7 +24,6 @@ public class ReportServlet extends HttpServlet {
 
     @Override
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
-
         database = new JDBCLib();
         gson = new Gson();
 
@@ -38,6 +36,7 @@ public class ReportServlet extends HttpServlet {
 
             response.setContentType("text/html;");
             response.getWriter().println(jsonReport);
+
         } else if (requestType.compareTo("all") == 0) {
             ArrayList<Report> reports = database.getEntries();
             String jsonReports = gson.toJson(reports);
