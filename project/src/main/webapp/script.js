@@ -151,8 +151,6 @@ function createMap(){
         {lat: -5.344, lng: 110.031},
       ];
 
-    //   create_markers(locations);
-
     for (var i = 0; i < locations.length; i++) {  
       marker = new google.maps.Marker({
         position: new google.maps.LatLng(locations[i]),
