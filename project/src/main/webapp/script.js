@@ -182,8 +182,6 @@ function createMap(){
         }
         ];
 
-    //   create_markers(locations);
-
     
     for (var i = 0; i < locations.length; i++) { 
         var data = markers[i]; //
