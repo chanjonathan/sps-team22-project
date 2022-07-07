@@ -144,7 +144,7 @@ function createMap(){
     );   
     map.mapTypes.set("styled_map", styledMapType);
     map.setMapTypeId("styled_map");
-
+     
     var locations = [
         {lat: -25.344, lng: 131.031},
         {lat: -10.344, lng: 120.031},
@@ -206,7 +206,6 @@ function createMap(){
             infoWindow.open(map, marker);
         });
     })(marker, data);		
-
       }	 
     }
 window.createMap = createMap

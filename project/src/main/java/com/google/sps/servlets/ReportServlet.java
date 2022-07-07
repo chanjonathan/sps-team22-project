@@ -1,10 +1,8 @@
-package com.google.sps.servlets;
-
+package src.main.java.com.google.sps.servlets;
 import com.google.gson.Gson;
 import com.google.sps.database.JDBCLib;
 import com.google.sps.objects.Report;
 import com.google.sps.database.JDBCLib;
-
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -26,7 +24,6 @@ public class ReportServlet extends HttpServlet {
 
     @Override
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
-
         database = new JDBCLib();
         gson = new Gson();
 
