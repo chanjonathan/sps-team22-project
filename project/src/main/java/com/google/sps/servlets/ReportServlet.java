@@ -36,7 +36,6 @@ public class ReportServlet extends HttpServlet {
 
             response.setContentType("text/html;");
             response.getWriter().println(jsonReport);
-
         } else if (requestType.compareTo("all") == 0) {
             ArrayList<Report> reports = database.getEntries();
             String jsonReports = gson.toJson(reports);
