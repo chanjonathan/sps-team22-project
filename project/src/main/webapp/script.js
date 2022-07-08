@@ -13,6 +13,9 @@
 // limitations under the License.
 
 
+var map;
+var markers = [];
+
 // Fill start and end time inputs with appropriate datetimes
 function fillDateTimes() {
     const date = new Date();
@@ -21,8 +24,8 @@ function fillDateTimes() {
     const localNow = (new Date(date.getTime() - date.getTimezoneOffset() * 60000).toISOString()).slice(0, -1);
     const localStart = (new Date(date.getTime() - date.getTimezoneOffset() * 60000 - offset).toISOString()).slice(0, -1);
 
-    document.getElementById("end-time").value = localNow;
     document.getElementById("start-time").value = localStart;
+    document.getElementById("end-time").value = localNow;
 }
 
 
@@ -144,7 +147,7 @@ function createMap() {
     );
     /** Creates a map and adds it to the page. */
 
-    const map = new google.maps.Map(
+    map = new google.maps.Map(
         document.getElementById('map'),
         {
             center: {lat: 0, lng: 0}, zoom: 1,
@@ -155,18 +158,23 @@ function createMap() {
     );
     map.mapTypes.set("styled_map", styledMapType);
     map.setMapTypeId("styled_map");
-
-    placeMarkers(map);
 }
 
-async function placeMarkers(map) {
+// retrieves reporters from server and places corresponding markers
+async function placeMarkers() {
+    for (let i = 0; i < markers.length; i++) {
+        markers[i].setMap(null);
+        markers[i] = null;
+    }
+    markers = [];
+
     const start = document.getElementById("start-time").value;
     const end = document.getElementById("end-time").value;
 
     const fetchedJSON = await fetch("/list-by-date-and-coordinates?start=" + start + "&end=" + end);
     const reports = await fetchedJSON.json();
 
-    for (var i = 0; i < reports.length; i++) {
+    for (let i = 0; i < reports.length; i++) {
         let latitude = parseInt(reports[i].latitude)
         let longitude = parseInt(reports[i].longitude)
         let location = {lat: latitude, lng: longitude};
@@ -177,6 +185,8 @@ async function placeMarkers(map) {
             url: '/',
             animation: google.maps.Animation.DROP
         });
+        marker.report = reports[i]
+        markers.push(marker);
     }
 }
 
@@ -186,4 +196,5 @@ window.createMap = createMap
 function initialize() {
     fillDateTimes();
     createMap();
+    placeMarkers();
 }
