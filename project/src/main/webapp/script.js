@@ -157,28 +157,32 @@ function createMap(){
             "lat": '-25.344',
             "lng": '131.031',
             "description": 'Aksa Beach is a popular beach and a vacation spot in Aksa village at Malad, Mumbai.',
-            "link": "https://www.google.com/maps/place/Aksa+Beach/@19.1760517,72.7908969,16z/data=!3m1!4b1!4m5!3m4!1s0x3be7b42e695a7097:0x48523c8334d8edf7!8m2!3d19.1759612!4d72.7953513"
+            "images": "image/ji udyan.JPG",
+            "link":'https://en.wikipedia.org/wiki/Aksa_Beach',
         },
         {
             "title": 'Juhu Beach',
             "lat": '-10.344',
             "lng": '120.031',
             "description": 'Juhu Beach is one of favourite tourist attractions situated in Mumbai.',
-            "link": "https://www.google.com/maps/place/Juhu,+Mumbai,+Maharashtra+400049,+India/@19.1012636,72.8120342,14z/data=!3m1!4b1!4m5!3m4!1s0x3be7c9bf95d4ba07:0x35047c9c36b6cea1!8m2!3d19.1075424!4d72.8263142"
+            "images": "image/g beach.JPG",
+            "link":'https://en.wikipedia.org/wiki/Juhu',
         },
         {
             "title": 'Girgaum Beach',
             "lat": '18.9542149',
             "lng": '72.81203529999993',
             "description": 'Girgaum Beach commonly known as just Chaupati is one of the most famous public beaches in Mumbai.',
-            "link": "https://www.google.com/maps/place/Girgaon+Chowpatty/@18.9530436,72.8089395,16z/data=!3m1!4b1!4m5!3m4!1s0x3be7ce0f19846e49:0xdc9efea85298c9bf!8m2!3d18.9518622!4d72.8165592"
+            "images": "image/download.JPG",
+            "link":'https://en.wikipedia.org/wiki/Girgaon_Chowpatty'
         },
         {
             "title": 'Jijamata Udyan',
             "lat": '-5.344',
             "lng": '110.031',
             "description": 'Jijamata Udyan is situated near Byculla station is famous as Mumbai (Bombay) Zoo.',
-            "link": 'https://www.google.com/maps/search/Jijamata+Udyan/@18.980938,72.8328219,17z/data=!3m1!4b1'
+            "images": "image/Aksa beach.JPG",
+            "link": ''
         }
         ];
     
@@ -201,7 +205,8 @@ function createMap(){
         google.maps.event.addListener(marker, "click", function (e) {
             //Wrap the content inside an HTML DIV in order to set height and width of InfoWindow.
             var contents = "<div style = 'width:200px;min-height:40px'>" + data.description + "</div>";
-            contents += '<p>Attribution: click to view details, <a href= "' + data.link +  '">' + data.link + '</a>';
+            // contents += '<p>Attribution: click to view details, <a href= "' + data.link +  '">' + data.link + '</a>';
+            contents += '<img src= "' + data.images +  '"></a>';
             infoWindow.setContent(contents);
             infoWindow.open(map, marker);
         });
