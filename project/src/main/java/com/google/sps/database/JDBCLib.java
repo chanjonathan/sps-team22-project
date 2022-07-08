@@ -1,12 +1,9 @@
 package com.google.sps.database;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.ResultSet;
-import java.sql.Statement;
-import java.util.ArrayList;
-
 import com.google.sps.objects.Report;
+
+import java.sql.*;
+import java.util.ArrayList;
 
 public class JDBCLib {
 
@@ -16,31 +13,26 @@ public class JDBCLib {
 
     // Require: reportDate of report object should be in the form of "YYYY-MM-DD"
     // Description: insert an entry into table collisionReports
-    public void insert(Report report) {
+    public void insert(Report report) throws SQLException {
         String Query = "INSERT INTO collisionReports (title, latitude, longitude, reportDate, reportDescription, " +
                 "contactDetails, imageURL) \n" +
                 "values (\"" + report.title + "\", \"" + report.latitude + "\", \"" + report.longitude +
-                "\",  \"" + report.date +"\", \"" + report.description + "\", \"" +
-                report.contactDetails + "\", \"" + report.imageURL +"\")";
+                "\",  \"" + report.date + "\", \"" + report.description + "\", \"" +
+                report.contactDetails + "\", \"" + report.imageURL + "\")";
 
-        try {
+        Connection connection = DriverManager.getConnection(url,
+                user, password);
 
-            Connection connection = DriverManager.getConnection(url,
-                    user, password);
+        Statement statement = connection.createStatement();
 
-            Statement statement = connection.createStatement();
-
-            statement.executeUpdate(Query);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        statement.executeUpdate(Query);
 
 
     }
 
     // Description: print every entry in the table
     // used for test
-    public void printEntries() {
+    public void printEntries() throws SQLException {
         String QUERY = "SELECT * FROM collisionReports";
 
         try {
@@ -68,28 +60,23 @@ public class JDBCLib {
     }
 
     // Description: delete an entry with the given entryID in the table
-    public void delete(String entryID) {
+    public void delete(String entryID) throws SQLException {
         String Query = "delete from collisionReports where entryID = " + entryID;
 
 
-        try {
+        Connection connection = DriverManager.getConnection(url,
+                user, password);
 
-            Connection connection = DriverManager.getConnection(url,
-                    user, password);
+        Statement statement = connection.createStatement();
 
-            Statement statement = connection.createStatement();
+        statement.executeUpdate(Query);
 
-            statement.executeUpdate(Query);
-        } catch (Exception e) {
-            e.printStackTrace();
-
-        }
 
     }
 
     // Description: update an entry with the given entryID in the table
     // !!! make sure the entryID is correct
-    public void update(Report report) {
+    public void update(Report report) throws SQLException {
         String entryID = report.entryID;
         String Query = "UPDATE collisionReports\n" +
                 "SET title = \"" + report.title + "\", latitude = \"" + report.latitude + "\", longitude = \"" +
@@ -97,91 +84,79 @@ public class JDBCLib {
                 report.description + "\", contactDetails = \"" + report.contactDetails + "\", imageURL = \"" +
                 report.imageURL + "\"\n" +
                 "WHERE entryID = " + entryID + ";";
-        try {
 
-            Connection connection = DriverManager.getConnection(url,
-                    user, password);
+        Connection connection = DriverManager.getConnection(url,
+                user, password);
 
-            Statement statement = connection.createStatement();
+        Statement statement = connection.createStatement();
 
-            statement.executeUpdate(Query);
-        } catch (Exception e) {
-            e.printStackTrace();
+        statement.executeUpdate(Query);
 
-        }
     }
 
     //
-    public Report getEntry(String entryID) {
+    public Report getEntry(String entryID) throws SQLException {
         String Query = "SELECT * FROM collisionReports where entryID = " + entryID;
 
-        try {
 
-            Connection connection = DriverManager.getConnection(url,
-                    user, password);
+        Connection connection = DriverManager.getConnection(url,
+                user, password);
 
-            Statement statement = connection.createStatement();
+        Statement statement = connection.createStatement();
 
-            ResultSet resultSet = statement.executeQuery(Query);
+        ResultSet resultSet = statement.executeQuery(Query);
 
-            while (resultSet.next()) {
-                String title = resultSet.getString("title");
-                String latitude = resultSet.getString("latitude");
-                String longitude = resultSet.getString("longitude");
-                String reportDate = resultSet.getString("reportDate");
-                String reportDescription = resultSet.getString("reportDescription");
-                String contactDetails = resultSet.getString("contactDetails");
-                String imageURL = resultSet.getString("imageURL");
+        while (resultSet.next()) {
+            String title = resultSet.getString("title");
+            String latitude = resultSet.getString("latitude");
+            String longitude = resultSet.getString("longitude");
+            String reportDate = resultSet.getString("reportDate");
+            String reportDescription = resultSet.getString("reportDescription");
+            String contactDetails = resultSet.getString("contactDetails");
+            String imageURL = resultSet.getString("imageURL");
 
-                Report report = new Report(title,latitude,longitude,
-                        reportDate,reportDescription,contactDetails,imageURL,entryID);
+            Report report = new Report(title, latitude, longitude,
+                    reportDate, reportDescription, contactDetails, imageURL, entryID);
 
-                return report;
-            }
-
-            return null;
-
-        } catch (Exception e) {
-            e.printStackTrace();
-            return null;
+            return report;
         }
+
+        return null;
+
+
     }
 
 
     // return all the entries in the table as a list of reports
-    public ArrayList<Report>getEntries () {
+    public ArrayList<Report> getEntries() throws SQLException {
         String QUERY = "SELECT * FROM collisionReports";
         ArrayList<Report> reports = new ArrayList<>();
 
-        try {
 
-            Connection connection = DriverManager.getConnection(url,
-                    user, password);
+        Connection connection = DriverManager.getConnection(url,
+                user, password);
 
-            Statement statement = connection.createStatement();
+        Statement statement = connection.createStatement();
 
-            ResultSet resultSet = statement.executeQuery(QUERY);
+        ResultSet resultSet = statement.executeQuery(QUERY);
 
-            while (resultSet.next()) {
-                String title = resultSet.getString("title");
-                String latitude = resultSet.getString("latitude");
-                String longitude = resultSet.getString("longitude");
-                String reportDate = resultSet.getString("reportDate");
-                String reportDescription = resultSet.getString("reportDescription");
-                String contactDetails = resultSet.getString("contactDetails");
-                String imageURL = resultSet.getString("imageURL");
-                String entryID = resultSet.getString("entryID");
+        while (resultSet.next()) {
+            String title = resultSet.getString("title");
+            String latitude = resultSet.getString("latitude");
+            String longitude = resultSet.getString("longitude");
+            String reportDate = resultSet.getString("reportDate");
+            String reportDescription = resultSet.getString("reportDescription");
+            String contactDetails = resultSet.getString("contactDetails");
+            String imageURL = resultSet.getString("imageURL");
+            String entryID = resultSet.getString("entryID");
 
-                Report report = new Report(title,latitude,longitude,
-                        reportDate,reportDescription,contactDetails,imageURL,entryID);
+            Report report = new Report(title, latitude, longitude,
+                    reportDate, reportDescription, contactDetails, imageURL, entryID);
 
-                reports.add(report);
-            }
-            return reports;
-
-        } catch (Exception e) {
-            e.printStackTrace();
-            return null;
+            reports.add(report);
         }
+        return reports;
+
+
     }
 }
