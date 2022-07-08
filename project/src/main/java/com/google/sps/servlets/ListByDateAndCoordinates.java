@@ -36,7 +36,7 @@ public class ListByDateAndCoordinates extends HttpServlet {
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
 
         String start = getParameter(request, "start", "");
-        String end = getParameter(request, "start", "");
+        String end = getParameter(request, "end", "");
 
         ArrayList<Report> reports = null;
 

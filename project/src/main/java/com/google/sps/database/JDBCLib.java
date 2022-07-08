@@ -163,7 +163,7 @@ public class JDBCLib {
     // return all the entries in given time range
     public ArrayList<Report> listByDateAndCoordinates(String start, String end) throws SQLException {
         String query = "SELECT * FROM collisionReports " +
-                "WHERE date(timestamp) between '" + start + "'  and   '" + end + "';";
+                "WHERE reportDate between '" + start + "'  and   '" + end + "';";
 
         ArrayList<Report> reports = new ArrayList<>();
 
