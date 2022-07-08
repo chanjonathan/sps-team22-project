@@ -159,4 +159,33 @@ public class JDBCLib {
 
 
     }
+
+    // return all the entries in given time range
+    public ArrayList<Report> listByDateAndCoordinates(String start, String end) throws SQLException {
+        String query = "SELECT * FROM collisionReports " +
+                "WHERE date(timestamp) between '" + start + "'  and   '" + end + "';";
+
+        ArrayList<Report> reports = new ArrayList<>();
+
+        Connection connection = DriverManager.getConnection(url, user, password);
+        Statement statement = connection.createStatement();
+        ResultSet resultSet = statement.executeQuery(query);
+
+        while (resultSet.next()) {
+            String title = resultSet.getString("title");
+            String latitude = resultSet.getString("latitude");
+            String longitude = resultSet.getString("longitude");
+            String reportDate = resultSet.getString("reportDate");
+            String reportDescription = resultSet.getString("reportDescription");
+            String contactDetails = resultSet.getString("contactDetails");
+            String imageURL = resultSet.getString("imageURL");
+            String entryID = resultSet.getString("entryID");
+
+            Report report = new Report(title, latitude, longitude,
+                    reportDate, reportDescription, contactDetails, imageURL, entryID);
+
+            reports.add(report);
+        }
+        return reports;
+    }
 }
