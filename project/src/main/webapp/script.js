@@ -13,10 +13,20 @@
 // limitations under the License.
 
 
-/**
- * creatMap function create a map on the homepage
- */
-function createMap(){
+// Fill start and end time inputs with appropriate datetimes
+{
+    const date = new Date();
+    const offset = (24 * 60 * 60 * 1000) * 7;
+
+    const localNow = (new Date(date.getTime() - date.getTimezoneOffset() * 60000).toISOString()).slice(0, -1);
+    const localStart = (new Date(date.getTime() - date.getTimezoneOffset() * 60000 - offset).toISOString()).slice(0, -1);
+
+    document.getElementById("end-time").value = localNow;
+    document.getElementById("start-time").value = localStart;
+}
+
+
+function createMap() {
     // Create a new StyledMapType object, passing it an array of styles,
     // and the name to be displayed on the map type control.
     const styledMapType = new google.maps.StyledMapType(
@@ -144,14 +154,14 @@ function createMap(){
     );   
     map.mapTypes.set("styled_map", styledMapType);
     map.setMapTypeId("styled_map");
-     
+
     var locations = [
         {lat: -25.344, lng: 131.031},
         {lat: -10.344, lng: 120.031},
         {lat: -5.344, lng: 110.031},
       ];
 
-    for (var i = 0; i < locations.length; i++) {  
+    for (var i = 0; i < locations.length; i++) {
       marker = new google.maps.Marker({
         position: new google.maps.LatLng(locations[i]),
         map: map,
