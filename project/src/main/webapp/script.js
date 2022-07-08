@@ -183,9 +183,21 @@ async function placeMarkers() {
             position: new google.maps.LatLng(location),
             map: map,
             url: '/',
-            animation: google.maps.Animation.DROP
-        });
-        marker.report = reports[i]
+            animation: google.maps.Animation.DROP,
+        })
+
+        var infoWindow = new google.maps.InfoWindow();
+        //Attach click event to the marker.
+        
+        google.maps.event.addListener(marker, "click", function (e) {
+            //Wrap the content inside an HTML DIV in order to set height and width of InfoWindow.
+            var contents = "<div style = 'width:200px;min-height:40px'>" + reports[i].description + "</div>";
+            contents += '<img src= "' + reports[i].imageURL +  '"></a>';
+            infoWindow.setContent(contents);
+            infoWindow.open(map, marker);
+        })
+
+        marker.report = reports[i];
         markers.push(marker);
     }
 }
