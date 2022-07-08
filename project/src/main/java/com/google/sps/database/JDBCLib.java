@@ -1,12 +1,9 @@
 package com.google.sps.database;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.ResultSet;
-import java.sql.Statement;
-import java.util.ArrayList;
-
 import com.google.sps.objects.Report;
+
+import java.sql.*;
+import java.util.ArrayList;
 
 public class JDBCLib {
 
@@ -14,142 +11,118 @@ public class JDBCLib {
     String user = "root";
     String password = "qw123456";
 
-    // Require: reportDate of report object should be in the form of "YYYY-MM-DD"
+    // Require: reportDate of report object should be in the form of "YYYY-MM-DD hh:mm:ss"
     // Description: insert an entry into table collisionReports
-    public void insert(Report report) {
+    public void insert(Report report) throws SQLException {
         String Query = "INSERT INTO collisionReports (title, latitude, longitude, reportDate, reportDescription, " +
                 "contactDetails, imageURL) \n" +
                 "values (\"" + report.title + "\", \"" + report.latitude + "\", \"" + report.longitude +
-                "\",  \"" + report.date +"\", \"" + report.description + "\", \"" +
-                report.contactDetails + "\", \"" + report.imageURL +"\")";
+                "\",  now(), \""+ report.description + "\", \"" +
+                report.contactDetails + "\", \"" + report.imageURL + "\")";
 
-        try {
 
-            Connection connection = DriverManager.getConnection(url,
-                    user, password);
 
-            Statement statement = connection.createStatement();
+        Connection connection = DriverManager.getConnection(url, user, password);
 
-            statement.executeUpdate(Query);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        Statement statement = connection.createStatement();
 
+        statement.executeUpdate(Query);
 
     }
 
     // Description: print every entry in the table
     // used for test
-    public void printEntries() {
+    public void printEntries() throws SQLException {
         String QUERY = "SELECT * FROM collisionReports";
 
-        try {
 
-            Connection connection = DriverManager.getConnection(url,
-                    user, password);
+        Connection connection = DriverManager.getConnection(url,
+                user, password);
 
-            Statement statement = connection.createStatement();
+        Statement statement = connection.createStatement();
 
-            ResultSet resultSet = statement.executeQuery(QUERY);
+        ResultSet resultSet = statement.executeQuery(QUERY);
 
-            while (resultSet.next()) {
-                System.out.println(resultSet.getString("title"));
-                System.out.println(resultSet.getString("latitude"));
-                System.out.println(resultSet.getString("longitude"));
-                System.out.println(resultSet.getString("reportDate"));
-                System.out.println(resultSet.getString("reportDescription"));
-                System.out.println(resultSet.getString("contactDetails"));
-                System.out.println(resultSet.getString("imageURL"));
-            }
-
-        } catch (Exception e) {
-            e.printStackTrace();
+        while (resultSet.next()) {
+            System.out.println(resultSet.getString("title"));
+            System.out.println(resultSet.getString("latitude"));
+            System.out.println(resultSet.getString("longitude"));
+            System.out.println(resultSet.getDate("reportDate"));
+            System.out.println(resultSet.getTime("reportDate"));
+            System.out.println(resultSet.getString("reportDescription"));
+            System.out.println(resultSet.getString("contactDetails"));
+            System.out.println(resultSet.getString("imageURL"));
         }
     }
 
     // Description: delete an entry with the given entryID in the table
-    public void delete(String entryID) {
+    public void delete(String entryID) throws SQLException {
         String Query = "delete from collisionReports where entryID = " + entryID;
 
 
-        try {
+        Connection connection = DriverManager.getConnection(url,
+                user, password);
 
-            Connection connection = DriverManager.getConnection(url,
-                    user, password);
+        Statement statement = connection.createStatement();
 
-            Statement statement = connection.createStatement();
+        statement.executeUpdate(Query);
 
-            statement.executeUpdate(Query);
-        } catch (Exception e) {
-            e.printStackTrace();
-
-        }
 
     }
 
     // Description: update an entry with the given entryID in the table
     // !!! make sure the entryID is correct
-    public void update(Report report) {
+    public void update(Report report) throws SQLException{
         String entryID = report.entryID;
         String Query = "UPDATE collisionReports\n" +
                 "SET title = \"" + report.title + "\", latitude = \"" + report.latitude + "\", longitude = \"" +
-                report.latitude + "\", reportDate = \"" + report.date + "\", reportDescription = \"" +
+                report.longitude + "\", reportDescription = \"" +
                 report.description + "\", contactDetails = \"" + report.contactDetails + "\", imageURL = \"" +
                 report.imageURL + "\"\n" +
                 "WHERE entryID = " + entryID + ";";
-        try {
 
-            Connection connection = DriverManager.getConnection(url,
-                    user, password);
 
-            Statement statement = connection.createStatement();
+        Connection connection = DriverManager.getConnection(url,
+                user, password);
 
-            statement.executeUpdate(Query);
-        } catch (Exception e) {
-            e.printStackTrace();
+        Statement statement = connection.createStatement();
 
-        }
+        statement.executeUpdate(Query);
+
     }
 
-    //
-    public Report getEntry(String entryID) {
+
+    public Report getReport(String entryID) throws SQLException {
         String Query = "SELECT * FROM collisionReports where entryID = " + entryID;
 
-        try {
 
-            Connection connection = DriverManager.getConnection(url,
-                    user, password);
+        Connection connection = DriverManager.getConnection(url,
+                user, password);
 
-            Statement statement = connection.createStatement();
+        Statement statement = connection.createStatement();
 
-            ResultSet resultSet = statement.executeQuery(Query);
+        ResultSet resultSet = statement.executeQuery(Query);
 
-            while (resultSet.next()) {
-                String title = resultSet.getString("title");
-                String latitude = resultSet.getString("latitude");
-                String longitude = resultSet.getString("longitude");
-                String reportDate = resultSet.getString("reportDate");
-                String reportDescription = resultSet.getString("reportDescription");
-                String contactDetails = resultSet.getString("contactDetails");
-                String imageURL = resultSet.getString("imageURL");
+        while (resultSet.next()) {
+            String title = resultSet.getString("title");
+            String latitude = resultSet.getString("latitude");
+            String longitude = resultSet.getString("longitude");
+            String Date = resultSet.getDate("reportDate").toString();
+            String Time = resultSet.getTime("reportDate").toString();
+            String reportDate = Date + " " + Time;
+            String reportDescription = resultSet.getString("reportDescription");
+            String contactDetails = resultSet.getString("contactDetails");
+            String imageURL = resultSet.getString("imageURL");
 
-                Report report = new Report(title,latitude,longitude,
-                        reportDate,reportDescription,contactDetails,imageURL,entryID);
+            return new Report(title, latitude, longitude,
+                    reportDate, reportDescription, contactDetails, imageURL, entryID);
 
-                return report;
-            }
-
-            return null;
-
-        } catch (Exception e) {
-            e.printStackTrace();
-            return null;
         }
+        return null;
     }
 
 
-    // return all the entries in the table as a list of reports
-    public ArrayList<Report>getEntries () {
+    public ArrayList<Report> getEntries() {
         String QUERY = "SELECT * FROM collisionReports";
         ArrayList<Report> reports = new ArrayList<>();
 
@@ -166,14 +139,16 @@ public class JDBCLib {
                 String title = resultSet.getString("title");
                 String latitude = resultSet.getString("latitude");
                 String longitude = resultSet.getString("longitude");
-                String reportDate = resultSet.getString("reportDate");
+                String Date = resultSet.getDate("reportDate").toString();
+                String Time = resultSet.getTime("reportDate").toString();
+                String reportDate = Date + " " + Time;
                 String reportDescription = resultSet.getString("reportDescription");
                 String contactDetails = resultSet.getString("contactDetails");
                 String imageURL = resultSet.getString("imageURL");
                 String entryID = resultSet.getString("entryID");
 
-                Report report = new Report(title,latitude,longitude,
-                        reportDate,reportDescription,contactDetails,imageURL,entryID);
+                Report report = new Report(title, latitude, longitude,
+                        reportDate, reportDescription, contactDetails, imageURL, entryID);
 
                 reports.add(report);
             }
@@ -183,5 +158,6 @@ public class JDBCLib {
             e.printStackTrace();
             return null;
         }
+
     }
 }
