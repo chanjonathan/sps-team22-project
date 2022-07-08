@@ -1,0 +1,25 @@
+#content {
+    margin-left: auto;
+    margin-right: auto;
+    width: 1200px;
+    background-color: white;
+  }
+  
+  #report-container {
+    margin-top: 20px;
+    width: 1200px;
+  }
+  
+  .inline-block {
+      width: 1200px;
+      display: inline-block;
+  }
+  
+  img{
+      height: 400px;
+  }
+  
+  textarea {
+      width: 600px;
+  }
+  
