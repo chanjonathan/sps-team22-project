@@ -182,11 +182,53 @@ function createMap(){
         }
         ];
 
-        var uniqueId = 1;
+    //     google.maps.event.addListener(map, 'click', function (e) {
+ 
+    //         //Determine the location where the user has clicked.
+    //         var location = e.latLng;
+ 
+    //         //Create a marker and placed it on the map.
+    //         var marker = new google.maps.Marker({
+    //             position: location,
+    //             map: map
+    //         });
+ 
+    //         //Set unique id
+    //         marker.id = uniqueId;
+    //         uniqueId++;
+
+    //         markers.push(marker);
+
+    //         var infoWindow = new google.maps.InfoWindow();
+    //         //Attach click event handler to the marker.
+    //         for(var i = 0; i < markers.length; i++){
+    //                 google.maps.event.addListener(marker, "click", function (e) {
+    //                 var content = 'Latitude: ' + location.lat() + '<br />Longitude: ' + location.lng();
+    //                 content += "<br /><input type = 'button' va;ue = 'Delete' onclick = 'DeleteMarker(" + marker.id + ");' value = 'Delete' />";
+    //                 infoWindow.setContent (content);
+    //                 infoWindow.open(map, marker);
+    //             });		
+    //         }
+            
+    //     });
+    // };
+
+    // function DeleteMarker(id) {
+    //     //Find and remove the marker from the Array
+    //     for (var i = 0; i < markers.length; i++) {
+    //         if (markers[i].id == id) {
+    //             //Remove the marker from Map                  
+    //             markers[i].setMap(null);
+ 
+    //             //Remove the marker from array.
+    //             markers.splice(i, 1);
+    //             return;
+    //         }
+    //     }
+    // };
 
     for (var i = 0; i < locations.length; i++) { 
         var data = markers[i]; 
-        data.id = uniqueId ++;
         var myLatlng = new google.maps.LatLng(data.lat, data.lng); //
       marker = new google.maps.Marker({
         // position: new google.maps.LatLng(locations[i]),
@@ -196,7 +238,6 @@ function createMap(){
         titel:data.title,
         animation:google.maps.Animation.DROP
       });      
-
       var infoWindow = new google.maps.InfoWindow(
       );
       //Attach click event to the marker.
@@ -220,4 +261,4 @@ function createMap(){
 //         }
 //    } 
 }
-window.createMap = createMap
+window.createMap = createMap;
