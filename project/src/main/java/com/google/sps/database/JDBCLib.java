@@ -17,10 +17,8 @@ public class JDBCLib {
         String Query = "INSERT INTO collisionReports (title, latitude, longitude, reportDate, reportDescription, " +
                 "contactDetails, imageURL) \n" +
                 "values (\"" + report.title + "\", \"" + report.latitude + "\", \"" + report.longitude +
-                "\",  \"" + report.date + "\", \"" + report.description + "\", \"" +
+                "\", \'" + report.date + "\', \"" + report.description + "\", \"" +
                 report.contactDetails + "\", \"" + report.imageURL + "\")";
-
-
 
         Connection connection = DriverManager.getConnection(url, user, password);
 
@@ -47,8 +45,7 @@ public class JDBCLib {
             System.out.println(resultSet.getString("title"));
             System.out.println(resultSet.getString("latitude"));
             System.out.println(resultSet.getString("longitude"));
-            System.out.println(resultSet.getDate("reportDate"));
-            System.out.println(resultSet.getTime("reportDate"));
+            System.out.println(resultSet.getTimestamp("reportDate"));
             System.out.println(resultSet.getString("reportDescription"));
             System.out.println(resultSet.getString("contactDetails"));
             System.out.println(resultSet.getString("imageURL"));
@@ -76,8 +73,9 @@ public class JDBCLib {
         String entryID = report.entryID;
         String Query = "UPDATE collisionReports\n" +
                 "SET title = \"" + report.title + "\", latitude = \"" + report.latitude + "\", longitude = \"" +
-                report.longitude + "\", reportDescription = \"" +
-                report.description + "\", contactDetails = \"" + report.contactDetails + "\", imageURL = \"" +
+                report.longitude + "\", reportDescription = \"" + report.description +
+                "\", reportDate = \"" + report.date +
+                "\", contactDetails = \"" + report.contactDetails + "\", imageURL = \"" +
                 report.imageURL + "\"\n" +
                 "WHERE entryID = " + entryID + ";";
 
@@ -107,9 +105,7 @@ public class JDBCLib {
             String title = resultSet.getString("title");
             String latitude = resultSet.getString("latitude");
             String longitude = resultSet.getString("longitude");
-            String Date = resultSet.getDate("reportDate").toString();
-            String Time = resultSet.getTime("reportDate").toString();
-            String reportDate = Date + " " + Time;
+            String reportDate = resultSet.getTimestamp("reportDate").toString();
             String reportDescription = resultSet.getString("reportDescription");
             String contactDetails = resultSet.getString("contactDetails");
             String imageURL = resultSet.getString("imageURL");
@@ -123,6 +119,7 @@ public class JDBCLib {
 
 
 
+
     // return all the entries in the table as a list of reports
     public ArrayList<Report> getEntries() throws SQLException {
         String QUERY = "SELECT * FROM collisionReports";
@@ -132,58 +129,26 @@ public class JDBCLib {
         Connection connection = DriverManager.getConnection(url,
                 user, password);
 
-        Statement statement = connection.createStatement();
+            Statement statement = connection.createStatement();
 
-        ResultSet resultSet = statement.executeQuery(QUERY);
+            ResultSet resultSet = statement.executeQuery(QUERY);
 
-        while (resultSet.next()) {
-            String title = resultSet.getString("title");
-            String latitude = resultSet.getString("latitude");
-            String longitude = resultSet.getString("longitude");
-            String reportDate = resultSet.getString("reportDate");
-            String reportDescription = resultSet.getString("reportDescription");
-            String contactDetails = resultSet.getString("contactDetails");
-            String imageURL = resultSet.getString("imageURL");
-            String entryID = resultSet.getString("entryID");
+            while (resultSet.next()) {
+                String title = resultSet.getString("title");
+                String latitude = resultSet.getString("latitude");
+                String longitude = resultSet.getString("longitude");
+                String reportDate = resultSet.getTimestamp("reportDate").toString();
+                String reportDescription = resultSet.getString("reportDescription");
+                String contactDetails = resultSet.getString("contactDetails");
+                String imageURL = resultSet.getString("imageURL");
+                String entryID = resultSet.getString("entryID");
 
-            Report report = new Report(title, latitude, longitude,
-                    reportDate, reportDescription, contactDetails, imageURL, entryID);
+                Report report = new Report(title, latitude, longitude,
+                        reportDate, reportDescription, contactDetails, imageURL, entryID);
 
+                reports.add(report);
+            }
 
-
-            reports.add(report);
-        }
-        return reports;
-
-
-    }
-
-    // return all the entries in given time range
-    public ArrayList<Report> listByDateAndCoordinates(String start, String end) throws SQLException {
-        String query = "SELECT * FROM collisionReports " +
-                "WHERE reportDate between '" + start + "'  and   '" + end + "';";
-
-        ArrayList<Report> reports = new ArrayList<>();
-
-        Connection connection = DriverManager.getConnection(url, user, password);
-        Statement statement = connection.createStatement();
-        ResultSet resultSet = statement.executeQuery(query);
-
-        while (resultSet.next()) {
-            String title = resultSet.getString("title");
-            String latitude = resultSet.getString("latitude");
-            String longitude = resultSet.getString("longitude");
-            String reportDate = resultSet.getString("reportDate");
-            String reportDescription = resultSet.getString("reportDescription");
-            String contactDetails = resultSet.getString("contactDetails");
-            String imageURL = resultSet.getString("imageURL");
-            String entryID = resultSet.getString("entryID");
-
-            Report report = new Report(title, latitude, longitude,
-                    reportDate, reportDescription, contactDetails, imageURL, entryID);
-
-            reports.add(report);
-        }
 
         return reports;
     }
