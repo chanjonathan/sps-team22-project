@@ -132,7 +132,7 @@ function createMap(){
         ],
         { name: "Styled Map" }
       );
-/** Creates a map and adds it to the page. */
+    /** Creates a map and adds it to the page. */
 
     const map = new google.maps.Map(
         document.getElementById('map'),
@@ -211,6 +211,6 @@ function createMap(){
             infoWindow.open(map, marker);
         });
     })(marker, data);		
-      }	 
     }
+}
 window.createMap = createMap
