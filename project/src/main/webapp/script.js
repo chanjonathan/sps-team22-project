@@ -132,7 +132,7 @@ function createMap(){
         ],
         { name: "Styled Map" }
       );
-/** Creates a map and adds it to the page. */
+    /** Creates a map and adds it to the page. */
 
     const map = new google.maps.Map(
         document.getElementById('map'),
@@ -145,120 +145,107 @@ function createMap(){
     map.mapTypes.set("styled_map", styledMapType);
     map.setMapTypeId("styled_map");
      
-    var locations = [
-        {lat: -25.344, lng: 131.031},
-        {lat: -10.344, lng: 120.031},
-        {lat: -5.344, lng: 110.031},
-      ];
+    // var locations = [
+    //     {lat: -25.344, lng: 131.031},
+    //     {lat: -10.344, lng: 120.031},
+    //     {lat: -5.344, lng: 110.031},
+    //   ];
 
-      var markers = [
-        {
-            "title": 'Aksa Beach',
-            "lat": '-25.344',
-            "lng": '131.031',
-            "description": 'Aksa Beach is a popular beach and a vacation spot in Aksa village at Malad, Mumbai.',
-            "images": "image/ji udyan.JPG",
-        },
-        {
-            "title": 'Juhu Beach',
-            "lat": '-10.344',
-            "lng": '120.031',
-            "description": 'Juhu Beach is one of favourite tourist attractions situated in Mumbai.',
-            "images": "image/g beach.JPG",
-        },
-        {
-            "title": 'Girgaum Beach',
-            "lat": '18.9542149',
-            "lng": '72.81203529999993',
-            "description": 'Girgaum Beach commonly known as just Chaupati is one of the most famous public beaches in Mumbai.',
-            "images": "image/download.JPG",
-        },
-        {
-            "title": 'Jijamata Udyan',
-            "lat": '-5.344',
-            "lng": '110.031',
-            "description": 'Jijamata Udyan is situated near Byculla station is famous as Mumbai (Bombay) Zoo.',
-            "images": "image/Aksa beach.JPG",
-        }
-        ];
-
-    //     google.maps.event.addListener(map, 'click', function (e) {
- 
-    //         //Determine the location where the user has clicked.
-    //         var location = e.latLng;
- 
-    //         //Create a marker and placed it on the map.
-    //         var marker = new google.maps.Marker({
-    //             position: location,
-    //             map: map
-    //         });
- 
-    //         //Set unique id
-    //         marker.id = uniqueId;
-    //         uniqueId++;
-
-    //         markers.push(marker);
-
-    //         var infoWindow = new google.maps.InfoWindow();
-    //         //Attach click event handler to the marker.
-    //         for(var i = 0; i < markers.length; i++){
-    //                 google.maps.event.addListener(marker, "click", function (e) {
-    //                 var content = 'Latitude: ' + location.lat() + '<br />Longitude: ' + location.lng();
-    //                 content += "<br /><input type = 'button' va;ue = 'Delete' onclick = 'DeleteMarker(" + marker.id + ");' value = 'Delete' />";
-    //                 infoWindow.setContent (content);
-    //                 infoWindow.open(map, marker);
-    //             });		
-    //         }
-            
-    //     });
-    // };
-
-    // function DeleteMarker(id) {
-    //     //Find and remove the marker from the Array
-    //     for (var i = 0; i < markers.length; i++) {
-    //         if (markers[i].id == id) {
-    //             //Remove the marker from Map                  
-    //             markers[i].setMap(null);
- 
-    //             //Remove the marker from array.
-    //             markers.splice(i, 1);
-    //             return;
-    //         }
+    //   var markers = [
+    //     {
+    //         "title": 'Aksa Beach',
+    //         "lat": '-25.344',
+    //         "lng": '131.031',
+    //         "description": 'Aksa Beach is a popular beach and a vacation spot in Aksa village at Malad, Mumbai.',
+    //         "images": "image/ji udyan.JPG",
+    //         "link":'https://en.wikipedia.org/wiki/Aksa_Beach',
+    //     },
+    //     {
+    //         "title": 'Juhu Beach',
+    //         "lat": '-10.344',
+    //         "lng": '120.031',
+    //         "description": 'Juhu Beach is one of favourite tourist attractions situated in Mumbai.',
+    //         "images": "image/g beach.JPG",
+    //         "link":'https://en.wikipedia.org/wiki/Juhu',
+    //     },
+    //     {
+    //         "title": 'Girgaum Beach',
+    //         "lat": '18.9542149',
+    //         "lng": '72.81203529999993',
+    //         "description": 'Girgaum Beach commonly known as just Chaupati is one of the most famous public beaches in Mumbai.',
+    //         "images": "image/download.JPG",
+    //         "link":'https://en.wikipedia.org/wiki/Girgaon_Chowpatty'
+    //     },
+    //     {
+    //         "title": 'Jijamata Udyan',
+    //         "lat": '-5.344',
+    //         "lng": '110.031',
+    //         "description": 'Jijamata Udyan is situated near Byculla station is famous as Mumbai (Bombay) Zoo.',
+    //         "images": "image/Aksa beach.JPG",
+    //         "link": ''
     //     }
-    // };
+    //     ];
+    var markers = [];
+    var currentId = 0;
+    var uniqueId = function() {
+        return ++currentId;
+    }
+    //Attach click event handler to the map.
+    google.maps.event.addListener(map, 'click', function (e) {
 
-    for (var i = 0; i < locations.length; i++) { 
-        var data = markers[i]; 
-        var myLatlng = new google.maps.LatLng(data.lat, data.lng); //
-      marker = new google.maps.Marker({
-        // position: new google.maps.LatLng(locations[i]),
-        position: myLatlng,
-        map: map,
-        url:'/',
-        titel:data.title,
-        animation:google.maps.Animation.DROP
-      });      
-      var infoWindow = new google.maps.InfoWindow(
-      );
-      //Attach click event to the marker.
-      (function (marker, data) {
+        var id = uniqueId();
+        //Determine the location where the user has clicked.
+        var location = e.latLng;
+
+        //Create a marker and placed it on the map.
+        var marker = new google.maps.Marker({
+            position: location,
+            map: map,
+            id: id,
+        });
+        //Add marker to the array.
+        markers[id] = marker;
+
+        //Attach click event handler to the marker.
         google.maps.event.addListener(marker, "click", function (e) {
-            //Wrap the content inside an HTML DIV in order to set height and width of InfoWindow.
-            var contents = "<div style = 'width:200px;min-height:40px'>" + data.description + "</div>"
-            contents += '<img src= "' + data.images +  '"></a><div><button >Delete</button><button>Update</button></div>';
-            infoWindow.setContent(contents);
+            var content = 'Latitude: ' + location.lat() + '<br />Longitude: ' + location.lng();
+            content += '<br /><input type="button" value="Delete" onclick= function(){' + markers[id].setMap(null) + '} />';
+            var infoWindow = new google.maps.InfoWindow({
+                content: content
+            });
             infoWindow.open(map, marker);
         });
-    })(marker, data);		
-    }	
-//     function deleteMarker(id){
-//         for(var i = 0; i <  locations.length; ++i){
-//             if(data.id == id){
-//                 data.setMap(null);
-//                 markers.slice(i, 1);
-//                 return;
-//             }
-//         }
-//    } 
-}
-window.createMap = createMap;
+    });
+    function DeleteMarker(id) {
+        var marker = markers[id];
+        marker.setMap(null);
+    }
+};
+    
+    // for (var i = 0; i < locations.length; i++) { 
+    //     var data = markers[i]; //
+    //     var myLatlng = new google.maps.LatLng(data.lat, data.lng); //
+    //   marker = new google.maps.Marker({
+    //     // position: new google.maps.LatLng(locations[i]),
+    //     position: myLatlng,
+    //     map: map,
+    //     url:'/',
+    //     titel:data.title,
+    //     animation:google.maps.Animation.DROP
+        
+    //   });
+
+    //   var infoWindow = new google.maps.InfoWindow();
+    //   //Attach click event to the marker.
+    //   (function (marker, data) {
+    //     google.maps.event.addListener(marker, "click", function (e) {
+    //         //Wrap the content inside an HTML DIV in order to set height and width of InfoWindow.
+    //         var contents = "<div style = 'width:200px;min-height:40px'>" + data.description + "</div>";
+    //         // contents += '<p>Attribution: click to view details, <a href= "' + data.link +  '">' + data.link + '</a>';
+    //         contents += '<img src= "' + data.images +  '"></a>';
+    //         infoWindow.setContent(contents);
+    //         infoWindow.open(map, marker);
+    //     });
+    // })(marker, data);		
+    //   }	 
+window.createMap = createMap
