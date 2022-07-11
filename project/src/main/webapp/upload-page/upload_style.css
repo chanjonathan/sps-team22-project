@@ -110,3 +110,15 @@
   #target {
     width: 345px;
   }
+
+  #hide {
+    display: none;
+  }
+
+  .one-line{
+      width: 30%
+  }
+
+  .title{
+      width: 60%
+  }
