@@ -109,6 +109,7 @@
   
   #target {
     width: 345px;
+<<<<<<< HEAD
   }
 
   #hide {
@@ -121,4 +122,6 @@
 
   .title{
       width: 60%
+=======
+>>>>>>> ec2c0ce4d528d034d32b449e10a0a7424d0c8ba8
   }
