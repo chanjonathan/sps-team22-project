@@ -11,7 +11,7 @@ function GetURLParameter(sParam) {
     }
 }
 
-
+var coordinates
 
 async function loadDetails() {
     const entryID = GetURLParameter("entryID");
@@ -25,7 +25,6 @@ async function loadDetails() {
     document.getElementById("description").innerText = report.description;
     document.getElementById("contact-details").innerText = report.contactDetails;
     document.getElementById("image").src = report.imageURL;
-
 }
 
 function placeMarkers() {
