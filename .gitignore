@@ -3,4 +3,4 @@
 .project
 .settings/
 target/
-pom.xml
+project/pom.xml

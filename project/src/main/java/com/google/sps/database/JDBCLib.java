@@ -24,6 +24,7 @@ public class JDBCLib {
 
         Statement statement = connection.createStatement();
 
+
         statement.executeUpdate(Query);
 
     }
@@ -68,7 +69,7 @@ public class JDBCLib {
 
     // Description: update an entry with the given entryID in the table
     // !!! make sure the entryID is correct
-    public void update(Report report) throws SQLException{
+    public void update(Report report) throws SQLException {
         String entryID = report.entryID;
         String Query = "UPDATE collisionReports\n" +
                 "SET title = \"" + report.title + "\", latitude = \"" + report.latitude + "\", longitude = \"" +
@@ -88,7 +89,6 @@ public class JDBCLib {
 
     }
 
-
     public Report getReport(String entryID) throws SQLException {
         String Query = "SELECT * FROM collisionReports where entryID = " + entryID;
 
@@ -100,11 +100,13 @@ public class JDBCLib {
 
         ResultSet resultSet = statement.executeQuery(Query);
 
+
         while (resultSet.next()) {
             String title = resultSet.getString("title");
             String latitude = resultSet.getString("latitude");
             String longitude = resultSet.getString("longitude");
-            String reportDate = resultSet.getTimestamp("reportDate").toString();
+
+            String reportDate = resultSet.getString("reportDate");
             String reportDescription = resultSet.getString("reportDescription");
             String contactDetails = resultSet.getString("contactDetails");
             String imageURL = resultSet.getString("imageURL");
@@ -116,41 +118,65 @@ public class JDBCLib {
         return null;
     }
 
-
-    public ArrayList<Report> getEntries() {
+    // return all the entries in the table as a list of reports
+    public ArrayList<Report> getEntries() throws SQLException {
         String QUERY = "SELECT * FROM collisionReports";
         ArrayList<Report> reports = new ArrayList<>();
 
-        try {
 
-            Connection connection = DriverManager.getConnection(url,
-                    user, password);
+        Connection connection = DriverManager.getConnection(url,
+                user, password);
 
-            Statement statement = connection.createStatement();
+        Statement statement = connection.createStatement();
 
-            ResultSet resultSet = statement.executeQuery(QUERY);
+        ResultSet resultSet = statement.executeQuery(QUERY);
 
-            while (resultSet.next()) {
-                String title = resultSet.getString("title");
-                String latitude = resultSet.getString("latitude");
-                String longitude = resultSet.getString("longitude");
-                String reportDate = resultSet.getTimestamp("reportDate").toString();
-                String reportDescription = resultSet.getString("reportDescription");
-                String contactDetails = resultSet.getString("contactDetails");
-                String imageURL = resultSet.getString("imageURL");
-                String entryID = resultSet.getString("entryID");
+        while (resultSet.next()) {
+            String title = resultSet.getString("title");
+            String latitude = resultSet.getString("latitude");
+            String longitude = resultSet.getString("longitude");
+            String reportDate = resultSet.getString("reportDate");
+            String reportDescription = resultSet.getString("reportDescription");
+            String contactDetails = resultSet.getString("contactDetails");
+            String imageURL = resultSet.getString("imageURL");
+            String entryID = resultSet.getString("entryID");
 
-                Report report = new Report(title, latitude, longitude,
-                        reportDate, reportDescription, contactDetails, imageURL, entryID);
+            Report report = new Report(title, latitude, longitude,
+                    reportDate, reportDescription, contactDetails, imageURL, entryID);
 
-                reports.add(report);
-            }
-            return reports;
-
-        } catch (Exception e) {
-            e.printStackTrace();
-            return null;
+            reports.add(report);
         }
+        return reports;
 
+
+    }
+
+    // return all the entries in given time range
+    public ArrayList<Report> listByDateAndCoordinates(String start, String end) throws SQLException {
+        String query = "SELECT * FROM collisionReports " +
+                "WHERE reportDate between '" + start + "'  and   '" + end + "';";
+
+        ArrayList<Report> reports = new ArrayList<>();
+
+        Connection connection = DriverManager.getConnection(url, user, password);
+        Statement statement = connection.createStatement();
+        ResultSet resultSet = statement.executeQuery(query);
+
+        while (resultSet.next()) {
+            String title = resultSet.getString("title");
+            String latitude = resultSet.getString("latitude");
+            String longitude = resultSet.getString("longitude");
+            String reportDate = resultSet.getString("reportDate");
+            String reportDescription = resultSet.getString("reportDescription");
+            String contactDetails = resultSet.getString("contactDetails");
+            String imageURL = resultSet.getString("imageURL");
+            String entryID = resultSet.getString("entryID");
+
+            Report report = new Report(title, latitude, longitude,
+                    reportDate, reportDescription, contactDetails, imageURL, entryID);
+
+            reports.add(report);
+        }
+        return reports;
     }
 }
