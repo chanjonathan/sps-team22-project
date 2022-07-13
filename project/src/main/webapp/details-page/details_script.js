@@ -1,3 +1,5 @@
+import { createMap } from "../script.js";
+
 function GetURLParameter(sParam) {
     var sPageURL = window.location.search.substring(1);
     var sURLVariables = sPageURL.split('&');
@@ -8,6 +10,8 @@ function GetURLParameter(sParam) {
         }
     }
 }
+
+
 
 async function loadDetails() {
     const entryID = GetURLParameter("entryID");
@@ -24,3 +28,10 @@ async function loadDetails() {
 
 }
 
+function placeMarkers() {
+
+}
+
+function initialize() {
+    loadDetails().then(r => createMap())
+}
