@@ -3,6 +3,7 @@ package com.google.sps.servlets;
 import com.google.gson.Gson;
 import com.google.sps.database.JDBCLib;
 import com.google.sps.objects.Report;
+import com.google.sps.utilities.Http;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
@@ -25,16 +26,18 @@ public class GetByIdServlet extends HttpServlet {
 
     JDBCLib database;
     Gson gson;
+    Http http;
 
     public GetByIdServlet() {
         database = new JDBCLib();
         gson = new Gson();
+        http = new Http();
     }
 
     @Override
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
 
-        String entryID = getParameter(request, "entryID", "");
+        String entryID = http.getParameter(request, "entryID", "");
         Report report = null;
 
         try {
@@ -52,13 +55,5 @@ public class GetByIdServlet extends HttpServlet {
         String jsonReport = gson.toJson(report);
         response.setContentType("text/html;");
         response.getWriter().println(jsonReport);
-    }
-
-    private String getParameter(HttpServletRequest request, String name, String defaultValue) {
-        String value = request.getParameter(name);
-        if (value == null) {
-            return defaultValue;
-        }
-        return value;
     }
 }

@@ -2,7 +2,9 @@ package com.google.sps.servlets;
 
 import com.google.gson.Gson;
 import com.google.sps.database.JDBCLib;
+
 import com.google.sps.objects.Report;
+import com.google.sps.utilities.Http;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
@@ -26,17 +28,19 @@ public class ListByDateAndCoordinates extends HttpServlet {
 
     JDBCLib database;
     Gson gson;
+    Http http;
 
     public ListByDateAndCoordinates() {
         database = new JDBCLib();
         gson = new Gson();
+        http = new Http();
     }
 
     @Override
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
 
-        String start = getParameter(request, "start", "");
-        String end = getParameter(request, "end", "");
+        String start = http.getParameter(request, "start", "");
+        String end = http.getParameter(request, "end", "");
 
         ArrayList<Report> reports = null;
 
@@ -53,11 +57,5 @@ public class ListByDateAndCoordinates extends HttpServlet {
         response.getWriter().println(jsonReport);
     }
 
-    private String getParameter(HttpServletRequest request, String name, String defaultValue) {
-        String value = request.getParameter(name);
-        if (value == null) {
-            return defaultValue;
-        }
-        return value;
-    }
+
 }
