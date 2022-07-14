@@ -190,7 +190,6 @@ function createMap(){
         var data = markers[i]; //
         var myLatlng = new google.maps.LatLng(data.lat, data.lng); //
       marker = new google.maps.Marker({
-        // position: new google.maps.LatLng(locations[i]),
         position: myLatlng,
         map: map,
         url:'/',
