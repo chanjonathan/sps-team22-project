@@ -118,40 +118,37 @@ public class JDBCLib {
     }
 
 
-    public ArrayList<Report> getEntries() {
+    public ArrayList<Report> getEntries() throws SQLException {
         String QUERY = "SELECT * FROM collisionReports";
         ArrayList<Report> reports = new ArrayList<>();
 
-        try {
 
-            Connection connection = DriverManager.getConnection(url,
-                    user, password);
+        Connection connection = DriverManager.getConnection(url,
+                user, password);
 
-            Statement statement = connection.createStatement();
+        Statement statement = connection.createStatement();
 
-            ResultSet resultSet = statement.executeQuery(QUERY);
+        ResultSet resultSet = statement.executeQuery(QUERY);
 
-            while (resultSet.next()) {
-                String title = resultSet.getString("title");
-                String latitude = resultSet.getString("latitude");
-                String longitude = resultSet.getString("longitude");
-                String reportDate = resultSet.getTimestamp("reportDate").toString();
-                String reportDescription = resultSet.getString("reportDescription");
-                String contactDetails = resultSet.getString("contactDetails");
-                String imageURL = resultSet.getString("imageURL");
-                String entryID = resultSet.getString("entryID");
+        while (resultSet.next()) {
+            String title = resultSet.getString("title");
+            String latitude = resultSet.getString("latitude");
+            String longitude = resultSet.getString("longitude");
+            String reportDate = resultSet.getTimestamp("reportDate").toString();
+            String reportDescription = resultSet.getString("reportDescription");
+            String contactDetails = resultSet.getString("contactDetails");
+            String imageURL = resultSet.getString("imageURL");
+            String entryID = resultSet.getString("entryID");
 
-                Report report = new Report(title, latitude, longitude,
-                        reportDate, reportDescription, contactDetails, imageURL, entryID);
+            Report report = new Report(title, latitude, longitude,
+                    reportDate, reportDescription, contactDetails, imageURL, entryID);
 
-                reports.add(report);
-            }
+            reports.add(report);
+
             return reports;
 
-        } catch (Exception e) {
-            e.printStackTrace();
-            return null;
         }
+        return null;
 
     }
 }
