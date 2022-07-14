@@ -12,7 +12,6 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-
 var map;
 var markers = [];
 
@@ -171,12 +170,14 @@ async function placeMarkers() {
     const start = document.getElementById("start-time").value;
     const end = document.getElementById("end-time").value;
 
+    console.log(start, end);
+
     const fetchedJSON = await fetch("/list-by-date-and-coordinates?start=" + start + "&end=" + end);
     const reports = await fetchedJSON.json();
 
     for (let i = 0; i < reports.length; i++) {
-        let latitude = parseInt(reports[i].latitude)
-        let longitude = parseInt(reports[i].longitude)
+        let latitude = parseInt(reports[i].latitude);
+        let longitude = parseInt(reports[i].longitude);
         let location = {lat: latitude, lng: longitude};
         console.log(location);
         let marker = new google.maps.Marker({
@@ -185,13 +186,13 @@ async function placeMarkers() {
             url: '/',
             animation: google.maps.Animation.DROP
         });
-        marker.report = reports[i]
+        marker.report = reports[i];
         markers.push(marker);
     }
 }
 
 
-window.createMap = createMap
+window.createMap = createMap;
 
 function initialize() {
     fillDateTimes();
