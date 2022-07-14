@@ -186,7 +186,7 @@ function createMap(){
         }
         ];
     
-    for (var i = 0; i < locations.length; i++) { 
+    for (var i = 0; i < markers.length; i++) { 
         var data = markers[i]; //
         var myLatlng = new google.maps.LatLng(data.lat, data.lng); //
       marker = new google.maps.Marker({
