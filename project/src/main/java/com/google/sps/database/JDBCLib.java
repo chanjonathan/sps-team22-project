@@ -100,7 +100,7 @@ public class JDBCLib {
 
         ResultSet resultSet = statement.executeQuery(Query);
 
-        while (resultSet.next()) {
+        if (resultSet.next()) {
             String title = resultSet.getString("title");
             String latitude = resultSet.getString("latitude");
             String longitude = resultSet.getString("longitude");
@@ -112,8 +112,9 @@ public class JDBCLib {
             return new Report(title, latitude, longitude,
                     reportDate, reportDescription, contactDetails, imageURL, entryID);
 
+        } else {
+            return null;
         }
-        return null;
     }
 
 
