@@ -109,9 +109,9 @@
   
   #target {
     width: 345px;
-<<<<<<< HEAD
   }
 
+  /* Form Input Specific */
   #hide {
     display: none;
   }
@@ -122,6 +122,4 @@
 
   .title{
       width: 60%
-=======
->>>>>>> ec2c0ce4d528d034d32b449e10a0a7424d0c8ba8
   }

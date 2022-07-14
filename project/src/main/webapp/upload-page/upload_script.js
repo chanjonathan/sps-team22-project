@@ -3,26 +3,12 @@
  * Copyright 2019 Google LLC. All Rights Reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
-<<<<<<< HEAD
 
 //Creates searchable roadmap for users to click on
 function initAutocomplete() {
     const map = new google.maps.Map(document.getElementById("map"), {
       center: { lat: 0, lng: 0 },
       zoom: 2,
-=======
-// @ts-nocheck TODO remove when fixed
-// This example adds a search box to a map, using the Google Place Autocomplete
-// feature. People can enter geographical searches. The search box will return a
-// pick list containing a mix of places and predicted search terms.
-// This example requires the Places library. Include the libraries=places
-// parameter when you first load the API. For example:
-// <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&libraries=places">
-function initAutocomplete() {
-    const map = new google.maps.Map(document.getElementById("map"), {
-      center: {lat: 0, lng: 0},
-      zoom: 1,
->>>>>>> ec2c0ce4d528d034d32b449e10a0a7424d0c8ba8
       mapTypeId: "roadmap",
     });
     // Create the search box and link it to the UI element.
@@ -61,25 +47,10 @@ function initAutocomplete() {
           return;
         }
   
-<<<<<<< HEAD
-=======
-        const icon = {
-          url: place.icon,
-          size: new google.maps.Size(71, 71),
-          origin: new google.maps.Point(0, 0),
-          anchor: new google.maps.Point(17, 34),
-          scaledSize: new google.maps.Size(25, 25),
-        };
-  
->>>>>>> ec2c0ce4d528d034d32b449e10a0a7424d0c8ba8
         // Create a marker for each place.
         markers.push(
           new google.maps.Marker({
             map,
-<<<<<<< HEAD
-=======
-            icon,
->>>>>>> ec2c0ce4d528d034d32b449e10a0a7424d0c8ba8
             title: place.name,
             position: place.geometry.location,
           })
@@ -93,7 +64,6 @@ function initAutocomplete() {
       });
       map.fitBounds(bounds);
     });
-<<<<<<< HEAD
     
     //Creates event handling for clicking on the map -> drops a pin and updates coordinates
     map.addListener("click", (mapsMouseEvent) => {
@@ -129,12 +99,3 @@ function initAutocomplete() {
   
   window.initAutocomplete = initAutocomplete;
 
-=======
-}
-  
-window.initAutocomplete = initAutocomplete;  
-
-function saveReport(){
-    
-}
->>>>>>> ec2c0ce4d528d034d32b449e10a0a7424d0c8ba8
