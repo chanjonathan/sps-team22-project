@@ -20,11 +20,13 @@ async function loadDetails() {
     const fetchedJSON = await fetch("/get-by-id?entryID=" + entryID);
     const report = await fetchedJSON.json();
 
-    document.getElementById("title").innerText = report.title;
-    document.getElementById("date").innerText = new Date(report.date).toDateString();
-    document.getElementById("description").innerText = report.description;
-    document.getElementById("contact-details").innerText = report.contactDetails;
-    document.getElementById("image").src = report.imageURL;
+    document.getElementById("title-container").innerText = report.title;
+    document.getElementById("date-container").innerText = new Date(report.date).toDateString();
+    document.getElementById("description-container").innerText = report.description;
+    document.getElementById("contact-details-container").innerText = report.contactDetails;
+    document.getElementById("image-container").src = report.imageURL;
+
+    document.getElementById("entry-id-container").innerText = entryID;
 
     latitude = parseInt(report.latitude);
     longitude = parseInt(report.longitude);
@@ -171,6 +173,8 @@ async function placeMarker() {
         url: '/',
         animation: google.maps.Animation.DROP
     });
+    map.setCenter(location);
+    map.setZoom(10);
 }
 
 function mapAndMark() {

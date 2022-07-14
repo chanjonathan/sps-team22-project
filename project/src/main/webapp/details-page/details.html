@@ -9,20 +9,31 @@
 </head>
 <body>
 <div id="content">
-    <form action="../index.html">
+    <form id="header" action="../index.html">
         <input type="submit" value="Back"/>
     </form>
-        <h1 id="title"></h1>
-        <p id="date"></p>
-        <p id="description"></p>
-        <p id="contact-details"></p>
-        <img id="image" width="400">
-</body>
-<script async
-        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDbskcye9gWYfKt8nHzuRaPudtpo2yr0so&region=US&language=en&callback=initMap">
-</script>
-<body onload="initialize();">
-    <div id="map"></div>
-</body>
+    <div style="width: 100%; overflow: hidden;">
+        <div style="width: 50%; float: left;">
+            <script async
+                    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDbskcye9gWYfKt8nHzuRaPudtpo2yr0so&region=US&language=en&callback=initMap">
+            </script>
+            <div id="map"></div>
+        </div>
+        <div style="margin-left: 50%;">
+            <div id="details-container">
+                <h1 id="title-container"></h1>
+                <p id="date-container"></p>
+                <p id="description-container"></p>
+                <p id="contact-details-container"></p>
+                <img id="image-container" width="400">
+            </div>
+            <form id="footer" action="/delete" method="POST" enctype="multipart/form-data">
+                <input type="hidden" id="entry-id-container"/>
+                <input type="submit" value="Delete"/>
+            </form>
+        </div>
+    </div>
+    <body onload="initialize();"></body>
 </div>
+</body>
 </html>
