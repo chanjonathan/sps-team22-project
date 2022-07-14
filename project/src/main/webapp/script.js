@@ -16,6 +16,7 @@
 /**
  * creatMap function create a map on the homepage
  */
+
 var markers = [];
 
 function createMap() {
@@ -208,6 +209,8 @@ function createMap() {
             position: location,
             map: map,
             id: id,
+            animation:google.maps.Animation.DROP,
+            image: "image/Aksa beach.JPG",
         });
         //Add marker to the array.
         marker.id = uniqueId;
@@ -216,6 +219,7 @@ function createMap() {
 
     google.maps.event.addListener(marker, "click", function (e) {
         var content = 'Latitude: ' + location.lat() + '<br />Longitude: ' + location.lng();
+        content += '<img src= "' + marker.image +  '">';
         content += '<br /><input type="button" value="Delete" onclick = "DeleteMarker(' + id + ')">';
         var infoWindow = new google.maps.InfoWindow({
             content: content
