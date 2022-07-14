@@ -26,7 +26,7 @@ async function loadDetails() {
     document.getElementById("contact-details-container").innerText = report.contactDetails;
     document.getElementById("image-container").src = report.imageURL;
 
-    document.getElementById("entry-id-container").innerText = entryID;
+    document.getElementById("entry-id-container").value = entryID;
 
     latitude = parseInt(report.latitude);
     longitude = parseInt(report.longitude);
