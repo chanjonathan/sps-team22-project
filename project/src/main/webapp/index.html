@@ -9,7 +9,7 @@
 </head>
 
 <script async
-        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDbskcye9gWYfKt8nHzuRaPudtpo2yr0so&region=US&language=en&callback=initMap">
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDbskcye9gWYfKt8nHzuRaPudtpo2yr0so&region=US&language=en&callback=initialize">
 </script>
 
 <body>
@@ -31,7 +31,9 @@
         <input type="submit" value="Upload an Incident Report"/>
     </form>
 
-    <div onload="initialize();" id="map"></div>
+    <div onload="initialize();">
+        <div id="map"></div>
+    </div>
 </div>
 
 </body>
