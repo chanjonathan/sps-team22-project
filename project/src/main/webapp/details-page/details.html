@@ -2,6 +2,7 @@
 <html>
 <head>
     <meta charset="UTF-8">
+    <meta name="theme-color" content="#0000000">
     <title>Case Details</title>
     <link rel="stylesheet" href="details_style.css">
     <script src="details_script.js"></script>
@@ -17,10 +18,13 @@
         <p id="description"></p>
         <p id="contact-details"></p>
         <img id="image" width="400">
-        <div id="map"></div>
     </center>
-</div>
 </body>
+<script async
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDbskcye9gWYfKt8nHzuRaPudtpo2yr0so&region=US&language=en&callback=initMap">
+</script>
 <body onload="initialize();">
+    <div id="map"></div>
 </body>
+</div>
 </html>

@@ -1,3 +1,7 @@
+var latitude;
+var longitude;
+var map;
+
 function GetURLParameter(sParam) {
     var sPageURL = window.location.search.substring(1);
     var sURLVariables = sPageURL.split('&');
@@ -9,7 +13,6 @@ function GetURLParameter(sParam) {
     }
 }
 
-var location;
 
 async function loadDetails() {
     const entryID = GetURLParameter("entryID");
@@ -24,10 +27,11 @@ async function loadDetails() {
     document.getElementById("contact-details").innerText = report.contactDetails;
     document.getElementById("image").src = report.imageURL;
 
-    let latitude = parseInt(reports.latitude)
-    let longitude = parseInt(report.longitude)
-    location = {lat: latitude, lng: longitude};
+    latitude = parseInt(report.latitude);
+    longitude = parseInt(report.longitude);
+
 }
+
 
 function createMap() {
     // Create a new StyledMapType object, passing it an array of styles,
@@ -160,8 +164,9 @@ function createMap() {
     map.setMapTypeId("styled_map");
 }
 
-function placeMarker() {
-    let marker = new google.maps.Marker({
+async function placeMarker() {
+    let location = {lat: latitude, lng: longitude};
+    var marker = new google.maps.Marker({
         position: new google.maps.LatLng(location),
         map: map,
         url: '/',
@@ -169,7 +174,12 @@ function placeMarker() {
     });
 }
 
-function initialize() {
-    loadDetails().then(r => createMap(), placeMarker())
-
+function mapAndMark() {
+    createMap();
+    placeMarker();
 }
+
+function initialize() {
+    loadDetails().then(() => mapAndMark());
+}
+
