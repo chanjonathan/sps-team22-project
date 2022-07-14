@@ -33,7 +33,6 @@ public class JDBCLib {
     public void printEntries() throws SQLException {
         String QUERY = "SELECT * FROM collisionReports";
 
-
         Connection connection = DriverManager.getConnection(url,
                 user, password);
 
@@ -119,9 +118,6 @@ public class JDBCLib {
     }
 
 
-
-
-    // return all the entries in the table as a list of reports
     public ArrayList<Report> getEntries() throws SQLException {
         String QUERY = "SELECT * FROM collisionReports";
         ArrayList<Report> reports = new ArrayList<>();
@@ -130,27 +126,29 @@ public class JDBCLib {
         Connection connection = DriverManager.getConnection(url,
                 user, password);
 
-            Statement statement = connection.createStatement();
+        Statement statement = connection.createStatement();
 
-            ResultSet resultSet = statement.executeQuery(QUERY);
+        ResultSet resultSet = statement.executeQuery(QUERY);
 
-            while (resultSet.next()) {
-                String title = resultSet.getString("title");
-                String latitude = resultSet.getString("latitude");
-                String longitude = resultSet.getString("longitude");
-                String reportDate = resultSet.getTimestamp("reportDate").toString();
-                String reportDescription = resultSet.getString("reportDescription");
-                String contactDetails = resultSet.getString("contactDetails");
-                String imageURL = resultSet.getString("imageURL");
-                String entryID = resultSet.getString("entryID");
+        while (resultSet.next()) {
+            String title = resultSet.getString("title");
+            String latitude = resultSet.getString("latitude");
+            String longitude = resultSet.getString("longitude");
+            String reportDate = resultSet.getTimestamp("reportDate").toString();
+            String reportDescription = resultSet.getString("reportDescription");
+            String contactDetails = resultSet.getString("contactDetails");
+            String imageURL = resultSet.getString("imageURL");
+            String entryID = resultSet.getString("entryID");
 
-                Report report = new Report(title, latitude, longitude,
-                        reportDate, reportDescription, contactDetails, imageURL, entryID);
+            Report report = new Report(title, latitude, longitude,
+                    reportDate, reportDescription, contactDetails, imageURL, entryID);
 
-                reports.add(report);
-            }
+            reports.add(report);
 
+            return reports;
 
-        return reports;
+        }
+        return null;
+
     }
 }
