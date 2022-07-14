@@ -14,7 +14,7 @@
 
 
 
-export function createMap(){
+function createMap(){
     // Create a new StyledMapType object, passing it an array of styles,
     // and the name to be displayed on the map type control.
     const styledMapType = new google.maps.StyledMapType(
