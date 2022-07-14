@@ -16,7 +16,6 @@ function GetURLParameter(sParam) {
 
 async function loadDetails() {
     const entryID = GetURLParameter("entryID");
-    console.log(entryID);
 
     const fetchedJSON = await fetch("/get-by-id?entryID=" + entryID);
     const report = await fetchedJSON.json();
