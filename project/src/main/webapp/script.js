@@ -162,11 +162,11 @@ function createMap() {
 
 // retrieves reporters from server and places corresponding markers
 async function placeMarkers() {
-    for (let i = 0; i < markers.length; i++) {
-        markers[i].setMap(null);
-        markers[i] = null;
-    }
-    markers = [];
+    // for (let i = 0; i < markers.length; i++) {
+    //     markers[i].setMap(null);
+    //     markers[i] = null;
+    // }
+     markers = [];
 
     const start = document.getElementById("start-time").value;
     const end = document.getElementById("end-time").value;
@@ -192,19 +192,33 @@ async function placeMarkers() {
         google.maps.event.addListener(marker, "click", function (e) {
             //Wrap the content inside an HTML DIV in order to set height and width of InfoWindow.
             var contents = "<div style = 'width:200px;min-height:40px'>" + reports[i].description + "</div>";
-            contents += '<img src= "' + reports[i].imageURL +  '"></a><div><button onclick = "DeleteMarker(' + i + ')">Delete</button><button>Update</button></div>';
+            contents += '<img src= "' + reports[i].imageURL +  '"></a><div><button onclick = "DeleteMarker(' + reports[i].entryID + ')">Delete</button><button>Update</button></div>';
+            // contents += '<form action = "/delete" method = "post"><button onclick = "DeleteMarker(' + i + ')">Delete</button></form> '
             infoWindow.setContent(contents);
             infoWindow.open(map, marker);
-        })
+        })       
 
         marker.report = reports[i];
         markers.push(marker);
     }
 }
 
-function DeleteMarker(id) {
-    var marker = markers[id];
-    marker.setMap(null);
+async function DeleteMarker(id) {
+    var xhr = new XMLHttpRequest();
+    let data = {entryID: id};
+
+    fetch("/delete", {
+    method: "POST",
+    headers: {'Content-Type': 'application/json'}, 
+    body: JSON.stringify(data)
+    }).then(res => {
+    console.log("Request complete! response:", res);
+    });
+    // xhr.onload = function() {
+    //     var data = JSON.parse(this.responseText);
+    //     console.log(data);
+    // };
+    placeMarkers();
 }
 
 window.createMap = createMap
