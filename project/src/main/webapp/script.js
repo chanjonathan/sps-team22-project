@@ -206,6 +206,7 @@ async function placeMarkers() {
 }
 
 async function DeleteMarker(id) {
+<<<<<<< HEAD
 
 //     var deleteForm = document.createElement("FORM");
 //     deleteForm.setAttribute("id","delete-form");
@@ -235,6 +236,25 @@ async function DeleteMarker(id) {
         });
     alert("Marker Deleted");
 
+=======
+    var deleteForm = document.createElement("FORM");
+    deleteForm.setAttribute("id","delete-form");
+    document.body.appendChild(deleteForm);
+
+// this will create a new FORM which is mapped to the Java Object of myForm, with an id of TestForm. Equivalent to: <form id="TestForm"></form>
+
+    var deleteInput = document.createElement("INPUT");
+    deleteInput.setAttribute("id","entry-id");
+    deleteInput.setAttribute("type","text");
+    deleteInput.setAttribute("name","entryID");
+    deleteInput.setAttribute("value", id);
+    document.getElementById("delete-form").appendChild(deleteInput);
+
+// To submit the form:
+    deleteForm.method = "POST";
+    deleteForm.action = "/delete";  // or "response.php"
+    deleteForm.submit()
+>>>>>>> 19eef7d (able to delete the marker through delete button in the infowindow, but need to refresh page)
     placeMarkers();
 }
 
