@@ -204,20 +204,23 @@ async function placeMarkers() {
 }
 
 async function DeleteMarker(id) {
-    var xhr = new XMLHttpRequest();
-    let data = {entryID: id};
+    var deleteForm = document.createElement("FORM");
+    deleteForm.setAttribute("id","delete-form");
+    document.body.appendChild(deleteForm);
 
-    fetch("/delete", {
-    method: "POST",
-    headers: {'Content-Type': 'application/json'}, 
-    body: JSON.stringify(data)
-    }).then(res => {
-    console.log("Request complete! response:", res);
-    });
-    // xhr.onload = function() {
-    //     var data = JSON.parse(this.responseText);
-    //     console.log(data);
-    // };
+// this will create a new FORM which is mapped to the Java Object of myForm, with an id of TestForm. Equivalent to: <form id="TestForm"></form>
+
+    var deleteInput = document.createElement("INPUT");
+    deleteInput.setAttribute("id","entry-id");
+    deleteInput.setAttribute("type","text");
+    deleteInput.setAttribute("name","entryID");
+    deleteInput.setAttribute("value", id);
+    document.getElementById("delete-form").appendChild(deleteInput);
+
+// To submit the form:
+    deleteForm.method = "POST";
+    deleteForm.action = "/delete";  // or "response.php"
+    deleteForm.submit()
     placeMarkers();
 }
 
