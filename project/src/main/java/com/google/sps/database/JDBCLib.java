@@ -20,6 +20,7 @@ public class JDBCLib {
                 "\", \'" + report.date + "\', \"" + report.description + "\", \"" +
                 report.contactDetails + "\", \"" + report.imageURL + "\")";
 
+
         Connection connection = DriverManager.getConnection(url, user, password);
 
         Statement statement = connection.createStatement();
@@ -145,10 +146,11 @@ public class JDBCLib {
 
             reports.add(report);
 
-            return reports;
+
 
         }
-        return null;
+        return reports;
+
 
     }
 
@@ -179,5 +181,6 @@ public class JDBCLib {
             reports.add(report);
         }
         return reports;
+
     }
 }
