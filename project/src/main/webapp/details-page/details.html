@@ -25,7 +25,15 @@
                 <p id="date-container"></p>
                 <p id="description-container"></p>
                 <p id="contact-details-container"></p>
-                <img id="image-container" width="400">
+                <div id="image-container">
+                    <a id="forward" onclick="changeSlide(1)">&#10095;</a>
+                    <a id="Back" onclick="changeSlide(-1)">&#10094;</a>
+                </div>
+                <br>
+                <div id="dots-container" style="text-align:center">
+                </div>
+
+
             </div>
             <form id="footer" action="/delete" method="POST" enctype="multipart/form-data">
                 <input type="hidden" name="entryID" id="entry-id-container" value=""></input>

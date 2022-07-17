@@ -2,6 +2,9 @@ var latitude;
 var longitude;
 var map;
 
+var slidePosition = 1;
+var slideLength = 0;
+
 function GetURLParameter(sParam) {
     var sPageURL = window.location.search.substring(1);
     var sURLVariables = sPageURL.split('&');
@@ -24,13 +27,29 @@ async function loadDetails() {
     document.getElementById("date-container").innerText = new Date(report.date).toDateString();
     document.getElementById("description-container").innerText = report.description;
     document.getElementById("contact-details-container").innerText = report.contactDetails;
-    document.getElementById("image-container").src = report.imageURL;
+
+    slideLength = report.imageURLs.length;
+    imagesContainer = document.getElementById("images-container")
+    dotsContainer = document.getElementById("dots-container")
+    for (i = 0; i < slideLength; i++) {
+        var slide = document.createElement("IMG");
+        slide.setAttribute("class", "slide");
+        slide.setAttribute("width", "400");
+        slide.setAttribute("src", report.imageURLs[i]);
+
+        slide.appendChild(slide);
+
+        var dot = document.createElement("SPAN");
+        dot.setAttribute("class", "dots");
+        dot.setAttribute("onclick", "currentSlide(" + i.toString + ")");
+
+        dotsContainer.appendChild(dot);
+    }
 
     document.getElementById("entry-id-container").value = entryID;
 
     latitude = parseInt(report.latitude);
     longitude = parseInt(report.longitude);
-
 }
 
 
@@ -180,6 +199,28 @@ async function placeMarker() {
 function mapAndMark() {
     createMap();
     placeMarker();
+}
+
+function slideShow() {
+    var slides = document.getElementsByClassName("slide");
+    var dots = document.getElementsByClassName("dots");
+
+    for (i = 0; i < slideLength; i++) {
+        slides[i].style.display = "none";
+        circles[i].className = circles[i].className.replace(" enable", "");
+    }
+    slides[slidePosition].style.display = "block";
+    circles[slidePosition].className += " enable";
+}
+
+function changeSlide(n) {
+    slidePosition = n;
+    slideShow();
+}
+
+function incrementSlide(d) {
+    slidePosition = (slidePosition + d) % slideLength;
+    slideShow();
 }
 
 function initialize() {
