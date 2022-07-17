@@ -41,7 +41,6 @@ public class DeleteServlet extends HttpServlet {
             servletException.setStackTrace(sqlException.getStackTrace());
             throw servletException;
         }
-
         response.sendRedirect("index.html");
     }
 }
