@@ -42,9 +42,12 @@ public class DeleteServlet extends HttpServlet {
             throw servletException;
         }
 <<<<<<< HEAD
+<<<<<<< HEAD
         //response.sendRedirect("index.html");
 =======
 
+=======
+>>>>>>> 2fc9db1 (added a confrimation for the deletion)
         response.sendRedirect("index.html");
 >>>>>>> 93dcee5 (fixing deleteMarker()))
     }
