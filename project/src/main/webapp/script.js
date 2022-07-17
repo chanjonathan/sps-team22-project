@@ -192,10 +192,11 @@ async function placeMarkers() {
         google.maps.event.addListener(marker, "click", function (e) {
             //Wrap the content inside an HTML DIV in order to set height and width of InfoWindow.
             var contents = "<div style = 'width:200px;min-height:40px'>" + reports[i].description + "</div>";
-            contents += '<img src= "' + reports[i].imageURL +  '"></a><div><button onclick = "DeleteMarker(' + reports[i].entryID + ')">Delete</button><button>Update</button></div>';
+            contents += '<img src= "' + reports[i].imageURL +  '"></a><div><input type = "button" onclick = "DeleteMarker(' + reports[i].entryID + ')" value = "Delete"><button>Update</button></div>';
             // contents += '<form action = "/delete" method = "post"><button onclick = "DeleteMarker(' + i + ')">Delete</button></form> '
             infoWindow.setContent(contents);
             infoWindow.open(map, marker);
+
         })       
 
         marker.report = reports[i];
@@ -204,6 +205,7 @@ async function placeMarkers() {
 }
 
 async function DeleteMarker(id) {
+
     var deleteForm = document.createElement("FORM");
     deleteForm.setAttribute("id","delete-form");
     document.body.appendChild(deleteForm);
@@ -220,9 +222,14 @@ async function DeleteMarker(id) {
 // To submit the form:
     deleteForm.method = "POST";
     deleteForm.action = "/delete";  // or "response.php"
-    deleteForm.submit()
+    deleteForm.submit();
+    alert("Marker Deleted");
     placeMarkers();
 }
+
+// function refresh(event,inputText){
+//     event.preventDefault();
+// }
 
 window.createMap = createMap
 
