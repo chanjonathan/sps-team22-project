@@ -2,8 +2,8 @@ var latitude;
 var longitude;
 var map;
 
-var slidePosition = 1;
-var slideLength = 0;
+var imagePosition = 0;
+var imagesLength = 0;
 
 function GetURLParameter(sParam) {
     var sPageURL = window.location.search.substring(1);
@@ -20,31 +20,49 @@ function GetURLParameter(sParam) {
 async function loadDetails() {
     const entryID = GetURLParameter("entryID");
 
-    const fetchedJSON = await fetch("/get-by-id?entryID=" + entryID);
-    const report = await fetchedJSON.json();
+    // const fetchedJSON = await fetch("/get-by-id?entryID=" + entryID);
+    // const report = await fetchedJSON.json();
+
+    const report = {
+        "title": "Title1",
+        "latitude": "10",
+        "longitude": "10",
+        "date": "2011-01-01 23:41:13",
+        "description": "description1 description1 description1 description1 description1",
+        "contactDetails": "email1@email.com",
+        "imageURLs":
+            [
+                "https://storage.googleapis.com/jchan-sps-summer22.appspot.com/dt3nf0gjl1f71.webp",
+                "https://storage.googleapis.com/jchan-sps-summer22.appspot.com/t3bcpr3iwye51.png",
+                "https://storage.googleapis.com/jchan-sps-summer22.appspot.com/wmyz67k8np271.webp",
+                "https://storage.googleapis.com/jchan-sps-summer22.appspot.com/xltved0lpvy61.webp"
+            ],
+        "entryID": "35"
+    }
 
     document.getElementById("title-container").innerText = report.title;
     document.getElementById("date-container").innerText = new Date(report.date).toDateString();
     document.getElementById("description-container").innerText = report.description;
     document.getElementById("contact-details-container").innerText = report.contactDetails;
 
-    slideLength = report.imageURLs.length;
+    imagesLength = report.imageURLs.length;
     imagesContainer = document.getElementById("images-container")
     dotsContainer = document.getElementById("dots-container")
-    for (i = 0; i < slideLength; i++) {
-        var slide = document.createElement("IMG");
-        slide.setAttribute("class", "slide");
-        slide.setAttribute("width", "400");
-        slide.setAttribute("src", report.imageURLs[i]);
+    for (i = 0; i < imagesLength; i++) {
+        var image = document.createElement("IMG");
+        image.setAttribute("class", "Image");
+        image.setAttribute("width", "400");
+        image.setAttribute("src", report.imageURLs[i]);
 
-        slide.appendChild(slide);
+        imagesContainer.appendChild(image);
 
         var dot = document.createElement("SPAN");
-        dot.setAttribute("class", "dots");
-        dot.setAttribute("onclick", "currentSlide(" + i.toString + ")");
+        dot.setAttribute("class", "Dot");
+        dot.setAttribute("onclick", "changeSlide(" + i.toString + ")");
 
         dotsContainer.appendChild(dot);
     }
+    slideShow();
 
     document.getElementById("entry-id-container").value = entryID;
 
@@ -202,24 +220,24 @@ function mapAndMark() {
 }
 
 function slideShow() {
-    var slides = document.getElementsByClassName("slide");
-    var dots = document.getElementsByClassName("dots");
+    var images = document.getElementsByClassName("Image");
+    var dots = document.getElementsByClassName("Dot");
 
-    for (i = 0; i < slideLength; i++) {
-        slides[i].style.display = "none";
-        circles[i].className = circles[i].className.replace(" enable", "");
+    for (i = 0; i < imagesLength; i++) {
+        images[i].style.display = "none";
+        dots[i].className = dots[i].className.replace(" Enabled", "");
     }
-    slides[slidePosition].style.display = "block";
-    circles[slidePosition].className += " enable";
+    images[imagePosition].style.display = "block";
+    dots[imagePosition].className += " Enabled";
 }
 
 function changeSlide(n) {
-    slidePosition = n;
+    imagePosition = n;
     slideShow();
 }
 
 function incrementSlide(d) {
-    slidePosition = (slidePosition + d) % slideLength;
+    imagePosition = ((imagePosition + d) + imagesLength) % imagesLength;
     slideShow();
 }
 

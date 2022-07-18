@@ -9,6 +9,10 @@
     width: 100%;
 }
 
+img {
+    width: 100%;
+}
+
 html,
 body {
     height: 100%;
@@ -20,7 +24,7 @@ h1 {
     color: rgb(63, 63, 209);
 }
 
-#image-container {
+#images-container {
     width: 100%;
 }
 
@@ -37,5 +41,90 @@ h1 {
 
 #footer {
     margin: 10px;
-    float:right;
+    float: right;
+}
+
+* {
+    box-sizing: border-box
+}
+
+/* Slideshow container */
+#images-container {
+    max-width: 1000px;
+    position: relative;
+    margin: auto;
+}
+
+/* Make the images invisible by default */
+.Image {
+    display: none;
+}
+
+/* forward & Back buttons */
+#forward, #back {
+    cursor: pointer;
+    position: absolute;
+    top: 48%;
+    width: auto;
+    margin-top: -23px;
+    padding: 17px;
+    color: grey;
+    font-weight: bold;
+    font-size: 19px;
+    transition: 0.4s ease;
+    border-radius: 0 5px 5px 0;
+    user-select: none;
+}
+
+/* Place the "forward button" to the right */
+#forward {
+    right: 0;
+    border-radius: 4px 0 0 4px;
+}
+
+/*when the user hovers,add a black background with some little opacity */
+#back:hover, #forward:hover {
+    background-color: rgba(0, 0, 0, 0.8);
+}
+
+/* The circles or bullets and indicators */
+.Dot {
+    cursor: pointer;
+    height: 16px;
+    width: 16px;
+    margin: 0 3px;
+    background-color: #acc;
+    border-radius: 50%;
+    display: inline-block;
+    transition: background-color 0.5s ease;
+}
+
+.Enabled, .Dot:hover {
+    background-color: #717161;
+}
+
+/* Faint animation */
+.fade {
+    -webkit-animation-name: fade;
+    -webkit-animation-duration: 1.4s;
+    animation-name: fade;
+    animation-duration: 1.4s;
+}
+
+@-webkit-keyframes fade {
+    from {
+        opacity: .5
+    }
+    to {
+        opacity: 2
+    }
+}
+
+@keyframes fade {
+    from {
+        opacity: .5
+    }
+    to {
+        opacity: 2
+    }
 }
