@@ -169,7 +169,7 @@ async function placeMarkers() {
 
     const start = document.getElementById("start-time").value;
     const end = document.getElementById("end-time").value;
-    
+
     const fetchedJSON = await fetch("/list-by-date-and-coordinates?start=" + start + "&end=" + end);
     const reports = await fetchedJSON.json();
 
