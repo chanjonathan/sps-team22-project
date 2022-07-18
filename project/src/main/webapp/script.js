@@ -169,9 +169,7 @@ async function placeMarkers() {
 
     const start = document.getElementById("start-time").value;
     const end = document.getElementById("end-time").value;
-
-    console.log(start, end);
-
+    
     const fetchedJSON = await fetch("/list-by-date-and-coordinates?start=" + start + "&end=" + end);
     const reports = await fetchedJSON.json();
 
@@ -179,7 +177,7 @@ async function placeMarkers() {
         let latitude = parseInt(reports[i].latitude);
         let longitude = parseInt(reports[i].longitude);
         let location = {lat: latitude, lng: longitude};
-        console.log(location);
+
         let marker = new google.maps.Marker({
             position: new google.maps.LatLng(location),
             map: map,
