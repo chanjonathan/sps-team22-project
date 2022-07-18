@@ -58,7 +58,7 @@ async function loadDetails() {
 
         var dot = document.createElement("SPAN");
         dot.setAttribute("class", "Dot");
-        dot.setAttribute("onclick", "changeSlide(" + i.toString + ")");
+        dot.setAttribute("onclick", "changeSlide(" + i.toString() + ")");
 
         dotsContainer.appendChild(dot);
     }
