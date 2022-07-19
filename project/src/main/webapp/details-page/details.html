@@ -5,21 +5,22 @@
     <meta name="theme-color" content="#0000000">
     <title>Case Details</title>
     <link rel="stylesheet" href="details_style.css">
-    <script src="details_script.js"></script>
+    <script type="module" src="../map/map.js"></script>
+    <script type="module" src="details_script.js"></script>
+    <script defer
+            src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDbskcye9gWYfKt8nHzuRaPudtpo2yr0so&region=US&language=en&callback=initialize">
+    </script>
 </head>
 <body>
 <div id="content">
     <form id="header" action="../index.html">
         <input type="submit" value="Back"/>
     </form>
-    <div style="width: 100%; overflow: hidden;">
-        <div style="width: 50%; float: left;">
-            <script async
-                    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDbskcye9gWYfKt8nHzuRaPudtpo2yr0so&region=US&language=en&callback=initialize">
-            </script>
+    <div id="panel-container">
+        <div id="left-panel">
             <div id="map"></div>
         </div>
-        <div style="margin-left: 50%;">
+        <div id="right-panel">
             <div id="details-container">
                 <h1 id="title-container"></h1>
                 <p id="date-container"></p>
@@ -27,13 +28,10 @@
                 <p id="contact-details-container"></p>
                 <img id="image-container" width="400">
             </div>
-            <form id="footer" action="/delete" method="POST" enctype="multipart/form-data">
-                <input type="hidden" name="entryID" id="entry-id-container" value=""></input>
-                <input type="submit" value="Delete" onclick="index.html"/>
-            </form>
+            <button id="delete-button" type="button">Delete</button>
         </div>
     </div>
-    <div onload="initialize();"></div>
 </div>
 </body>
+
 </html>
