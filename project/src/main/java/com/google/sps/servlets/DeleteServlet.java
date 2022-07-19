@@ -43,6 +43,7 @@ public class DeleteServlet extends HttpServlet {
         }
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
         //response.sendRedirect("index.html");
 =======
 
@@ -50,5 +51,8 @@ public class DeleteServlet extends HttpServlet {
 >>>>>>> 2fc9db1 (added a confrimation for the deletion)
         response.sendRedirect("index.html");
 >>>>>>> 93dcee5 (fixing deleteMarker()))
+=======
+        //response.sendRedirect("index.html");
+>>>>>>> 9d010a8 (able to delete the marker without refreshing to the original date)
     }
 }
