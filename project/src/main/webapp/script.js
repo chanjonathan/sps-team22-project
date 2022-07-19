@@ -162,11 +162,13 @@ function createMap() {
 
 // retrieves reporters from server and places corresponding markers
 async function placeMarkers() {
-    // for (let i = 0; i < markers.length; i++) {
-    //     markers[i].setMap(null);
-    //     markers[i] = null;
-    // }
-     markers = [];
+
+    for (let i = 0; i < markers.length; i++) {
+        markers[i].setMap(null);
+        markers[i] = null;
+    }
+
+    markers = [];
 
     const start = document.getElementById("start-time").value;
     const end = document.getElementById("end-time").value;
@@ -192,8 +194,7 @@ async function placeMarkers() {
         google.maps.event.addListener(marker, "click", function (e) {
             //Wrap the content inside an HTML DIV in order to set height and width of InfoWindow.
             var contents = "<div style = 'width:200px;min-height:40px'>" + reports[i].description + "</div>";
-            contents += '<img src= "' + reports[i].imageURL +  '"></a><div><input type = "button" onclick = "DeleteMarker(' + reports[i].entryID + ')" value = "Delete"><button>Update</button></div>';
-            // contents += '<form action = "/delete" method = "post"><button onclick = "DeleteMarker(' + i + ')">Delete</button></form> '
+            contents += '<img src= "' + reports[i].imageURL +  '"></a><div><button onclick = "DeleteMarker(' + reports[i].entryID + ')" >Delete</button><button>Update</button></div>';
             infoWindow.setContent(contents);
             infoWindow.open(map, marker);
 
@@ -206,30 +207,36 @@ async function placeMarkers() {
 
 async function DeleteMarker(id) {
 
-    var deleteForm = document.createElement("FORM");
-    deleteForm.setAttribute("id","delete-form");
-    document.body.appendChild(deleteForm);
+//     var deleteForm = document.createElement("FORM");
+//     deleteForm.setAttribute("id","delete-form");
+//     document.body.appendChild(deleteForm);
 
-// this will create a new FORM which is mapped to the Java Object of myForm, with an id of TestForm. Equivalent to: <form id="TestForm"></form>
+// // this will create a new FORM which is mapped to the Java Object of myForm, with an id of TestForm. Equivalent to: <form id="TestForm"></form>
 
-    var deleteInput = document.createElement("INPUT");
-    deleteInput.setAttribute("id","entry-id");
-    deleteInput.setAttribute("type","text");
-    deleteInput.setAttribute("name","entryID");
-    deleteInput.setAttribute("value", id);
-    document.getElementById("delete-form").appendChild(deleteInput);
+//     var deleteInput = document.createElement("INPUT");
+//     deleteInput.setAttribute("id","entry-id");
+//     deleteInput.setAttribute("type","text");
+//     deleteInput.setAttribute("name","entryID");
+//     deleteInput.setAttribute("value", id);
+//     document.getElementById("delete-form").appendChild(deleteInput);
 
-// To submit the form:
-    deleteForm.method = "POST";
-    deleteForm.action = "/delete";  // or "response.php"
-    deleteForm.submit();
+// // To submit the form:
+//     deleteForm.method = "POST";
+//     deleteForm.action = "/delete";  // or "response.php"
+//     deleteForm.submit();
+    // await fetch('/delete?' + new URLSearchParams({entryID: id,}), {method: "POST"})
+
+        var data = {entryID:id};
+
+        await fetch('/delete?' + new URLSearchParams({entryID: id,}) , {method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        });
     alert("Marker Deleted");
+
     placeMarkers();
 }
-
-// function refresh(event,inputText){
-//     event.preventDefault();
-// }
 
 window.createMap = createMap
 
