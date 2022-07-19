@@ -238,10 +238,6 @@ async function DeleteMarker(id) {
     placeMarkers();
 }
 
-// function refresh(event,inputText){
-//     event.preventDefault();
-// }
-
 window.createMap = createMap
 
 function initialize() {
