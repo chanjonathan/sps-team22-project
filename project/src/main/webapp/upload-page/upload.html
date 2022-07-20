@@ -10,7 +10,7 @@
   </head>
   <body>
       <div id="content"> 
-        <form action="../index.html">
+        <form action="/index.html">
             <input type="submit" value="Return to Main Page" />
         </form>
         <center><h1>Upload a report!</h1></center>
@@ -18,25 +18,25 @@
         <!-- contact info, title, latitude, longitude, date+time (use html component), img url -->
             <p>Please complete the following details of the report:</p>
             <ul>
-                <li id = "inline-textbox">
+                <li class="inline-textbox">
                     Input title of report: 
                     <input type=text name="title" class="title" required>
                 </li> 
                 <br/>
                 <!-- Keeps visible coordinates while parsing latitude and longitude in the front end (hidden) -->
-                <li id="inline-textbox">
+                <li class="inline-textbox">
                     Coordinates (click any location on the map):
                     <input text id="coordinates" class="one-line" required>
                 </li> 
                 <input type="hidden" name="latitude" id="latitude" required>
                 <input type="hidden" name="longitude" id="longitude" required>
                 <br/>
-                <li id = "inline-textbox">
+                <li class="inline-textbox">
                     Time of incident: 
                     <input type="datetime-local" name="time" required>
                 </li> 
                 <br/>
-                <li id = "inline-textbox">Description of the collision:</li>
+                <li class="inline-textbox">Description of the collision:</li>
                 <textarea name="description">E.g. car types of those involved, etc.</textarea>
                 <br/>
                 <li id = "inline-textbox">
