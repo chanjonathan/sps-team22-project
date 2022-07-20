@@ -194,7 +194,7 @@ async function placeMarkers() {
         google.maps.event.addListener(marker, "click", function (e) {
             //Wrap the content inside an HTML DIV in order to set height and width of InfoWindow.
             var contents = "<div style = 'width:200px;min-height:40px'>" + reports[i].description + "</div>";
-            contents += '<img src= "' + reports[i].imageURL +  '"></a><div><button onclick = "DeleteMarker(' + reports[i].entryID + ')" >Delete</button><a href="/details-page/details.html?entryID =' + reports[i].entryID + '"><button>Details</button></div></a>';
+            contents += '<img src= "' + reports[i].imageURL +  '"></a><div><button onclick = "DeleteMarker(' + reports[i].entryID + ')" >Delete</button><a href="/details-page/details.html?entryID=' + reports[i].entryID + '"><button>Details</button></div></a>';
             infoWindow.setContent(contents);
             infoWindow.open(map, marker);
 
