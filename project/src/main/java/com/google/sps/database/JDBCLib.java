@@ -241,4 +241,21 @@ public class JDBCLib {
         }
         return reports;
     }
+
+    // return the reports at a given coordinate
+    public ArrayList<Report> listByCoordinates(String latitude, String longitude) throws SQLException {
+        String query = "select * from collisionReportsPro where latitude = " + latitude+ " AND longitude = " + longitude;
+
+        ArrayList<Report> reports = new ArrayList<>();
+
+        Connection connection = DriverManager.getConnection(url, user, password);
+        Statement statement = connection.createStatement();
+        ResultSet resultSet = statement.executeQuery(query);
+
+        while (resultSet.next()) {
+            String entryID = resultSet.getString("entryID");
+            reports.add(getReport(entryID));
+        }
+        return reports;
+    }
 }
