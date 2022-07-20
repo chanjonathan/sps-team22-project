@@ -14,7 +14,7 @@
 
 <body>
 <div id="content">
-    <h1 style="color: rgb(63, 63, 209);">Car Collision Map:</h1>
+    <h1 style="color: rgb(1, 1, 17);">Car Collision Map:</h1>
     <div style="width: 100%; overflow: hidden;">
         <div style="width: 50%; float: left;">
             <h3>Start Time:
@@ -27,14 +27,16 @@
             </h3>
         </div>
     </div>
-    <form action="upload.html">
-        <input type="submit" value="Upload an Incident Report"/>
-    </form>
 
     <div onload="initialize();">
-        <div id="map"></div>
+        <div id="map"></div><br>
     </div>
-</div>
 
+    <form action="/upload-page/upload.html">
+        <!-- <input type="submit" value="Upload an Incident Report"/> -->
+        <button class="button" style="vertical-align:middle"><span>Upload Report</span></button>
+
+    </form>
+</div>
 </body>
 </html>
