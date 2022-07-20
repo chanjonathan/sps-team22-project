@@ -1,4 +1,5 @@
 package com.google.sps.objects;
+import java.util.ArrayList;
 
 public class Report {
 
@@ -8,7 +9,7 @@ public class Report {
     public String date;
     public String description;
     public String contactDetails;
-    public String imageURL;
+    public ArrayList<String> imageURLs;
     public String entryID;
 
     public Report(String title,
@@ -17,7 +18,7 @@ public class Report {
                   String date,
                   String description,
                   String contactDetails,
-                  String imageURL,
+                  ArrayList<String> imageURLs,
                   String entryID) {
 
         this.title = title;
@@ -26,7 +27,7 @@ public class Report {
         this.date = date;
         this.description = description;
         this.contactDetails = contactDetails;
-        this.imageURL = imageURL;
+        this.imageURLs = imageURLs;
         this.entryID = entryID;
     }
 }
