@@ -238,17 +238,6 @@ async function DeleteMarker(id) {
     placeMarkers();
 }
 
-// async function detailed(id){
-//     var data = {entryID:id};
-
-//         await fetch('/detailes' + new URLSearchParams({entryID: id,}) , {method: 'POST',
-//             headers: {
-//                 'Content-Type': 'application/json',
-//             },
-//         });
-//     alert("Marker Deleted");
-// }
-
 window.createMap = createMap
 
 function initialize() {
