@@ -3,6 +3,7 @@ import {createMap} from '../map/map.js';
 var map;
 var marker = null;
 var report;
+var edit = false;
 
 function GetURLParameter(sParam) {
     var sPageURL = window.location.search.substring(1);
@@ -34,10 +35,10 @@ async function deletePost() {
     window.location.href = "/index.html";
 }
 
-function switchView() {
+function toggleDetails() {
     const editElements = document.getElementsByClassName("Edit");
     for (let i = 0; i < editElements.length; i++) {
-        if (editElements[i].style.display === "none") {
+        if (edit === true) {
             editElements[i].style.display = "";
         } else {
             editElements[i].style.display = "none";
@@ -45,15 +46,15 @@ function switchView() {
     }
     const viewElements = document.getElementsByClassName("View");
     for (let i = 0; i < viewElements.length; i++) {
-        if (viewElements[i].style.display === "none") {
-            viewElements[i].style.display = "";
-        } else {
+        if (edit === true) {
             viewElements[i].style.display = "none";
+        } else {
+            viewElements[i].style.display = "";
         }
     }
 }
 
-function setView() {
+function setDetails() {
     const editElements = document.getElementsByClassName("Edit");
     for (let i = 0; i < editElements.length; i++) {
         editElements[i].style.display = "none";
@@ -66,24 +67,24 @@ function setView() {
     }
 }
 
-function edit() {
+function editMode() {
     document.getElementById("edit-title-container").value = report.title;
     document.getElementById("edit-date-container").value = report.date
     document.getElementById("edit-description-container").value = report.description;
     document.getElementById("edit-contact-details-container").value = report.contactDetails;
     document.getElementById("edit-image-container").src = report.imageURL;
 
-    switchView();
+    toggleMode();
+}
+
+function toggleMode() {
+    edit = !edit;
+    toggleDetails();
+    toggleMap();
 }
 
 function cancel() {
-    document.getElementById("title-container").innerText = report.title;
-    document.getElementById("date-container").innerText = new Date(report.date).toDateString();
-    document.getElementById("description-container").innerText = report.description;
-    document.getElementById("contact-details-container").innerText = report.contactDetails;
-    document.getElementById("image-container").src = report.imageURL;
-
-    switchView();
+    toggleMode();
     placeMarker();
 }
 
@@ -91,8 +92,8 @@ async function saveEdits() {
     fetch('/put?' + new URLSearchParams(
         {
             title: document.getElementById("edit-title-container").value,
-            latitude: report.latitude,
-            longitude: report.longitude,
+            latitude: marker.position.lat.toString(),
+            longitude: marker.position.lng.toString(),
             date: document.getElementById("edit-date-container").value,
             description: document.getElementById("edit-description-container").value,
             contactDetails: document.getElementById("edit-contact-details-container").value,
@@ -101,14 +102,39 @@ async function saveEdits() {
         }),
         {method: "PUT"}).then(() => {
         loadDetails().then(() => {
+            toggleMode();
             placeMarker();
-            switchView();
         });
     });
 }
 
+function toggleMap() {
+    if (edit === true) {
+        map.addListener("click", (mapsMouseEvent) => {
+            newMarker(mapsMouseEvent)
+        });
+    } else {
+        map.removeListener("click", (mapsMouseEvent) => {
+            newMarker(mapsMouseEvent)
+        });
+        placeMarker();
+    }
+}
 
-async function placeMarker() {
+function newMarker(mapsMouseEvent) {
+    if (marker != null) {
+        marker.setMap(null);
+        marker = null;
+    }
+    marker = new google.maps.Marker({
+        position: mapsMouseEvent.latLng,
+        map: map,
+        url: '/',
+        animation: google.maps.Animation.DROP,
+    })
+}
+
+function placeMarker() {
     if (marker != null) {
         marker.setMap(null);
         marker = null;
@@ -126,14 +152,14 @@ async function placeMarker() {
 
 function addListeners() {
     document.getElementById("delete-button").addEventListener("click", deletePost);
-    document.getElementById("edit-button").addEventListener("click", edit);
+    document.getElementById("edit-button").addEventListener("click", editMode);
     document.getElementById("save-button").addEventListener("click", saveEdits);
     document.getElementById("cancel-button").addEventListener("click", cancel);
 }
 
 function initialize() {
     addListeners();
-    setView();
+    setDetails();
     map = createMap();
     loadDetails().then(() => placeMarker());
 }
