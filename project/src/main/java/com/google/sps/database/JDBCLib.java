@@ -69,24 +69,20 @@ public class JDBCLib {
 
     // Description: update an entry with the given entryID in the table
     // !!! make sure the entryID is correct
-    public void update(Report report) throws SQLException{
+    public void update(Report report) throws SQLException {
         String entryID = report.entryID;
         String Query = "UPDATE collisionReports\n" +
-                "SET title = \"" + report.title + "\", latitude = \"" + report.latitude + "\", longitude = \"" +
-                report.longitude + "\", reportDescription = \"" + report.description +
-                "\", reportDate = \"" + report.date +
-                "\", contactDetails = \"" + report.contactDetails + "\", imageURL = \"" +
-                report.imageURL + "\"\n" +
+                "SET title = \"" + report.title + "\", " +
+                "latitude = \"" + report.latitude + "\", " +
+                "longitude = \"" + report.longitude + "\", " +
+                "reportDescription = \"" + report.description + "\", " +
+                "reportDate = \"" + report.date + "\", " +
+                "contactDetails = \"" + report.contactDetails + "\", " +
+                "imageURL = \"" + report.imageURL + "\"\n" +
                 "WHERE entryID = " + entryID + ";";
-
-
-        Connection connection = DriverManager.getConnection(url,
-                user, password);
-
+        Connection connection = DriverManager.getConnection(url, user, password);
         Statement statement = connection.createStatement();
-
         statement.executeUpdate(Query);
-
     }
 
 
@@ -145,7 +141,6 @@ public class JDBCLib {
                     reportDate, reportDescription, contactDetails, imageURL, entryID);
 
             reports.add(report);
-
 
 
         }

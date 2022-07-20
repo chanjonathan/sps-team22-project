@@ -21,14 +21,40 @@
             <div id="map"></div>
         </div>
         <div id="right-panel">
-            <div id="details-container">
+            <div class="View" id="details-container">
                 <h1 id="title-container"></h1>
                 <p id="date-container"></p>
                 <p id="description-container"></p>
                 <p id="contact-details-container"></p>
                 <img id="image-container" width="400">
             </div>
-            <button id="delete-button" type="button">Delete</button>
+            <div class="Edit" id="edit-container">
+                <label for="edit-title-container">Title: </label>
+                <input type="text" name="title" id="edit-title-container">
+                <br>
+                <label for="edit-date-container">Time: </label>
+                <input type="datetime-local" name="date" id="edit-date-container">
+                <br>
+                <label for="edit-description-container">Description: </label>
+                <br>
+                <input id="edit-description-container" name="description">
+                <br>
+                <label for="edit-contact-details-container">Contact Details: </label>
+                <input type="text" id="edit-contact-details-container" name="contactDetails">
+                <br>
+                <img id="edit-image-container" width="400">
+                <input type="hidden" name="imageURL">
+            </div>
+            <div id="footer">
+                <a id="footer-left">
+                    <button class="View" id="edit-button" type="button">Edit</button>
+                    <button class="Edit" id="save-button" type="button">Save</button>
+                    <button class="Edit" id="cancel-button" type="button">Cancel</button>
+                </a>
+                <a id="footer-right">
+                    <button class="View" id="delete-button" type="button">Delete</button>
+                </a>
+            </div>
         </div>
     </div>
 </div>
