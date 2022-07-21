@@ -4,6 +4,7 @@ var map;
 var marker = null;
 var report;
 var edit = false;
+var mapListener;
 
 function GetURLParameter(sParam) {
     var sPageURL = window.location.search.substring(1);
@@ -92,8 +93,8 @@ async function saveEdits() {
     fetch('/put?' + new URLSearchParams(
         {
             title: document.getElementById("edit-title-container").value,
-            latitude: marker.position.lat.toString(),
-            longitude: marker.position.lng.toString(),
+            latitude: marker.getPosition().lat().toString(),
+            longitude: marker.getPosition().lng().toString(),
             date: document.getElementById("edit-date-container").value,
             description: document.getElementById("edit-description-container").value,
             contactDetails: document.getElementById("edit-contact-details-container").value,
@@ -110,13 +111,11 @@ async function saveEdits() {
 
 function toggleMap() {
     if (edit === true) {
-        map.addListener("click", (mapsMouseEvent) => {
+        mapListener = google.maps.event.addListener(map, "click", (mapsMouseEvent) => {
             newMarker(mapsMouseEvent)
         });
     } else {
-        map.removeListener("click", (mapsMouseEvent) => {
-            newMarker(mapsMouseEvent)
-        });
+        google.maps.event.removeListener(mapListener);
         placeMarker();
     }
 }
@@ -131,7 +130,7 @@ function newMarker(mapsMouseEvent) {
         map: map,
         url: '/',
         animation: google.maps.Animation.DROP,
-    })
+    });
 }
 
 function placeMarker() {
@@ -139,7 +138,7 @@ function placeMarker() {
         marker.setMap(null);
         marker = null;
     }
-    let location = {lat: parseInt(report.latitude), lng: parseInt(report.longitude)};
+    let location = {lat: parseFloat(report.latitude), lng: parseFloat(report.longitude)};
     marker = new google.maps.Marker({
         position: new google.maps.LatLng(location),
         map: map,

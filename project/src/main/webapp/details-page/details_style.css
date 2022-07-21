@@ -37,7 +37,6 @@ h1 {
 
 #footer {
     width: 100%;
-    overflow: hidden;
 }
 
 #footer-left {
@@ -51,7 +50,6 @@ h1 {
 
 #panel-container {
     width: 100%;
-    overflow: hidden;
 }
 
 #left-panel {
