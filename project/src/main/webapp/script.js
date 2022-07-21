@@ -12,6 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+
 var map;
 var markers = [];
 
@@ -161,10 +162,12 @@ function createMap() {
 
 // retrieves reporters from server and places corresponding markers
 async function placeMarkers() {
+
     for (let i = 0; i < markers.length; i++) {
         markers[i].setMap(null);
         markers[i] = null;
     }
+
     markers = [];
 
     const start = document.getElementById("start-time").value;
@@ -174,10 +177,10 @@ async function placeMarkers() {
     const reports = await fetchedJSON.json();
 
     for (let i = 0; i < reports.length; i++) {
-        let latitude = parseInt(reports[i].latitude);
-        let longitude = parseInt(reports[i].longitude);
+        let latitude = parseInt(reports[i].latitude)
+        let longitude = parseInt(reports[i].longitude)
         let location = {lat: latitude, lng: longitude};
-        
+        console.log(location);
         let marker = new google.maps.Marker({
             position: new google.maps.LatLng(location),
             map: map,
@@ -186,18 +189,53 @@ async function placeMarkers() {
         })
 
         var infoWindow = new google.maps.InfoWindow();
-        //Attach click event to the marker.      
+
+        //Attach click event to the marker.
         google.maps.event.addListener(marker, "click", function (e) {
             //Wrap the content inside an HTML DIV in order to set height and width of InfoWindow.
             var contents = "<div style = 'width:200px;min-height:40px'>" + reports[i].description + "</div>";
-            contents += '<img src= "' + reports[i].imageURL +  '"></a>';
+            contents += '<img src= "' + reports[i].imageURL +  '"></a><div><button  onclick = "DeleteMarker(' + reports[i].entryID + ')" >Delete</button><a href="/details-page/details.html?entryID=' + reports[i].entryID + '"><button >Details</button></div></a>';
             infoWindow.setContent(contents);
             infoWindow.open(map, marker);
-        })
+
+        })       
 
         marker.report = reports[i];
         markers.push(marker);
     }
+}
+
+async function DeleteMarker(id) {
+
+//     var deleteForm = document.createElement("FORM");
+//     deleteForm.setAttribute("id","delete-form");
+//     document.body.appendChild(deleteForm);
+
+// // this will create a new FORM which is mapped to the Java Object of myForm, with an id of TestForm. Equivalent to: <form id="TestForm"></form>
+
+//     var deleteInput = document.createElement("INPUT");
+//     deleteInput.setAttribute("id","entry-id");
+//     deleteInput.setAttribute("type","text");
+//     deleteInput.setAttribute("name","entryID");
+//     deleteInput.setAttribute("value", id);
+//     document.getElementById("delete-form").appendChild(deleteInput);
+
+// // To submit the form:
+//     deleteForm.method = "POST";
+//     deleteForm.action = "/delete";  // or "response.php"
+//     deleteForm.submit();
+    // await fetch('/delete?' + new URLSearchParams({entryID: id,}), {method: "POST"})
+
+        var data = {entryID:id};
+
+        await fetch('/delete?' + new URLSearchParams({entryID: id,}) , {method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        });
+    alert("Marker Deleted");
+
+    placeMarkers();
 }
 
 window.createMap = createMap
@@ -207,4 +245,3 @@ function initialize() {
     createMap();
     placeMarkers();
 }
-
