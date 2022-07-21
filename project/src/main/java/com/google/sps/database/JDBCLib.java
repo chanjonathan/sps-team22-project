@@ -69,7 +69,7 @@ public class JDBCLib {
 
     // Description: update an entry with the given entryID in the table
     // !!! make sure the entryID is correct
-    public void update(Report report) throws SQLException{
+    public void update(Report report) throws SQLException {
         String entryID = report.entryID;
         String Query = "UPDATE collisionReports\n" +
                 "SET title = \"" + report.title + "\", latitude = \"" + report.latitude + "\", longitude = \"" +
@@ -147,7 +147,6 @@ public class JDBCLib {
             reports.add(report);
 
 
-
         }
         return reports;
 
@@ -182,5 +181,19 @@ public class JDBCLib {
         }
         return reports;
 
+    }
+
+    public String getStoredHash(String username) throws SQLException {
+        String Query = "SELECT * FROM users where username = " + username;
+
+        Connection connection = DriverManager.getConnection(url, user, password);
+        Statement statement = connection.createStatement();
+        ResultSet resultSet = statement.executeQuery(Query);
+
+        String storedHash = null;
+        if (resultSet.next()) {
+            storedHash = resultSet.getString("passwordHash");
+        }
+        return storedHash;
     }
 }
