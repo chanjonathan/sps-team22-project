@@ -76,3 +76,7 @@ button {
 .Edit {
     visibility: hidden;
 }
+
+.View {
+    visibility: hidden;
+}

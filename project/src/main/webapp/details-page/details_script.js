@@ -65,6 +65,7 @@ function setDetails() {
     const viewElements = document.getElementsByClassName("View");
     for (let i = 0; i < viewElements.length; i++) {
         viewElements[i].style.display = "";
+        viewElements[i].style.visibility = "visible";
     }
 }
 
@@ -74,6 +75,7 @@ function editMode() {
     document.getElementById("edit-description-container").value = report.description;
     document.getElementById("edit-contact-details-container").value = report.contactDetails;
     document.getElementById("edit-image-container").src = report.imageURL;
+    document.getElementById("new-image-upload-container").value = "";
 
     toggleMode();
 }
@@ -90,18 +92,28 @@ function cancel() {
 }
 
 async function saveEdits() {
-    fetch('/put?' + new URLSearchParams(
-        {
-            title: document.getElementById("edit-title-container").value,
-            latitude: marker.getPosition().lat().toString(),
-            longitude: marker.getPosition().lng().toString(),
-            date: document.getElementById("edit-date-container").value,
-            description: document.getElementById("edit-description-container").value,
-            contactDetails: document.getElementById("edit-contact-details-container").value,
-            imageURL: report.imageURL,
-            entryID: report.entryID,
-        }),
-        {method: "PUT"}).then(() => {
+    let image = null;
+    let data = new FormData()
+
+    if (document.getElementById("edit-image-container").src !== report.imageURL) {
+        image = document.getElementById("new-image-upload-container").files[0];
+        data.append('image', image)
+    }
+
+    fetch('/put?' +
+        new URLSearchParams(
+            {
+                title: document.getElementById("edit-title-container").value,
+                latitude: marker.getPosition().lat().toString(),
+                longitude: marker.getPosition().lng().toString(),
+                date: document.getElementById("edit-date-container").value,
+                description: document.getElementById("edit-description-container").value,
+                contactDetails: document.getElementById("edit-contact-details-container").value,
+                imageURL: report.imageURL,
+                entryID: report.entryID,
+            }),
+        {method: "PUT", body: data}
+    ).then(() => {
         loadDetails().then(() => {
             toggleMode();
             placeMarker();
@@ -149,11 +161,19 @@ function placeMarker() {
     map.setZoom(10);
 }
 
+function loadImage(event) {
+    let image = document.getElementById('edit-image-container');
+    image.src = URL.createObjectURL(event.target.files[0]);
+}
+
 function addListeners() {
     document.getElementById("delete-button").addEventListener("click", deletePost);
     document.getElementById("edit-button").addEventListener("click", editMode);
     document.getElementById("save-button").addEventListener("click", saveEdits);
     document.getElementById("cancel-button").addEventListener("click", cancel);
+    document.getElementById("new-image-upload-container").addEventListener("change", (event) => {
+        loadImage(event)
+    });
 }
 
 function initialize() {
