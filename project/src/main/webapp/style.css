@@ -9,14 +9,14 @@
 }
 
 #map {
-    border: thin solid rgb(174, 219, 245);
+    border: thin solid rgb(3, 3, 3);
     height: 500px;
     width: 500px;
   }
 
   .button {
     display: inline-block;
-    border-radius: 4px;
+    border-radius: 20px;
     background-color: #140a01;
     border: none;
     color: #FFFFFF;
@@ -27,6 +27,8 @@
     transition: all 0.5s;
     cursor: pointer;
     margin: 5px;
+    border:none;
+    outline:none;
   }
   
   .button span {
