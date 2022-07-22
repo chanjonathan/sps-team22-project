@@ -1,36 +1,34 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <meta charset="UTF-8">
-  <meta name = "theme-color" content = "#0000000">
-      <title>Car Collision</title>
-  <link rel="stylesheet" href="style.css">
-  <script src="script.js"></script>
-  <script async src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDbskcye9gWYfKt8nHzuRaPudtpo2yr0so&region=US&language=en&callback=initMap"></script>
+    <meta charset="UTF-8">
+    <meta name="theme-color" content="#0000000">
+    <title>Car Collision</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="script.js"></script>
+    <script defer
+            src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDbskcye9gWYfKt8nHzuRaPudtpo2yr0so&region=US&language=en&callback=initialize"></script>
 </head>
 
 <body>
 <div id="content">
-    <h1 style= "color: rgb(63, 63, 209);">Car Collision Map:</h1>
+    <h1 style="color: rgb(63, 63, 209);">Car Collision Map:</h1>
     <form action="upload-page/upload.html">
-      <input type="submit" value="Upload an Incident Report" />
+        <input type="submit" value="Upload an Incident Report"/>
     </form>
-    <div style="width: 100%; overflow: hidden;">
-        <div style="width: 50%; float: left;">
+    <div id="panel-container" >
+        <div id="left-panel">
             <h3>Start Time:
                 <input type="datetime-local" id="start-time" onblur=placeMarkers()>
             </h3>
         </div>
-        <div style="margin-left: 50%;">
+        <div id="right-panel">
             <h3>End Time:
                 <input type="datetime-local" id="end-time" onblur=placeMarkers()>
             </h3>
         </div>
     </div>
-
-    <div onload="initialize();">
-        <div id="map"></div>
-    </div>
+    <div id="map"></div>
 </div>
 
 </body>
