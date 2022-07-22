@@ -195,8 +195,8 @@ async function placeMarkers() {
             //Wrap the content inside an HTML DIV in order to set height and width of InfoWindow.
             var description = reports[i].description;
             var contents = "<div style='font-weight: bold '>" + reports[i].title + "</div><br>";
-            contents += "<div style = 'width:200px;min-height:40px'>" + description.substring(0,Math.min(100,description.length)) + "....</div>";
-            contents += '<img src= "' + reports[i].imageURL +  '"></a><div><button  onclick = "DeleteMarker(' + reports[i].entryID + ')" >Delete</button><a href="/details-page/details.html?entryID=' + reports[i].entryID + '"><button >Details</button></div></a>';
+            contents += "<div style = 'width:100%;min-height:40px'>" + description.substring(0,Math.min(100,description.length)) + "....</div>";
+            contents += '<img src= "' + reports[i].imageURL +  '"style = "width:100%"></a><div><button  onclick = "DeleteMarker(' + reports[i].entryID + ')" >Delete</button><a href="/details-page/details.html?entryID=' + reports[i].entryID + '"><button >Details</button></div></a>';
             infoWindow.setContent(contents);
             infoWindow.open(map, marker);
 
