@@ -1,34 +1,4 @@
-// Copyright 2020 Google LLC
-//
-// Licensed under the Apache License, Version 2.0 (the "License");
-// you may not use this file except in compliance with the License.
-// You may obtain a copy of the License at
-//
-//     https://www.apache.org/licenses/LICENSE-2.0
-//
-// Unless required by applicable law or agreed to in writing, software
-// distributed under the License is distributed on an "AS IS" BASIS,
-// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-// See the License for the specific language governing permissions and
-// limitations under the License.
-
-var map;
-var markers = [];
-
-// Fill start and end time inputs with appropriate datetimes
-function fillDateTimes() {
-    const date = new Date();
-    const offset = (24 * 60 * 60 * 1000) * 7;
-
-    const localNow = (new Date(date.getTime() - date.getTimezoneOffset() * 60000).toISOString()).slice(0, -1);
-    const localStart = (new Date(date.getTime() - date.getTimezoneOffset() * 60000 - offset).toISOString()).slice(0, -1);
-
-    document.getElementById("start-time").value = localStart;
-    document.getElementById("end-time").value = localNow;
-}
-
-
-function createMap() {
+export function createMap() {
     // Create a new StyledMapType object, passing it an array of styles,
     // and the name to be displayed on the map type control.
     const styledMapType = new google.maps.StyledMapType(
@@ -146,7 +116,7 @@ function createMap() {
     );
     /** Creates a map and adds it to the page. */
 
-    map = new google.maps.Map(
+    var map = new google.maps.Map(
         document.getElementById('map'),
         {
             center: {lat: 0, lng: 0}, zoom: 1,
@@ -157,54 +127,6 @@ function createMap() {
     );
     map.mapTypes.set("styled_map", styledMapType);
     map.setMapTypeId("styled_map");
+
+    return map;
 }
-
-// retrieves reporters from server and places corresponding markers
-async function placeMarkers() {
-    for (let i = 0; i < markers.length; i++) {
-        markers[i].setMap(null);
-        markers[i] = null;
-    }
-    markers = [];
-
-    const start = document.getElementById("start-time").value;
-    const end = document.getElementById("end-time").value;
-
-    const fetchedJSON = await fetch("/list-by-date-and-coordinates?start=" + start + "&end=" + end);
-    const reports = await fetchedJSON.json();
-
-    for (let i = 0; i < reports.length; i++) {
-        let latitude = parseInt(reports[i].latitude);
-        let longitude = parseInt(reports[i].longitude);
-        let location = {lat: latitude, lng: longitude};
-        
-        let marker = new google.maps.Marker({
-            position: new google.maps.LatLng(location),
-            map: map,
-            url: '/',
-            animation: google.maps.Animation.DROP,
-        })
-
-        var infoWindow = new google.maps.InfoWindow();
-        //Attach click event to the marker.      
-        google.maps.event.addListener(marker, "click", function (e) {
-            //Wrap the content inside an HTML DIV in order to set height and width of InfoWindow.
-            var contents = "<div style = 'width:200px;min-height:40px'>" + reports[i].description + "</div>";
-            contents += '<img src= "' + reports[i].imageURL +  '"></a>';
-            infoWindow.setContent(contents);
-            infoWindow.open(map, marker);
-        })
-
-        marker.report = reports[i];
-        markers.push(marker);
-    }
-}
-
-window.createMap = createMap
-
-function initialize() {
-    fillDateTimes();
-    createMap();
-    placeMarkers();
-}
-

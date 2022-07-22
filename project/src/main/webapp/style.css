@@ -1,25 +1,38 @@
 #content {
-  margin-left: auto;
-  margin-right: auto;
-  width: 650px;
+    margin-left: auto;
+    margin-right: auto;
+    width: 650px;
 }
 
 #greeting-container {
-  margin-top: 20px;
+    margin-top: 20px;
 }
 
 #map {
     border: thin solid rgb(174, 219, 245);
     height: 500px;
     width: 500px;
-  }
-  /* 
-   * Optional: Makes the sample page fill the window. 
-   */
-  html,
-  body {
+}
+
+html,
+body {
     height: 100%;
     margin: 0;
     padding: 0;
+}
+
+h1 {
+    color: rgb(63, 63, 209);
+}
+
+  .block {
+    display: block;
+    width: 100%;
+    border: none;
+    background-color: #ee8f62;
+    padding: 14px 28px;
+    font-size: 16px;
+    cursor: pointer;
+    text-align: center;
   }
 

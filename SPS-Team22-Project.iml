@@ -12,5 +12,19 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/project/lib/mysql-connector-java-8.0.29.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="library" name="eclipse.jetty.annotations" level="project" />
+    <orderEntry type="library" name="eclipse.jetty.orbit.javax.servlet" level="project" />
+    <orderEntry type="library" name="eclipse.jetty.orbit.jdt.core" level="project" />
+    <orderEntry type="library" name="google.api.client.gson" level="project" />
+    <orderEntry type="library" name="google.cloud.storage" level="project" />
   </component>
 </module>
