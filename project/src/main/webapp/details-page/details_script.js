@@ -49,8 +49,8 @@ async function loadDetails() {
 
     document.getElementById("entry-id-container").value = entryID;
 
-    latitude = parseInt(report.latitude);
-    longitude = parseInt(report.longitude);
+    latitude = parseFloat(report.latitude);
+    longitude = parseFloat(report.longitude);
 }
 
 
