@@ -16,7 +16,6 @@ public class JDBCLib {
     public void insert(Report report) throws SQLException {
 
         Connection connection = DriverManager.getConnection(url, user, password);
-
         Statement statement = connection.createStatement();
 
         String InsertReportQuery = "INSERT INTO collisionReportsPro (title, latitude, longitude, reportDate, reportDescription, " +
@@ -41,6 +40,7 @@ public class JDBCLib {
             statement.executeUpdate(InsertImageQuery);
         }
 
+        statement.executeUpdate(Query);
     }
 
     // Description: print every entry in both tables
@@ -75,6 +75,7 @@ public class JDBCLib {
             System.out.println("imageURL: "+ resultSet1.getString("imageURL"));
             System.out.println("entryID: "+ resultSet1.getString("entryID"));
             System.out.println();
+
         }
     }
 
@@ -83,12 +84,8 @@ public class JDBCLib {
         String Query = "delete from collisionReportsPro where entryID = " + entryID;
         String Query1 = "delete from imageAddresses where entryID = " + entryID;
 
-
-        Connection connection = DriverManager.getConnection(url,
-                user, password);
-
+        Connection connection = DriverManager.getConnection(url, user, password);
         Statement statement = connection.createStatement();
-
         statement.executeUpdate(Query);
 
         statement.executeUpdate(Query1);
@@ -106,11 +103,8 @@ public class JDBCLib {
 
         String DELETE_IMAGE_URL = "delete from imageAddresses where entryID = " + report.entryID;
 
-        Connection connection = DriverManager.getConnection(url,
-                user, password);
-
+        Connection connection = DriverManager.getConnection(url, user, password);
         Statement statement = connection.createStatement();
-
         statement.executeUpdate(Query);
         statement.executeUpdate(DELETE_IMAGE_URL);
 
@@ -127,11 +121,8 @@ public class JDBCLib {
     public Report getReport(String entryID) throws SQLException {
         String Query = "SELECT * FROM collisionReportsPro where entryID = " + entryID;
 
-        Connection connection = DriverManager.getConnection(url,
-                user, password);
-
+        Connection connection = DriverManager.getConnection(url, user, password);
         Statement statement = connection.createStatement();
-
         ResultSet resultSet = statement.executeQuery(Query);
 
         if (resultSet.next()) {
@@ -155,7 +146,6 @@ public class JDBCLib {
 
             return new Report(title, latitude, longitude,
                     reportDate, reportDescription, contactDetails, URLs, entryID);
-
         } else {
             return null;
         }
@@ -166,12 +156,8 @@ public class JDBCLib {
         String QUERY = "SELECT * FROM collisionReportsPro";
         ArrayList<Report> reports = new ArrayList<>();
 
-
-        Connection connection = DriverManager.getConnection(url,
-                user, password);
-
+        Connection connection = DriverManager.getConnection(url, user, password);
         Statement statement = connection.createStatement();
-
         ResultSet resultSet = statement.executeQuery(QUERY);
 
         while (resultSet.next()) {
@@ -197,7 +183,7 @@ public class JDBCLib {
 
             Report report = new Report(title, latitude, longitude,
                     reportDate, reportDescription, contactDetails, URLs, entryID);
-
+                    
             reports.add(report);
 
         }
@@ -208,6 +194,7 @@ public class JDBCLib {
     public ArrayList<Report> listByDateAndCoordinates(String start, String end) throws SQLException {
         String query = "SELECT * FROM collisionReportsPro " +
                 "WHERE reportDate between '" + start + "'  and   '" + end + "';";
+
 
         ArrayList<Report> reports = new ArrayList<>();
 
@@ -237,9 +224,11 @@ public class JDBCLib {
             Report report = new Report(title, latitude, longitude,
                     reportDate, reportDescription, contactDetails, URLs, entryID);
 
+
             reports.add(report);
         }
         return reports;
+
     }
 
     // return the reports at a given coordinate
