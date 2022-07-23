@@ -33,6 +33,7 @@
             <artifactId>jetty-server</artifactId>
             <version>${jetty.version}</version>
         </dependency>
+
         <dependency>
             <groupId>org.eclipse.jetty</groupId>
             <artifactId>jetty-annotations</artifactId>
@@ -50,16 +51,14 @@
         <dependency>
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
-            <version>8.0.24</version>
+            <version>8.0.29</version>
         </dependency>
 
-        <!-- Google Cloud Storage -->
         <dependency>
             <groupId>com.google.cloud</groupId>
             <artifactId>google-cloud-storage</artifactId>
             <version>1.113.0</version>
         </dependency>
-
     </dependencies>
 
     <build>

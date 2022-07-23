@@ -174,21 +174,32 @@ async function placeMarkers() {
     const reports = await fetchedJSON.json();
 
     for (let i = 0; i < reports.length; i++) {
-        let latitude = parseInt(reports[i].latitude);
-        let longitude = parseInt(reports[i].longitude);
+        let latitude = parseFloat(reports[i].latitude);
+        let longitude = parseFloat(reports[i].longitude);
         let location = {lat: latitude, lng: longitude};
 
         let marker = new google.maps.Marker({
             position: new google.maps.LatLng(location),
             map: map,
             url: '/',
-            animation: google.maps.Animation.DROP
-        });
+            animation: google.maps.Animation.DROP,
+        })
+
+        var infoWindow = new google.maps.InfoWindow();
+        //Attach click event to the marker.
+
+        google.maps.event.addListener(marker, "click", function (e) {
+            //Wrap the content inside an HTML DIV in order to set height and width of InfoWindow.
+            var contents = "<div style = 'width:200px;min-height:40px'>" + reports[i].description + "</div>";
+            contents += '<img src= "' + reports[i].imageURL +  '"></a>';
+            infoWindow.setContent(contents);
+            infoWindow.open(map, marker);
+        })
+
         marker.report = reports[i];
         markers.push(marker);
     }
 }
-
 
 window.createMap = createMap;
 
@@ -197,4 +208,3 @@ function initialize() {
     createMap();
     placeMarkers();
 }
-

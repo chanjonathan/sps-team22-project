@@ -41,7 +41,7 @@ public class GetByIdServlet extends HttpServlet {
         Report report = null;
 
         try {
-             report = database.getEntry(entryID);
+             report = database.getReport(entryID);
         } catch (SQLException sqlException) {
             ServletException servletException = new ServletException(sqlException.getMessage());
             servletException.setStackTrace(sqlException.getStackTrace());

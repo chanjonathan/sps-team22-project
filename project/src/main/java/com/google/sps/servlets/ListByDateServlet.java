@@ -24,13 +24,13 @@ import java.util.ArrayList;
 @WebServlet("/list-by-date-and-coordinates")
 @MultipartConfig
 
-public class ListByDateAndCoordinates extends HttpServlet {
+public class ListByDateServlet extends HttpServlet {
 
     JDBCLib database;
     Gson gson;
     Http http;
 
-    public ListByDateAndCoordinates() {
+    public ListByDateServlet() {
         database = new JDBCLib();
         gson = new Gson();
         http = new Http();
@@ -45,7 +45,7 @@ public class ListByDateAndCoordinates extends HttpServlet {
         ArrayList<Report> reports = null;
 
         try {
-            reports = database.listByDateAndCoordinates(start, end);
+            reports = database.listByDate(start, end);
         } catch (SQLException sqlException) {
             ServletException servletException = new ServletException(sqlException.getMessage());
             servletException.setStackTrace(sqlException.getStackTrace());
