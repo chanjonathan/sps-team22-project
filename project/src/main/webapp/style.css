@@ -12,7 +12,8 @@
     border: thin solid rgb(3, 3, 3);
     height: 500px;
     width: 500px;
-  }
+    margin: auto;
+}
 
   .button {
     display: inline-block;
@@ -65,3 +66,32 @@
     padding: 0;
 }
 
+h1 {
+    color: rgb(1, 1, 17);
+}
+
+.block {
+    display: block;
+    width: 100%;
+    border: none;
+    background-color: #ee8f62;
+    padding: 14px 28px;
+    font-size: 16px;
+    cursor: pointer;
+    text-align: center;
+}
+
+#panel-container {
+    width: 100%;
+    overflow: hidden;
+}
+
+#left-panel {
+    width: 50%;
+    float: left;
+
+}
+
+#right-panel {
+    margin-left: 50%;
+}
