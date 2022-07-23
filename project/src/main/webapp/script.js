@@ -177,8 +177,8 @@ async function placeMarkers() {
     const reports = await fetchedJSON.json();
 
     for (let i = 0; i < reports.length; i++) {
-        let latitude = parseFloat(reports[i].latitude)
-        let longitude = parseFloat(reports[i].longitude)
+        let latitude = parseFloat(reports[i].latitude);
+        let longitude = parseFloat(reports[i].longitude);
         let location = {lat: latitude, lng: longitude};
         console.log(location);
         let marker = new google.maps.Marker({
@@ -208,41 +208,15 @@ async function placeMarkers() {
 }
 
 async function DeleteMarker(id) {
-//     var deleteForm = document.createElement("FORM");
-//     deleteForm.setAttribute("id","delete-form");
-//     document.body.appendChild(deleteForm);
-
-// // this will create a new FORM which is mapped to the Java Object of myForm, with an id of TestForm. Equivalent to: <form id="TestForm"></form>
-
-//     var deleteInput = document.createElement("INPUT");
-//     deleteInput.setAttribute("id","entry-id");
-//     deleteInput.setAttribute("type","text");
-//     deleteInput.setAttribute("name","entryID");
-//     deleteInput.setAttribute("value", id);
-//     document.getElementById("delete-form").appendChild(deleteInput);
-
-// // To submit the form:
-//     deleteForm.method = "POST";
-//     deleteForm.action = "/delete";  // or "response.php"
-//     deleteForm.submit();
-    // await fetch('/delete?' + new URLSearchParams({entryID: id,}), {method: "POST"})
-
-        var data = {entryID:id};
-
-        await fetch('/delete?' + new URLSearchParams({entryID: id,}) , {method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-        });
-    alert("Marker Deleted");
-    
+    await fetch('/delete?' + new URLSearchParams({entryID: id}), {method: "DELETE"})
+    alert("Report Deleted");
     placeMarkers();
 }
-
-window.createMap = createMap
 
 function initialize() {
     fillDateTimes();
     createMap();
     placeMarkers();
 }
+
+window.initialize = initialize

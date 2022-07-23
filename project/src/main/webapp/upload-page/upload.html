@@ -16,7 +16,7 @@
         </a>
         <center>
             <h1>Upload a report!</h1>
-            <form action="/report-handler" method="POST" enctype="multipart/form-data">
+            <form action="/upload" method="POST" enctype="multipart/form-data">
             <!-- <form action="/report-upload" method="POST" enctype="multipart/form-data"></form> -->
                 <p>Please upload a quick description of the collision:</p>
                 <textarea name="text-input">E.g. date, time-of-day, car types of those involved, etc.</textarea>
@@ -59,7 +59,7 @@
             <script
               src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBH_GoSj-x7Nzn-YwkQg2KBIZIGy59Uan0&region=US&language=en&callback=initAutocomplete&libraries=places&v=weekly"
             ></script>
-            <button>Submit</button>
+            <button class = "button">Submit</button>
             <br/><br/>
         </form>
       </div>
