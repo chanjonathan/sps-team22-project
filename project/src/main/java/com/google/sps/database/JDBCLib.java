@@ -25,7 +25,7 @@ public class JDBCLib {
                 report.contactDetails + "\")";
 
         statement.executeUpdate(InsertReportQuery, Statement.RETURN_GENERATED_KEYS);
-        ResultSet rs= statement.getGeneratedKeys();
+        ResultSet rs = statement.getGeneratedKeys();
         String entryID = "";
         if (rs.next()) {
             long entry = rs.getLong(1);
@@ -39,8 +39,6 @@ public class JDBCLib {
                     "values (\"" + img + "\"," + entryID + ");";
             statement.executeUpdate(InsertImageQuery);
         }
-
-        statement.executeUpdate(Query);
     }
 
     // Description: print every entry in both tables
@@ -49,11 +47,9 @@ public class JDBCLib {
         String QUERY = "SELECT * FROM collisionReportsPro";
         String QUERY1 = "SELECT * FROM imageAddresses";
 
-        Connection connection = DriverManager.getConnection(url,
-                user, password);
+        Connection connection = DriverManager.getConnection(url, user, password);
 
         Statement statement = connection.createStatement();
-
         ResultSet resultSet = statement.executeQuery(QUERY);
 
         while (resultSet.next()) {
@@ -61,21 +57,19 @@ public class JDBCLib {
             System.out.println("title: " + resultSet.getString("title"));
             System.out.println("latitude: " + resultSet.getString("latitude"));
             System.out.println("longitude: " + resultSet.getString("longitude"));
-            System.out.println("reportDate: " +resultSet.getTimestamp("reportDate"));
+            System.out.println("reportDate: " + resultSet.getTimestamp("reportDate"));
             System.out.println("reportDescription:　" + resultSet.getString("reportDescription"));
             System.out.println("contactDetails： " + resultSet.getString("contactDetails"));
             System.out.println();
         }
-
         Statement statement1 = connection.createStatement();
 
         ResultSet resultSet1 = statement1.executeQuery(QUERY1);
         while (resultSet1.next()) {
             System.out.println("imageID: " + resultSet1.getString("imageID"));
-            System.out.println("imageURL: "+ resultSet1.getString("imageURL"));
-            System.out.println("entryID: "+ resultSet1.getString("entryID"));
+            System.out.println("imageURL: " + resultSet1.getString("imageURL"));
+            System.out.println("entryID: " + resultSet1.getString("entryID"));
             System.out.println();
-
         }
     }
 
@@ -98,7 +92,7 @@ public class JDBCLib {
                 "SET title = \"" + report.title + "\", latitude = \"" + report.latitude + "\", longitude = \"" +
                 report.longitude + "\", reportDescription = \"" + report.description +
                 "\", reportDate = \"" + report.date +
-                "\", contactDetails = \"" + report.contactDetails+ "\"\n" +
+                "\", contactDetails = \"" + report.contactDetails + "\"\n" +
                 "WHERE entryID = " + report.entryID + ";";
 
         String DELETE_IMAGE_URL = "delete from imageAddresses where entryID = " + report.entryID;
@@ -114,7 +108,6 @@ public class JDBCLib {
                     "values (\"" + img + "\"," + report.entryID + ");";
             statement.executeUpdate(InsertImageQuery);
         }
-
     }
 
 
@@ -173,7 +166,6 @@ public class JDBCLib {
             String GET_URLS = "SELECT * FROM imageAddresses WHERE entryID = " + entryID;
 
             Statement statement1 = connection.createStatement();
-
             ResultSet resultSet1 = statement1.executeQuery(GET_URLS);
 
             while (resultSet1.next()) {
@@ -183,9 +175,8 @@ public class JDBCLib {
 
             Report report = new Report(title, latitude, longitude,
                     reportDate, reportDescription, contactDetails, URLs, entryID);
-                    
-            reports.add(report);
 
+            reports.add(report);
         }
         return reports;
     }
@@ -194,7 +185,6 @@ public class JDBCLib {
     public ArrayList<Report> listByDateAndCoordinates(String start, String end) throws SQLException {
         String query = "SELECT * FROM collisionReportsPro " +
                 "WHERE reportDate between '" + start + "'  and   '" + end + "';";
-
 
         ArrayList<Report> reports = new ArrayList<>();
 
@@ -224,16 +214,14 @@ public class JDBCLib {
             Report report = new Report(title, latitude, longitude,
                     reportDate, reportDescription, contactDetails, URLs, entryID);
 
-
             reports.add(report);
         }
         return reports;
-
     }
 
     // return the reports at a given coordinate
     public ArrayList<Report> listByCoordinates(String latitude, String longitude) throws SQLException {
-        String query = "select * from collisionReportsPro where latitude = " + latitude+ " AND longitude = " + longitude;
+        String query = "select * from collisionReportsPro where latitude = " + latitude + " AND longitude = " + longitude;
 
         ArrayList<Report> reports = new ArrayList<>();
 

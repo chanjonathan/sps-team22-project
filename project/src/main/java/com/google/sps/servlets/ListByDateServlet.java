@@ -45,7 +45,7 @@ public class ListByDateServlet extends HttpServlet {
         ArrayList<Report> reports = null;
 
         try {
-            reports = database.listByDate(start, end);
+            reports = database.listByDateAndCoordinates(start, end);
         } catch (SQLException sqlException) {
             ServletException servletException = new ServletException(sqlException.getMessage());
             servletException.setStackTrace(sqlException.getStackTrace());
