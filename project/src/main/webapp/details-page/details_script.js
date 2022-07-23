@@ -20,25 +20,8 @@ function GetURLParameter(sParam) {
 async function loadDetails() {
     const entryID = GetURLParameter("entryID");
 
-    // const fetchedJSON = await fetch("/get-by-id?entryID=" + entryID);
-    // const report = await fetchedJSON.json();
-
-    const report = {
-        "title": "Title1",
-        "latitude": "10",
-        "longitude": "10",
-        "date": "2011-01-01 23:41:13",
-        "description": "description1 description1 description1 description1 description1",
-        "contactDetails": "email1@email.com",
-        "imageURLs":
-            [
-                "https://storage.googleapis.com/jchan-sps-summer22.appspot.com/dt3nf0gjl1f71.webp",
-                "https://storage.googleapis.com/jchan-sps-summer22.appspot.com/t3bcpr3iwye51.png",
-                "https://storage.googleapis.com/jchan-sps-summer22.appspot.com/wmyz67k8np271.webp",
-                "https://storage.googleapis.com/jchan-sps-summer22.appspot.com/xltved0lpvy61.webp"
-            ],
-        "entryID": "35"
-    }
+    const fetchedJSON = await fetch("/get-by-id?entryID=" + entryID);
+    const report = await fetchedJSON.json();
 
     document.getElementById("title-container").innerText = report.title;
     document.getElementById("date-container").innerText = new Date(report.date).toDateString();

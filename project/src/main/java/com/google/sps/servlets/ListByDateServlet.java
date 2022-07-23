@@ -56,6 +56,4 @@ public class ListByDateServlet extends HttpServlet {
         response.setContentType("text/html;");
         response.getWriter().println(jsonReport);
     }
-
-
 }
