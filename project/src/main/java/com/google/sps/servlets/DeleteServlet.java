@@ -31,7 +31,7 @@ public class DeleteServlet extends HttpServlet {
     }
 
     @Override
-    public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+    public void doDelete(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         String entryID = http.getParameter(request, "entryID", "");
 
         try {
@@ -41,6 +41,5 @@ public class DeleteServlet extends HttpServlet {
             servletException.setStackTrace(sqlException.getStackTrace());
             throw servletException;
         }
-        //response.sendRedirect("index.html");
     }
 }
