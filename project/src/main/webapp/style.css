@@ -15,7 +15,7 @@
     margin: auto;
 }
 
-  .button {
+.button {
     display: inline-block;
     border-radius: 20px;
     background-color: #140a01;
@@ -28,39 +28,40 @@
     transition: all 0.5s;
     cursor: pointer;
     margin: 5px;
-    border:none;
-    outline:none;
-  }
-  
-  .button span {
+    border: none;
+    outline: none;
+}
+
+.button span {
     cursor: pointer;
     display: inline-block;
     position: relative;
     transition: 0.5s;
-  }
-  
-  .button span:after {
+}
+
+.button span:after {
     content: '\00bb';
     position: absolute;
     opacity: 0;
     top: 0;
     right: -20px;
     transition: 0.5s;
-  }
-  
-  .button:hover span {
+}
+
+.button:hover span {
     padding-right: 25px;
-  }
-  
-  .button:hover span:after {
+}
+
+.button:hover span:after {
     opacity: 1;
     right: 0;
-  }
-  /* 
-   * Optional: Makes the sample page fill the window. 
-   */
-  html,
-  body {
+}
+
+/*
+ * Optional: Makes the sample page fill the window.
+ */
+html,
+body {
     height: 100%;
     margin: 0;
     padding: 0;

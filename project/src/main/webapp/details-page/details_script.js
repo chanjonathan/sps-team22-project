@@ -30,8 +30,8 @@ async function loadDetails() {
 
     document.getElementById("delete-button").addEventListener("click", deletePost);
 
-    latitude = parseInt(report.latitude);
-    longitude = parseInt(report.longitude);
+    latitude = parseFloat(report.latitude);
+    longitude = parseFloat(report.longitude);
 }
 
 async function deletePost() {
