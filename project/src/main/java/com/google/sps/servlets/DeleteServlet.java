@@ -1,7 +1,7 @@
 package com.google.sps.servlets;
 
 import com.google.sps.database.JDBCLib;
-import com.google.sps.utilities.*;
+import com.google.sps.utilities.Http;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
@@ -31,7 +31,7 @@ public class DeleteServlet extends HttpServlet {
     }
 
     @Override
-    public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+    public void doDelete(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         String entryID = http.getParameter(request, "entryID", "");
 
         try {
@@ -41,18 +41,5 @@ public class DeleteServlet extends HttpServlet {
             servletException.setStackTrace(sqlException.getStackTrace());
             throw servletException;
         }
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-        //response.sendRedirect("index.html");
-=======
-
-=======
->>>>>>> 2fc9db1 (added a confrimation for the deletion)
-        response.sendRedirect("index.html");
->>>>>>> 93dcee5 (fixing deleteMarker()))
-=======
-        //response.sendRedirect("index.html");
->>>>>>> 9d010a8 (able to delete the marker without refreshing to the original date)
     }
 }
