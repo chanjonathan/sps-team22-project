@@ -1,11 +1,16 @@
 #content {
     margin: auto;
-    width: 650px;
+    width: 1000px;
 }
 
 body {
     margin: 0;
     padding: 0;
+}
+
+* {
+    font-family: Helvetica;
+    font-size: 104%;
 }
 
 .sign-up-form {
@@ -19,8 +24,8 @@ body {
 }
 
 .sign-up-form h1 {
-    color: #101111;
-    margin-bottom: 30px;
+    color: #202c3e;
+    font-size: 200%;
 }
 
 .input-box {

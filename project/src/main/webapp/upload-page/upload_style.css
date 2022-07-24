@@ -1,19 +1,13 @@
 /* PAGE CONTENT */
 #content {
-    margin-left: auto;
-    margin-right: auto;
-    width: 1200px;
-    background-color: white;
+    margin: auto;
+    width: 1000px;
 }
+
 
 #report-container {
     margin-top: 20px;
     width: 1200px;
-}
-
-.inline-textbox, textarea {
-    width: 1000px;
-    display: inline-block;
 }
 
 img {
@@ -68,17 +62,10 @@ img {
     right: 0;
 }
 
-html,
-body {
+html, body {
     height: 100%;
     margin: 0;
     padding: 0;
-}
-
-#description {
-    font-family: Roboto;
-    font-size: 15px;
-    font-weight: 300;
 }
 
 #infowindow-content .title {
@@ -125,12 +112,12 @@ body {
 #pac-input {
     background-color: #fff;
     font-family: Roboto;
-    font-size: 15px;
+    font-size: 200%;
     font-weight: 300;
-    margin-left: 12px;
     padding: 0 11px 0 13px;
     text-overflow: ellipsis;
     width: 400px;
+    margin: 12px;
 }
 
 #pac-input:focus {
@@ -160,4 +147,53 @@ body {
 
 .title {
     width: 60%
+}
+
+* {
+    font-family: Helvetica;
+    font-size: 102%;
+}
+
+h1 {
+    color: #202c3e;
+    font-size: 400%;
+    margin-bottom: -15px;
+}
+
+h2 {
+    color: #202c3e;
+    font-size: 250%;
+}
+
+#description {
+    width: 90%;
+    height: 100px;
+    padding: 5px 5px;
+    margin: 4px 0;
+    box-sizing: border-box;
+}
+
+#image-container {
+    width: 400px;
+    height: auto;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+#coordinates {
+    visibility: hidden;
+    position: absolute;
+}
+
+.left-panel {
+    padding: 10px;
+    text-align: right;
+    width: 20%;
+    float: left;
+}
+
+.right-panel {
+    padding: 10px;
+    margin-left: 20%;
 }

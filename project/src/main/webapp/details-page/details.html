@@ -3,10 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="theme-color" content="#0000000">
-    <title>Case Details</title>
+    <title>Report Details</title>
+    <link rel="icon" type="image/x-icon" href="../images/icon.png">
     <link rel="stylesheet" href="details_style.css">
     <script type="module" src="../map/map.js"></script>
     <script type="module" src="details_script.js"></script>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
     <script defer
             src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDbskcye9gWYfKt8nHzuRaPudtpo2yr0so&region=US&language=en&callback=initialize">
     </script>
@@ -22,7 +24,7 @@
         </div>
         <div id="right-panel">
             <div id="details-container">
-                <h1 id="title-container"></h1>
+                <h2 id="title-container"></h2>
                 <p id="date-container"></p>
                 <p id="description-container"></p>
                 <p id="contact-details-container"></p>

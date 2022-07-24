@@ -1,7 +1,6 @@
 #content {
-    margin-left: auto;
-    margin-right: auto;
-    width: 650px;
+    margin: auto;
+    width: 1000px;
 }
 
 #greeting-container {
@@ -10,8 +9,8 @@
 
 #map {
     border: thin solid rgb(3, 3, 3);
-    height: 500px;
-    width: 500px;
+    height: 700px;
+    width: 100%;
     margin: auto;
 }
 
@@ -60,15 +59,34 @@
 /*
  * Optional: Makes the sample page fill the window.
  */
-html,
-body {
+html, body {
     height: 100%;
     margin: 0;
     padding: 0;
 }
 
 h1 {
-    color: rgb(1, 1, 17);
+    color: #202c3e;
+    font-size: 350%;
+    margin-bottom: -15px;
+}
+
+h3 {
+    color: #202c3e;
+    font-size: 120%;
+}
+
+* {
+    font-family: Helvetica;
+    font-size: 104%;
+}
+
+#start-time, #end-time {
+    font-size: 80%;
+    display: block;
+    padding: 0.5rem 1rem;
+    box-sizing: border-box;
+    display: inline-block;
 }
 
 .block {
@@ -83,16 +101,39 @@ h1 {
 }
 
 #panel-container {
-    width: 100%;
     overflow: hidden;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 #left-panel {
     width: 50%;
     float: left;
-
+    text-align: center;
 }
 
 #right-panel {
     margin-left: 50%;
+    text-align: center;
+}
+
+#sign-up {
+    float: right;
+    margin: 10px;
+}
+
+#new-report {
+    margin-left: 10px;
+}
+
+#logo {
+    position: absolute;
+    height: 100px;
+    margin-left: 10px;
+    margin-top: 50px;
+}
+
+#header {
+    margin: auto;
+    text-align: center;
 }

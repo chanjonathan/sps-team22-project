@@ -1,6 +1,7 @@
 package com.google.sps.servlets;
 
 //Database
+
 import com.google.sps.utilities.Http;
 
 import com.google.cloud.storage.*;
@@ -27,7 +28,7 @@ import java.sql.SQLException;
 @WebServlet("/upload")
 @MultipartConfig
 public class UploadReport extends HttpServlet {
-    
+
     JDBCLib database;
     Gson gson;
     Http http;
@@ -39,7 +40,7 @@ public class UploadReport extends HttpServlet {
         //Retrieves all the data from the submitted form
         String title = http.getParameter(request, "title", "");
         String latitude = http.getParameter(request, "latitude", "");
-        String longitude =  http.getParameter(request, "longitude", "");
+        String longitude = http.getParameter(request, "longitude", "");
         String date = http.getParameter(request, "time", "");
         String description = http.getParameter(request, "description", "");
         String contactDetails = http.getParameter(request, "phone", "");
@@ -81,10 +82,9 @@ public class UploadReport extends HttpServlet {
      * Uploads a file to Cloud Storage and returns the uploaded file's URL.
      */
     private static String uploadToCloudStorage(String fileName, InputStream fileInputStream) {
-        String projectId = "michelleli";
-        String bucketName = "michelleli-sps-summer22.appspot.com";
-        Storage storage =
-                StorageOptions.newBuilder().setProjectId(projectId).build().getService();
+        String projectId = "jchan";
+        String bucketName = "jchan-sps-summer22.appspot.com";
+        Storage storage = StorageOptions.newBuilder().setProjectId(projectId).build().getService();
         BlobId blobId = BlobId.of(bucketName, fileName);
         BlobInfo blobInfo = BlobInfo.newBuilder(blobId).build();
 
