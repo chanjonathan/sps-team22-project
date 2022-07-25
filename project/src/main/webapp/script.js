@@ -12,6 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+
 var map;
 var markers = [];
 
@@ -161,10 +162,12 @@ function createMap() {
 
 // retrieves reporters from server and places corresponding markers
 async function placeMarkers() {
+
     for (let i = 0; i < markers.length; i++) {
         markers[i].setMap(null);
         markers[i] = null;
     }
+
     markers = [];
 
     const start = document.getElementById("start-time").value;
@@ -174,10 +177,10 @@ async function placeMarkers() {
     const reports = await fetchedJSON.json();
 
     for (let i = 0; i < reports.length; i++) {
-        let latitude = parseInt(reports[i].latitude);
-        let longitude = parseInt(reports[i].longitude);
+        let latitude = parseFloat(reports[i].latitude);
+        let longitude = parseFloat(reports[i].longitude);
         let location = {lat: latitude, lng: longitude};
-        
+        console.log(location);
         let marker = new google.maps.Marker({
             position: new google.maps.LatLng(location),
             map: map,
@@ -186,21 +189,29 @@ async function placeMarkers() {
         })
 
         var infoWindow = new google.maps.InfoWindow();
-        //Attach click event to the marker.      
+
+        //Attach click event to the marker.
         google.maps.event.addListener(marker, "click", function (e) {
             //Wrap the content inside an HTML DIV in order to set height and width of InfoWindow.
-            var contents = "<div style = 'width:200px;min-height:40px'>" + reports[i].description + "</div>";
-            contents += '<img src= "' + reports[i].imageURL +  '"></a>';
+            var description = reports[i].description;
+            var contents = "<div style='font-weight: bold '>" + reports[i].title + "</div><br>";
+            contents += "<div style = 'width:100%;min-height:40px'>" + description.substring(0,Math.min(100,description.length)) + "....</div>";
+            contents += '<img src= "' + reports[i].imageURL +  '"style = "width:100%"></a><div><button  onclick = "DeleteMarker(' + reports[i].entryID + ')" >Delete</button><a href="/details-page/details.html?entryID=' + reports[i].entryID + '"><button >Details</button></div></a>';
             infoWindow.setContent(contents);
             infoWindow.open(map, marker);
-        })
+
+        })       
 
         marker.report = reports[i];
         markers.push(marker);
     }
 }
 
-window.createMap = createMap
+async function DeleteMarker(id) {
+    await fetch('/delete?' + new URLSearchParams({entryID: id}), {method: "DELETE"})
+    alert("Report Deleted");
+    placeMarkers();
+}
 
 function initialize() {
     fillDateTimes();
@@ -208,3 +219,4 @@ function initialize() {
     placeMarkers();
 }
 
+window.initialize = initialize

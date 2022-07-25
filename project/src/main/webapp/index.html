@@ -3,19 +3,56 @@
 <head>
   <meta charset="UTF-8">
   <meta name = "theme-color" content = "#0000000">
-      <title>Car Collision</title>
+      <title>Appeal No More</title>
+      <link rel="icon" type="image/x-icon" href="image/icon.png">
   <link rel="stylesheet" href="style.css">
   <script src="script.js"></script>
-  <script async src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDbskcye9gWYfKt8nHzuRaPudtpo2yr0so&region=US&language=en&callback=initMap"></script>
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
+  <script async src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDbskcye9gWYfKt8nHzuRaPudtpo2yr0so&region=US&language=en&callback=initialize"></script>
 </head>
 
 <body>
 <div id="content">
-    <h1 style= "color: rgb(63, 63, 209);">Car Collision Map:</h1>
-    <form action="upload-page/upload.html">
-      <input type="submit" value="Upload an Incident Report" />
+    <form action="/sign-in/sign_in.html">
+        <button id="sign-up" class="button" style="vertical-align:middle">
+            Sign Up
+        </button>
     </form>
-    <div style="width: 100%; overflow: hidden;">
+    <br>
+    <img id="logo" src="image/icon.png">
+    <div id="header">
+        <h1>Appeal No More</h1>
+        <h3>Your Reverse Witness Appeal Hub</h3>
+    </div>
+
+    <div id="panel-container">
+        <div id="left-panel">
+            <h3>From:
+                <input type="datetime-local" id="start-time" onblur=placeMarkers()>
+            </h3>
+        </div>
+        <div id="right-panel">
+            <h3>To:
+                <input type="datetime-local" id="end-time" onblur=placeMarkers()>
+            </h3>
+        </div>
+    </div>
+
+    <div id="map"></div>
+    <br>
+    <form action="/upload-page/upload.html">
+        <button id="new-report" class="button" style="vertical-align:middle"><span>New Report</span></button>
+    </form>
+</body>
+</html>
+    <!-- <span>
+        <form action="/sign-in/sign_in.html">
+            <button class="button" style="vertical-align:middle"><span>Sign up</span></button>
+        </form>
+        <br>
+    </span> -->
+
+    <!-- <div style="width: 100%; overflow: hidden;">
         <div style="width: 50%; float: left;">
             <h3>Start Time:
                 <input type="datetime-local" id="start-time" onblur=placeMarkers()>
@@ -26,12 +63,16 @@
                 <input type="datetime-local" id="end-time" onblur=placeMarkers()>
             </h3>
         </div>
+    </div> -->
+
+    <!-- <div onload="initialize();">
+        <div id="map"></div><br>
     </div>
 
-    <div onload="initialize();">
-        <div id="map"></div>
-    </div>
+    <form action="/upload-page/upload.html">
+        <input type="submit" value="Upload an Incident Report"/> -->
+        <!-- <button class="button" style="vertical-align:middle"><span>Upload Report</span></button>
+    </form>
 </div>
-
 </body>
-</html>
+</html> -->
