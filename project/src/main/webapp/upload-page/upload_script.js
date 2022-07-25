@@ -42,7 +42,6 @@ function initAutocomplete() {
 
         places.forEach((place) => {
             if (!place.geometry || !place.geometry.location) {
-                console.log("Returned place contains no geometry");
                 return;
             }
 
@@ -74,7 +73,6 @@ function initAutocomplete() {
 
         // Gets coords for the user's choice
         const myJSON = JSON.stringify(mapsMouseEvent.latLng.toJSON(), null, 2);
-        console.log(myJSON)
 
         //Then create a new marker for user's choice
         markers.push(
@@ -99,23 +97,48 @@ function initAutocomplete() {
     setFocus(map);
 }
 
+function deleteImage(imageContainer, oldInput) {
+    imageContainer.remove();
+    oldInput.remove();
+
+    let imagesContainer = document.getElementById('images-container');
+    if (imagesContainer.childElementCount == 0) {
+        imagesContainer.setAttribute("style", "display: none");
+    }
+}
+
 function loadImage(event) {
+    let imageContainer = document.createElement("a");
+
     let image = document.createElement("img");
     image.src = URL.createObjectURL(event.target.files[0]);
-    let imageContainer = document.getElementById('image-container');
-    imageContainer.setAttribute("style", "display: ''");
+    image.setAttribute("class", "Image")
     imageContainer.appendChild(image);
-    imageContainer.scrollLeft = imageContainer.scrollWidth;
+
+    let overlay = document.createElement("img");
+    overlay.src = "../images/close.png";
+    overlay.setAttribute("class", "Overlay")
+    imageContainer.appendChild(overlay);
+
+    let imagesContainer = document.getElementById('images-container');
+    imagesContainer.setAttribute("style", "display: ''");
+    imagesContainer.appendChild(imageContainer);
+    imagesContainer.scrollLeft = imagesContainer.scrollWidth;
 
     let uploadContainer = document.getElementById('image-upload-container');
     let uploadInputs = uploadContainer.getElementsByTagName('*');
     for (let i = 0; i < uploadInputs.length; ++i) {
-        uploadInputs[i].setAttribute("style","display: none;");
+        uploadInputs[i].setAttribute("style", "display: none;");
     }
     let newInput = document.createElement("input");
-    newInput.setAttribute("type","file");
-    newInput.setAttribute("name","images");
+    newInput.setAttribute("type", "file");
+    newInput.setAttribute("name", "images");
     uploadContainer.appendChild(newInput);
+
+    let oldInput = event.target;
+    overlay.addEventListener("click", function () {
+        deleteImage(imageContainer, oldInput)
+    });
 }
 
 function addListeners() {

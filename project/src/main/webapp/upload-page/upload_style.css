@@ -186,13 +186,21 @@ h2 {
     margin-left: 20%;
 }
 
-#image-container {
+#images-container {
     overflow: auto;
     white-space: nowrap;
     width: 100%;
 }
 
-#image-container img {
+.Image {
     height: 250px;
     padding: 10px;
+}
+
+.Overlay {
+    vertical-align: top;
+    position: relative;
+    height: 25px;
+    top: 20px;
+    right: 45px;
 }
