@@ -10,10 +10,6 @@
     width: 1200px;
 }
 
-img {
-    height: 400px;
-}
-
 
 /* MAP DETAILS */
 #map {
@@ -173,14 +169,6 @@ h2 {
     box-sizing: border-box;
 }
 
-#image-container {
-    width: 400px;
-    height: auto;
-    display: block;
-    margin-right: auto;
-    margin-bottom: 10px;
-}
-
 #coordinates {
     visibility: hidden;
     position: absolute;
@@ -196,4 +184,15 @@ h2 {
 .right-panel {
     padding: 10px;
     margin-left: 20%;
+}
+
+#image-container {
+    overflow: auto;
+    white-space: nowrap;
+    width: 100%;
+}
+
+#image-container img {
+    height: 250px;
+    padding: 10px;
 }

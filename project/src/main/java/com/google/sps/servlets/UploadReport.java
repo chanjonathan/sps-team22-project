@@ -75,11 +75,13 @@ public class UploadReport extends HttpServlet {
             String fileName = filePart.getSubmittedFileName();
             InputStream fileInputStream = filePart.getInputStream();
 
-            String uploadedFileUrl = uploadToCloudStorage(fileName, fileInputStream);
-            if (uploadedFileUrl == null) {
-                uploadedFileUrl = "";
+            if (fileName.compareTo("") != 0) {
+                String uploadedFileUrl = uploadToCloudStorage(fileName, fileInputStream);
+                if (uploadedFileUrl == null) {
+                    uploadedFileUrl = "";
+                }
+                uploadedFileUrls.add(uploadedFileUrl);
             }
-            uploadedFileUrls.add(uploadedFileUrl);
         }
         return uploadedFileUrls;
     }

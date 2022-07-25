@@ -100,9 +100,22 @@ function initAutocomplete() {
 }
 
 function loadImage(event) {
-    let image = document.getElementById('image-container');
+    let image = document.createElement("img");
     image.src = URL.createObjectURL(event.target.files[0]);
-    image.setAttribute("style", "display: ''");
+    let imageContainer = document.getElementById('image-container');
+    imageContainer.setAttribute("style", "display: ''");
+    imageContainer.appendChild(image);
+    imageContainer.scrollLeft += imageContainer.scrollWidth;
+
+    let uploadContainer = document.getElementById('image-upload-container');
+    let uploadInputs = uploadContainer.getElementsByTagName('*');
+    for (let i = 0; i < uploadInputs.length; ++i) {
+        uploadInputs[i].setAttribute("style","display: none;");
+    }
+    let newInput = document.createElement("input");
+    newInput.setAttribute("type","file");
+    newInput.setAttribute("name","images");
+    uploadContainer.appendChild(newInput);
 }
 
 function addListeners() {
