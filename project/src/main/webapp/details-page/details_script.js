@@ -23,6 +23,8 @@ async function loadDetails() {
     const fetchedJSON = await fetch("/get-by-id?entryID=" + entryID);
     report = await fetchedJSON.json();
 
+    let date = new Date(report.date);
+
     document.getElementById("title-container").innerText = report.title;
     document.getElementById("date-container").innerText = date.toDateString() + ", " + date.toLocaleTimeString();
     document.getElementById("description-container").innerText = report.description;

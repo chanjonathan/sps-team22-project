@@ -48,7 +48,7 @@ async function placeMarkers() {
         let latitude = parseFloat(reports[i].latitude);
         let longitude = parseFloat(reports[i].longitude);
         let location = {lat: latitude, lng: longitude};
-        console.log(location);
+
         let marker = new google.maps.Marker({
             position: new google.maps.LatLng(location),
             map: map,
@@ -69,7 +69,7 @@ async function placeMarkers() {
                 '<a href="/details-page/details.html?entryID=' + reports[i].entryID + '">' +
                 '<button >Details</button>' +
                 '</a>' +
-                '<button onclick = "DeleteMarker(' + reports[i].entryID + ')" style="float: right">Delete</button>' +
+                '<button onclick = "deleteMarker(' + reports[i].entryID + ')" style="float: right">Delete</button>' +
                 '</div>';
             infoWindow.setContent(contents);
             infoWindow.open(map, marker);
@@ -79,7 +79,7 @@ async function placeMarkers() {
     }
 }
 
-async function DeleteMarker(id) {
+async function deleteMarker(id) {
     await fetch('/delete?' + new URLSearchParams({entryID: id}), {method: "DELETE"})
     alert("Report Deleted");
     placeMarkers();
@@ -91,5 +91,6 @@ function initialize() {
     placeMarkers();
 }
 
+window.deleteMarker = deleteMarker;
 window.initialize = initialize
 
