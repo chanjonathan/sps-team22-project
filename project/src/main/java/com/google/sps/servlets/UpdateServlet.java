@@ -2,6 +2,7 @@ package com.google.sps.servlets;
 
 import com.google.cloud.storage.*;
 import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.google.sps.database.JDBCLib;
 import com.google.sps.objects.Report;
 import com.google.sps.utilities.Http;
@@ -15,7 +16,11 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.Part;
 import java.io.IOException;
 import java.io.InputStream;
+import java.lang.reflect.Type;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Handles requests sent to the /text-form-handler URL. Takes given list and tries to sort and return it.
@@ -47,18 +52,14 @@ public class UpdateServlet extends HttpServlet {
         String description = http.getParameter(request, "description", "");
         String contactDetails = http.getParameter(request, "contactDetails", "");
         String entryID = http.getParameter(request, "entryID", "");
+        String jsonImageURLs = http.getParameter(request, "imageURLs", "");
 
-        String imageURL = null;
-        Part filePart = request.getPart("image");
-        if (filePart != null) {
-            String fileName = filePart.getSubmittedFileName();
-            InputStream fileInputStream = filePart.getInputStream();
-            imageURL = uploadToCloudStorage(fileName, fileInputStream);
-        } else {
-            imageURL = http.getParameter(request, "imageURL", "");
-        }
+        Type listType = new TypeToken<ArrayList<String>>() {}.getType();
+        ArrayList<String> imageURLs = gson.fromJson(jsonImageURLs, listType);
 
-        Report report = new Report(title, latitude, longitude, date, description, contactDetails, imageURL, entryID);
+        addImageURLs(request, imageURLs);
+
+        Report report = new Report(title, latitude, longitude, date, description, contactDetails, imageURLs, entryID);
 
         try {
             database.update(report);
@@ -66,6 +67,21 @@ public class UpdateServlet extends HttpServlet {
             ServletException servletException = new ServletException(sqlException.getMessage());
             servletException.setStackTrace(sqlException.getStackTrace());
             throw servletException;
+        }
+    }
+
+    private void addImageURLs(HttpServletRequest request, ArrayList<String> imageURLs) throws ServletException, IOException {
+        List<Part> fileParts = request.getParts().stream().
+                filter(part -> "images".equals(part.getName())).collect(Collectors.toList());
+        for (Part filePart : fileParts) {
+            String fileName = filePart.getSubmittedFileName();
+            InputStream fileInputStream = filePart.getInputStream();
+
+            String uploadedFileUrl = uploadToCloudStorage(fileName, fileInputStream);
+            if (uploadedFileUrl == null) {
+                uploadedFileUrl = "";
+            }
+            imageURLs.add(uploadedFileUrl);
         }
     }
 
