@@ -23,15 +23,53 @@
             <div id="map"></div>
         </div>
         <div id="right-panel">
-            <div id="details-container">
-                <h2 id="title-container"></h2>
+            <div class="View" id="details-container">
+                <h1 id="title-container"></h1>
                 <p id="date-container"></p>
                 <p id="description-container"></p>
                 <p id="contact-details-container"></p>
                 <img id="image-container" width="400">
             </div>
-            <!-- <button id="delete-button" type="button">Delete</button> -->
-            <button class="button" id="delete-button" type="button">Delete</button>
+            <div class="Edit" id="edit-container">
+                <p>
+                    <label for="edit-title-container">Title: </label>
+                    <input type="text" name="title" id="edit-title-container">
+                </p>
+                <p>
+                    <label for="edit-date-container">Time: </label>
+                    <input type="datetime-local" name="date" id="edit-date-container">
+                </p>
+                <p>
+                    <label for="edit-description-container">Description: </label>
+                    <textarea id="edit-description-container" name="description"></textarea>
+                </p>
+                <p>
+                    <label for="edit-contact-details-container">Contact Details: </label>
+                    <input type="text" id="edit-contact-details-container" name="contactDetails">
+                </p>
+                <p>
+                    <img id="edit-image-container" width="400">
+                    <input type="hidden" name="imageURL">
+                </p>
+                <p>
+                    <label for="new-image-upload-container">Upload a new image: </label>
+                    <input type="file" id="new-image-upload-container" name="image">
+                </p>
+            </div>
+            <div id="footer">
+                <a id="footer-left">
+                    <a class="View">
+                        <button id="edit-button" type="button">Edit</button>
+                    </a>
+                    <a class="Edit">
+                        <button id="save-button" type="button">Save</button>
+                        <button id="cancel-button" type="button">Cancel</button>
+                    </a>
+                </a>
+                <a id="footer-right">
+                    <button class="View" id="delete-button" type="button">Delete</button>
+                </a>
+            </div>
         </div>
     </div>
 </div>
