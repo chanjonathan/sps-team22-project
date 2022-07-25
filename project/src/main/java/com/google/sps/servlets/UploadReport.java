@@ -90,7 +90,7 @@ public class UploadReport extends HttpServlet {
      * Uploads a file to Cloud Storage and returns the uploaded file's URL.
      */
     private static String uploadToCloudStorage(String fileName, InputStream fileInputStream) {
-        fileName += System.currentTimeMillis();
+        fileName = System.currentTimeMillis() + fileName;
 
         String projectId = "jchan";
         String bucketName = "jchan-sps-summer22.appspot.com";

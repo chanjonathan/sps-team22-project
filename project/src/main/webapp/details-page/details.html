@@ -25,7 +25,7 @@
         <div id="right-panel">
             <div class="View" id="details-container">
                 <h2 id="title-container"></h2>
-                <p id="date-container"  ></p>
+                <p id="date-container"></p>
                 <p id="description-container"></p>
                 <p id="contact-details-container"></p>
                 <div id="images-container">
@@ -36,7 +36,7 @@
                 <div id="dots-container" style="text-align:center">
                 </div>
             </div>
-            <div class="Edit" id="edit-container">
+            <form class="Edit" id="edit-container">
                 <p>
                     <label for="edit-title-container">Title: </label>
                     <input type="text" name="title" id="edit-title-container">
@@ -53,15 +53,17 @@
                     <label for="edit-contact-details-container">Contact Details: </label>
                     <input type="text" id="edit-contact-details-container" name="contactDetails">
                 </p>
+
+                <div id="edit-images-container" style="display: none">
+                </div>
                 <p>
-                    <img id="edit-image-container" width="400">
-                    <input type="hidden" name="imageURL">
+                <label for="new-image-upload-container">Upload New Images: </label>
+                <div id="new-image-upload-container">
+                    <input type="file" name="images" class="Image-input">
+                </div>
                 </p>
-                <p>
-                    <label for="new-image-upload-container">Upload a new image: </label>
-                    <input type="file" id="new-image-upload-container" name="image">
-                </p>
-            </div>
+
+            </form>
             <div id="footer">
                 <a id="footer-left">
                     <a class="View">
@@ -73,7 +75,7 @@
                     </a>
                 </a>
                 <a id="footer-right">
-                    <div class="View" >
+                    <div class="View">
                         <button class="button" id="delete-button" type="button">Delete</button>
                     </div>
                 </a>

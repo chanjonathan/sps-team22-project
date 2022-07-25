@@ -54,10 +54,11 @@ public class UpdateServlet extends HttpServlet {
         String entryID = http.getParameter(request, "entryID", "");
         String jsonImageURLs = http.getParameter(request, "imageURLs", "");
 
-        Type listType = new TypeToken<ArrayList<String>>() {}.getType();
+        Type listType = new TypeToken<ArrayList<String>>() {
+        }.getType();
         ArrayList<String> imageURLs = gson.fromJson(jsonImageURLs, listType);
 
-        addImageURLs(request, imageURLs);
+        imageURLs = addImageURLs(request, imageURLs);
 
         Report report = new Report(title, latitude, longitude, date, description, contactDetails, imageURLs, entryID);
 
@@ -70,24 +71,31 @@ public class UpdateServlet extends HttpServlet {
         }
     }
 
-    private void addImageURLs(HttpServletRequest request, ArrayList<String> imageURLs) throws ServletException, IOException {
+    private ArrayList<String> addImageURLs(HttpServletRequest request, ArrayList<String> imageURLs) throws ServletException, IOException {
         List<Part> fileParts = request.getParts().stream().
                 filter(part -> "images".equals(part.getName())).collect(Collectors.toList());
         for (Part filePart : fileParts) {
+            if (filePart == null) {
+                throw new ServletException("filepart is null");
+            }
             String fileName = filePart.getSubmittedFileName();
             InputStream fileInputStream = filePart.getInputStream();
 
-            String uploadedFileUrl = uploadToCloudStorage(fileName, fileInputStream);
-            if (uploadedFileUrl == null) {
-                uploadedFileUrl = "";
+            if (fileName.compareTo("") != 0) {
+                String uploadedFileUrl = uploadToCloudStorage(fileName, fileInputStream);
+                if (uploadedFileUrl == null) {
+                    uploadedFileUrl = "";
+                }
+
+                imageURLs.add(uploadedFileUrl);
             }
-            imageURLs.add(uploadedFileUrl);
         }
+        return imageURLs;
     }
 
     private static String uploadToCloudStorage(String fileName, InputStream fileInputStream) {
-        fileName += System.currentTimeMillis();
-        
+        fileName = System.currentTimeMillis() + fileName;
+
         String projectId = "jchan-sps-summer22";
         String bucketName = "jchan-sps-summer22.appspot.com";
         Storage storage = StorageOptions.newBuilder().setProjectId(projectId).build().getService();

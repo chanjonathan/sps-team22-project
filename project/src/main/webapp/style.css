@@ -65,10 +65,20 @@ html, body {
     padding: 0;
 }
 
+* {
+    font-family: Helvetica;
+    font-size: 104%;
+}
+
 h1 {
     color: #202c3e;
     font-size: 350%;
     margin-bottom: -15px;
+}
+
+h2 {
+    color: #202c3e;
+    font-size: 200%;
 }
 
 h3 {
@@ -76,10 +86,7 @@ h3 {
     font-size: 120%;
 }
 
-* {
-    font-family: Helvetica;
-    font-size: 104%;
-}
+
 
 #start-time, #end-time {
     font-size: 80%;

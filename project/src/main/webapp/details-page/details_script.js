@@ -19,6 +19,27 @@ function GetURLParameter(sParam) {
     }
 }
 
+function resetDetails() {
+    let dotsContainer = document.getElementById("dots-container");
+    let dots = dotsContainer.getElementsByClassName("Dot");
+    while (dots.length > 0) {
+        dots[0].remove();
+    }
+    let dotsEnabled = dotsContainer.getElementsByClassName("Dot Enable");
+    while (dotsEnabled.length > 0) {
+        dotsEnabled[0].remove();
+    }
+
+    let imagesContainer = document.getElementById("images-container");
+    let images = imagesContainer.getElementsByClassName("Image");
+    while (images.length > 0) {
+        images[0].remove();
+    }
+
+    imagePosition = 0;
+    imagesLength = 0;
+}
+
 async function loadDetails() {
     const entryID = GetURLParameter("entryID");
 
@@ -36,14 +57,14 @@ async function loadDetails() {
     let imagesContainer = document.getElementById("images-container")
     let dotsContainer = document.getElementById("dots-container")
     for (let i = 0; i < imagesLength; i++) {
-        var image = document.createElement("IMG");
+        let image = document.createElement("IMG");
         image.setAttribute("class", "Image");
         image.setAttribute("width", "100%");
         image.setAttribute("src", report.imageURLs[i]);
 
         imagesContainer.appendChild(image);
 
-        var dot = document.createElement("SPAN");
+        let dot = document.createElement("SPAN");
         dot.setAttribute("class", "Dot");
         dot.setAttribute("onclick", "changeSlide(" + i.toString() + ")");
 
@@ -92,14 +113,55 @@ function setDetails() {
 }
 
 function editMode() {
+    resetEdit();
+    toggleMode();
+}
+
+function resetEdit() {
     document.getElementById("edit-title-container").value = report.title;
     document.getElementById("edit-date-container").value = report.date
     document.getElementById("edit-description-container").value = report.description;
     document.getElementById("edit-contact-details-container").value = report.contactDetails;
-    document.getElementById("edit-image-container").src = report.imageURL;
-    document.getElementById("new-image-upload-container").value = "";
 
-    toggleMode();
+    let imagesContainer = document.getElementById("edit-images-container");
+    let images = imagesContainer.getElementsByTagName('*');
+    while (images.length > 0) {
+        images[0].remove();
+    }
+    for (let i = 0; i < report.imageURLs.length; i++) {
+        let imageContainer = document.createElement("a");
+
+        let oldImage = document.createElement("img");
+        oldImage.src = report.imageURLs[i];
+        oldImage.setAttribute("class", "Image-old")
+        imageContainer.appendChild(oldImage);
+
+        let overlay = document.createElement("img");
+        overlay.src = "../images/close.png";
+        overlay.setAttribute("class", "Overlay")
+        imageContainer.appendChild(overlay);
+
+        let imagesContainer = document.getElementById('edit-images-container');
+        imagesContainer.setAttribute("style", "display: ''");
+        imagesContainer.appendChild(imageContainer);
+
+        overlay.addEventListener("click", function () {
+            deleteImage(imageContainer, null)
+        });
+    }
+
+    let uploadContainer = document.getElementById("new-image-upload-container");
+    let uploadInputs = uploadContainer.getElementsByTagName('*');
+    while (uploadInputs.length > 0) {
+        uploadInputs[0].remove();
+    }
+    let newInput = document.createElement("input");
+    newInput.setAttribute("type", "file");
+    newInput.setAttribute("class", "Image-input");
+    newInput.setAttribute("name", "images");
+    uploadContainer.appendChild(newInput);
+
+    imagesContainer.scrollLeft = imagesContainer.scrollWidth;
 }
 
 function toggleMode() {
@@ -114,13 +176,23 @@ function cancel() {
 }
 
 async function saveEdits() {
-    let image = null;
-    let data = new FormData()
+    // let data = new FormData()
+    // let imageInputs = document.getElementById("new-image-upload-container").getElementsByTagName("*")
+    // for (let i = 0; i < imageInputs.length; i++) {
+    //     let imageFile = imageInputs[i].files[0];
+    //     data.append('images', imageInputs[i].files[0]);
+    // }
 
-    if (document.getElementById("edit-image-container").src !== report.imageURL) {
-        image = document.getElementById("new-image-upload-container").files[0];
-        data.append('image', image)
+    let editContainer = document.getElementById("edit-container");
+    let data = new FormData(editContainer)
+
+    let oldImageURLs = [];
+    let imagesContainer = document.getElementById("edit-images-container");
+    let oldImages = imagesContainer.getElementsByClassName("Image-old");
+    for (let i = 0; i < oldImages.length; i++) {
+        oldImageURLs.push(oldImages[i].src);
     }
+    let jsonURLs = JSON.stringify(oldImageURLs);
 
     fetch('/put?' +
         new URLSearchParams(
@@ -131,11 +203,12 @@ async function saveEdits() {
                 date: document.getElementById("edit-date-container").value,
                 description: document.getElementById("edit-description-container").value,
                 contactDetails: document.getElementById("edit-contact-details-container").value,
-                imageURL: report.imageURL,
+                imageURLs: jsonURLs,
                 entryID: report.entryID,
             }),
         {method: "PUT", body: data}
     ).then(() => {
+        resetDetails();
         loadDetails().then(() => {
             toggleMode();
             placeMarker();
@@ -183,9 +256,52 @@ function placeMarker() {
     map.setZoom(13);
 }
 
+function deleteImage(imageContainer, oldInput) {
+    imageContainer.remove();
+    if (oldInput != null) {
+        oldInput.remove();
+    }
+
+    let imagesContainer = document.getElementById('images-container');
+    if (imagesContainer.childElementCount == 0) {
+        imagesContainer.setAttribute("style", "display: none");
+    }
+}
+
 function loadImage(event) {
-    let image = document.getElementById('edit-image-container');
-    image.src = URL.createObjectURL(event.target.files[0]);
+    let imageContainer = document.createElement("a");
+
+    let newImage = document.createElement("img");
+    newImage.src = URL.createObjectURL(event.target.files[0]);
+    newImage.setAttribute("class", "Image-new")
+    imageContainer.appendChild(newImage);
+
+    let overlay = document.createElement("img");
+    overlay.src = "../images/close.png";
+    overlay.setAttribute("class", "Overlay")
+    imageContainer.appendChild(overlay);
+
+    let imagesContainer = document.getElementById('edit-images-container');
+    imagesContainer.setAttribute("style", "display: ''");
+    imagesContainer.appendChild(imageContainer);
+    imagesContainer.scrollLeft = imagesContainer.scrollWidth;
+
+    let uploadContainer = document.getElementById('new-image-upload-container');
+    let uploadInputs = uploadContainer.getElementsByTagName('*');
+    for (let i = 0; i < uploadInputs.length; ++i) {
+        uploadInputs[i].setAttribute("style", "display: none;");
+    }
+    let newInput = document.createElement("input");
+    newInput.setAttribute("type", "file");
+    newInput.setAttribute("class", "Image-input");
+    newInput.setAttribute("name", "images");
+    uploadContainer.appendChild(newInput);
+
+    let oldInput = event.target;
+    overlay.addEventListener("click", function () {
+        deleteImage(imageContainer, oldInput)
+    });
+
 }
 
 function addListeners() {
@@ -199,8 +315,11 @@ function addListeners() {
 }
 
 function slideShow() {
-    var images = document.getElementsByClassName("Image");
-    var dots = document.getElementsByClassName("Dot");
+    let dotsContainer = document.getElementById("dots-container")
+    let imagesContainer = document.getElementById("images-container")
+
+    let images = imagesContainer.getElementsByClassName("Image");
+    let dots = dotsContainer.getElementsByClassName("Dot");
 
     for (let i = 0; i < imagesLength; i++) {
         images[i].style.display = "none";

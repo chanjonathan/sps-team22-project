@@ -22,13 +22,18 @@ html, body {
 
 h1 {
     color: #202c3e;
-    font-size: 400%;
+    font-size: 350%;
     margin-bottom: -15px;
 }
 
 h2 {
     color: #202c3e;
     font-size: 200%;
+}
+
+h3 {
+    color: #202c3e;
+    font-size: 120%;
 }
 
 #image-container, #edit-image-container {
@@ -214,4 +219,23 @@ h2 {
     to {
         opacity: 2
     }
+}
+
+#edit-images-container {
+    overflow: auto;
+    white-space: nowrap;
+    width: 100%;
+}
+
+.Image-new, .Image-old {
+    height: 250px;
+    padding: 10px;
+}
+
+.Overlay {
+    vertical-align: top;
+    position: relative;
+    height: 25px;
+    top: 20px;
+    right: 45px;
 }

@@ -147,19 +147,26 @@ html, body {
 
 * {
     font-family: Helvetica;
-    font-size: 102%;
+    font-size: 104%;
 }
 
 h1 {
     color: #202c3e;
-    font-size: 400%;
+    font-size: 350%;
     margin-bottom: -15px;
 }
 
 h2 {
     color: #202c3e;
-    font-size: 250%;
+    font-size: 200%;
 }
+
+h3 {
+    color: #202c3e;
+    font-size: 120%;
+}
+
+
 
 #description {
     width: 90%;
