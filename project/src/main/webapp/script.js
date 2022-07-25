@@ -67,7 +67,7 @@ async function placeMarkers() {
             var description = reports[i].description;
             var contents = "<div style='font-weight: bold '>" + reports[i].title + "</div><br>";
             contents += "<div style = 'width:100%;min-height:40px'>" + description.substring(0, Math.min(100, description.length)) + "....</div>";
-            contents += '<img src= "' + reports[i].imageURL + '" style = "width:100%"></a>' +
+            contents += '<img src= "' + reports[i].imageURLs[0] + '" style = "width:100%"></a>' +
                 '<div>' +
                 '<a href="/details-page/details.html?entryID=' + reports[i].entryID + '">' +
                 '<button >Details</button>' +

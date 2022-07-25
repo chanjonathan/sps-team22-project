@@ -176,13 +176,6 @@ function cancel() {
 }
 
 async function saveEdits() {
-    // let data = new FormData()
-    // let imageInputs = document.getElementById("new-image-upload-container").getElementsByTagName("*")
-    // for (let i = 0; i < imageInputs.length; i++) {
-    //     let imageFile = imageInputs[i].files[0];
-    //     data.append('images', imageInputs[i].files[0]);
-    // }
-
     let editContainer = document.getElementById("edit-container");
     let data = new FormData(editContainer)
 
