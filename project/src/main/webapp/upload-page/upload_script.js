@@ -105,7 +105,7 @@ function loadImage(event) {
     let imageContainer = document.getElementById('image-container');
     imageContainer.setAttribute("style", "display: ''");
     imageContainer.appendChild(image);
-    imageContainer.scrollLeft += imageContainer.scrollWidth;
+    imageContainer.scrollLeft = imageContainer.scrollWidth;
 
     let uploadContainer = document.getElementById('image-upload-container');
     let uploadInputs = uploadContainer.getElementsByTagName('*');

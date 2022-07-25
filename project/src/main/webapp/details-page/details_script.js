@@ -5,6 +5,8 @@ var marker = null;
 var report;
 var edit = false;
 var mapListener;
+var imagePosition = 0;
+var imagesLength = 0;
 
 function GetURLParameter(sParam) {
     var sPageURL = window.location.search.substring(1);
@@ -29,7 +31,25 @@ async function loadDetails() {
     document.getElementById("date-container").innerText = date.toDateString() + ", " + date.toLocaleTimeString();
     document.getElementById("description-container").innerText = report.description;
     document.getElementById("contact-details-container").innerText = report.contactDetails;
-    document.getElementById("image-container").src = report.imageURL;
+
+    imagesLength = report.imageURLs.length;
+    let imagesContainer = document.getElementById("images-container")
+    let dotsContainer = document.getElementById("dots-container")
+    for (let i = 0; i < imagesLength; i++) {
+        var image = document.createElement("IMG");
+        image.setAttribute("class", "Image");
+        image.setAttribute("width", "100%");
+        image.setAttribute("src", report.imageURLs[i]);
+
+        imagesContainer.appendChild(image);
+
+        var dot = document.createElement("SPAN");
+        dot.setAttribute("class", "Dot");
+        dot.setAttribute("onclick", "changeSlide(" + i.toString() + ")");
+
+        dotsContainer.appendChild(dot);
+    }
+    slideShow();
 }
 
 async function deletePost() {
@@ -178,6 +198,28 @@ function addListeners() {
     });
 }
 
+function slideShow() {
+    var images = document.getElementsByClassName("Image");
+    var dots = document.getElementsByClassName("Dot");
+
+    for (let i = 0; i < imagesLength; i++) {
+        images[i].style.display = "none";
+        dots[i].className = dots[i].className.replace(" Enabled", "");
+    }
+    images[imagePosition].style.display = "block";
+    dots[imagePosition].className += " Enabled";
+}
+
+function changeSlide(n) {
+    imagePosition = n;
+    slideShow();
+}
+
+function incrementSlide(d) {
+    imagePosition = ((imagePosition + d) + imagesLength) % imagesLength;
+    slideShow();
+}
+
 function initialize() {
     addListeners();
     setDetails();
@@ -185,4 +227,6 @@ function initialize() {
     loadDetails().then(() => placeMarker());
 }
 
+window.changeSlide = changeSlide;
+window.incrementSlide = incrementSlide;
 window.initialize = initialize;

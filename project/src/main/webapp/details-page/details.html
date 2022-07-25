@@ -28,7 +28,13 @@
                 <p id="date-container"  ></p>
                 <p id="description-container"></p>
                 <p id="contact-details-container"></p>
-                <img id="image-container" width="400">
+                <div id="images-container">
+                    <a id="forward" onclick="incrementSlide(1)">&#10095;</a>
+                    <a id="back" onclick="incrementSlide(-1)">&#10094;</a>
+                </div>
+                <br>
+                <div id="dots-container" style="text-align:center">
+                </div>
             </div>
             <div class="Edit" id="edit-container">
                 <p>
@@ -76,5 +82,4 @@
     </div>
 </div>
 </body>
-
 </html>
