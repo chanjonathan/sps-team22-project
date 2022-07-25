@@ -2,12 +2,11 @@ package com.google.sps.servlets;
 
 //Database
 
-import com.google.sps.utilities.Http;
-
 import com.google.cloud.storage.*;
 import com.google.gson.Gson;
 import com.google.sps.database.JDBCLib;
 import com.google.sps.objects.Report;
+import com.google.sps.utilities.Http;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
@@ -19,6 +18,9 @@ import javax.servlet.http.Part;
 import java.io.IOException;
 import java.io.InputStream;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
 
 //Multi-input Form
 //Exception Handling
@@ -45,10 +47,10 @@ public class UploadReport extends HttpServlet {
         String description = http.getParameter(request, "description", "");
         String contactDetails = http.getParameter(request, "phone", "");
         String entryID = "";
-        String imageURL = cloudImg(request, response);
+        ArrayList<String> imageURLs = cloudImg(request, response);
 
         //Creates report object and adds it to database
-        Report report = new Report(title, latitude, longitude, date, description, contactDetails, imageURL, entryID);
+        Report report = new Report(title, latitude, longitude, date, description, contactDetails, imageURLs, entryID);
         try {
             database.insert(report);
         } catch (SQLException sqlException) {
@@ -63,27 +65,31 @@ public class UploadReport extends HttpServlet {
     /**
      * Takes an image submitted by the user and uploads it to Cloud Storage, returns needed URL or "" if none
      */
-    public String cloudImg(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    public ArrayList<String> cloudImg(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         // Get the file chosen by the user.
-        Part filePart = request.getPart("image");
-        String fileName = filePart.getSubmittedFileName();
-        InputStream fileInputStream = filePart.getInputStream();
+        List<Part> fileParts = request.getParts().stream().
+                filter(part -> "images".equals(part.getName())).collect(Collectors.toList());
 
-        // Upload the file and get its URL
-        String uploadedFileUrl = uploadToCloudStorage(fileName, fileInputStream);
+        ArrayList<String> uploadedFileUrls = new ArrayList<String>();
+        for (Part filePart : fileParts) {
+            String fileName = filePart.getSubmittedFileName();
+            InputStream fileInputStream = filePart.getInputStream();
 
-        if (uploadedFileUrl == null) {
-            return "";
+            String uploadedFileUrl = uploadToCloudStorage(fileName, fileInputStream);
+            if (uploadedFileUrl == null) {
+                uploadedFileUrl = "";
+            }
+            uploadedFileUrls.add(uploadedFileUrl);
         }
-        return uploadedFileUrl;
+        return uploadedFileUrls;
     }
 
     /**
      * Uploads a file to Cloud Storage and returns the uploaded file's URL.
      */
     private static String uploadToCloudStorage(String fileName, InputStream fileInputStream) {
-        String projectId = "michelleli";
-        String bucketName = "michelleli-sps-summer22.appspot.com";
+        String projectId = "jchan";
+        String bucketName = "jchan-sps-summer22.appspot.com";
         Storage storage = StorageOptions.newBuilder().setProjectId(projectId).build().getService();
         BlobId blobId = BlobId.of(bucketName, fileName);
         BlobInfo blobInfo = BlobInfo.newBuilder(blobId).build();
