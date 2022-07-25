@@ -160,7 +160,7 @@ function placeMarker() {
         animation: google.maps.Animation.DROP
     });
     map.setCenter(location);
-    map.setZoom(10);
+    map.setZoom(13);
 }
 
 function loadImage(event) {

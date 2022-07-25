@@ -11,10 +11,13 @@
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
+
 import {createMap} from './map/map.js';
+import {setFocus} from './map/map.js';
 
 var map;
 var markers = [];
+var userLocation;
 
 // Fill start and end time inputs with appropriate datetimes
 function fillDateTimes() {
@@ -88,6 +91,7 @@ async function deleteMarker(id) {
 function initialize() {
     fillDateTimes();
     map = createMap();
+    setFocus(map);
     placeMarkers();
 }
 

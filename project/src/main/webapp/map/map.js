@@ -158,3 +158,14 @@ export function createMap() {
 
     return map;
 }
+
+export function setFocus(map) {
+    function setCenter(position) {
+        let location = {lat: position.coords.latitude, lng: position.coords.longitude}
+        map.setCenter(location);
+        map.setZoom(11);
+    }
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(setCenter);
+    }
+}

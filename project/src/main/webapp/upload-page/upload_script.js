@@ -5,6 +5,7 @@
  */
 
 import {createMap} from '../map/map.js';
+import {setFocus} from '../map/map.js';
 
 //Creates searchable roadmap for users to click on
 function initAutocomplete() {
@@ -95,6 +96,7 @@ function initAutocomplete() {
     });
 
     addListeners();
+    setFocus(map);
 }
 
 function loadImage(event) {
