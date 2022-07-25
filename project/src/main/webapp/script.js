@@ -1,20 +1,8 @@
-// Copyright 2020 Google LLC
-//
-// Licensed under the Apache License, Version 2.0 (the "License");
-// you may not use this file except in compliance with the License.
-// You may obtain a copy of the License at
-//
-//     https://www.apache.org/licenses/LICENSE-2.0
-//
-// Unless required by applicable law or agreed to in writing, software
-// distributed under the License is distributed on an "AS IS" BASIS,
-// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-// See the License for the specific language governing permissions and
-// limitations under the License.
 
 
 var map;
 var markers = [];
+var userLocation;
 
 // Fill start and end time inputs with appropriate datetimes
 function fillDateTimes() {
@@ -34,120 +22,147 @@ function createMap() {
     // and the name to be displayed on the map type control.
     const styledMapType = new google.maps.StyledMapType(
         [
-            {elementType: "geometry", stylers: [{color: "#ebe3cd"}]},
-            {elementType: "labels.text.fill", stylers: [{color: "#523735"}]},
-            {elementType: "labels.text.stroke", stylers: [{color: "#f5f1e6"}]},
             {
-                featureType: "administrative",
-                elementType: "geometry.stroke",
-                stylers: [{color: "#c9b2a6"}],
+                "featureType": "all",
+                "elementType": "geometry",
+                "stylers": [
+                    {
+                        "color": "#202c3e"
+                    }
+                ]
             },
             {
-                featureType: "administrative.land_parcel",
-                elementType: "geometry.stroke",
-                stylers: [{color: "#dcd2be"}],
+                "featureType": "all",
+                "elementType": "labels.text.fill",
+                "stylers": [
+                    {
+                        "gamma": 0.01
+                    },
+                    {
+                        "lightness": 20
+                    },
+                    {
+                        "weight": "1.39"
+                    },
+                    {
+                        "color": "#ffffff"
+                    }
+                ]
             },
             {
-                featureType: "administrative.land_parcel",
-                elementType: "labels.text.fill",
-                stylers: [{color: "#ae9e90"}],
+                "featureType": "all",
+                "elementType": "labels.text.stroke",
+                "stylers": [
+                    {
+                        "weight": "0.96"
+                    },
+                    {
+                        "saturation": "9"
+                    },
+                    {
+                        "visibility": "on"
+                    },
+                    {
+                        "color": "#000000"
+                    }
+                ]
             },
             {
-                featureType: "landscape.natural",
-                elementType: "geometry",
-                stylers: [{color: "#dfd2ae"}],
+                "featureType": "all",
+                "elementType": "labels.icon",
+                "stylers": [
+                    {
+                        "visibility": "off"
+                    }
+                ]
             },
             {
-                featureType: "poi",
-                elementType: "geometry",
-                stylers: [{color: "#dfd2ae"}],
+                "featureType": "landscape",
+                "elementType": "geometry",
+                "stylers": [
+                    {
+                        "lightness": 30
+                    },
+                    {
+                        "saturation": "9"
+                    },
+                    {
+                        "color": "#29446b"
+                    }
+                ]
             },
             {
-                featureType: "poi",
-                elementType: "labels.text.fill",
-                stylers: [{color: "#93817c"}],
+                "featureType": "poi",
+                "elementType": "geometry",
+                "stylers": [
+                    {
+                        "saturation": 20
+                    }
+                ]
             },
             {
-                featureType: "poi.park",
-                elementType: "geometry.fill",
-                stylers: [{color: "#a5b076"}],
+                "featureType": "poi.park",
+                "elementType": "geometry",
+                "stylers": [
+                    {
+                        "lightness": 20
+                    },
+                    {
+                        "saturation": -20
+                    }
+                ]
             },
             {
-                featureType: "poi.park",
-                elementType: "labels.text.fill",
-                stylers: [{color: "#447530"}],
+                "featureType": "road",
+                "elementType": "geometry",
+                "stylers": [
+                    {
+                        "lightness": 10
+                    },
+                    {
+                        "saturation": -30
+                    }
+                ]
             },
             {
-                featureType: "road",
-                elementType: "geometry",
-                stylers: [{color: "#f5f1e6"}],
+                "featureType": "road",
+                "elementType": "geometry.fill",
+                "stylers": [
+                    {
+                        "color": "#193a55"
+                    }
+                ]
             },
             {
-                featureType: "road.arterial",
-                elementType: "geometry",
-                stylers: [{color: "#fdfcf8"}],
+                "featureType": "road",
+                "elementType": "geometry.stroke",
+                "stylers": [
+                    {
+                        "saturation": 25
+                    },
+                    {
+                        "lightness": 25
+                    },
+                    {
+                        "weight": "0.01"
+                    }
+                ]
             },
             {
-                featureType: "road.highway",
-                elementType: "geometry",
-                stylers: [{color: "#f8c967"}],
-            },
-            {
-                featureType: "road.highway",
-                elementType: "geometry.stroke",
-                stylers: [{color: "#e9bc62"}],
-            },
-            {
-                featureType: "road.highway.controlled_access",
-                elementType: "geometry",
-                stylers: [{color: "#e98d58"}],
-            },
-            {
-                featureType: "road.highway.controlled_access",
-                elementType: "geometry.stroke",
-                stylers: [{color: "#db8555"}],
-            },
-            {
-                featureType: "road.local",
-                elementType: "labels.text.fill",
-                stylers: [{color: "#806b63"}],
-            },
-            {
-                featureType: "transit.line",
-                elementType: "geometry",
-                stylers: [{color: "#dfd2ae"}],
-            },
-            {
-                featureType: "transit.line",
-                elementType: "labels.text.fill",
-                stylers: [{color: "#8f7d77"}],
-            },
-            {
-                featureType: "transit.line",
-                elementType: "labels.text.stroke",
-                stylers: [{color: "#ebe3cd"}],
-            },
-            {
-                featureType: "transit.station",
-                elementType: "geometry",
-                stylers: [{color: "#dfd2ae"}],
-            },
-            {
-                featureType: "water",
-                elementType: "geometry.fill",
-                stylers: [{color: "#b9d3c2"}],
-            },
-            {
-                featureType: "water",
-                elementType: "labels.text.fill",
-                stylers: [{color: "#92998d"}],
+                "featureType": "water",
+                "elementType": "all",
+                "stylers": [
+                    {
+                        "lightness": -20
+                    }
+                ]
             },
         ],
         {name: "Styled Map"}
     );
     /** Creates a map and adds it to the page. */
 
-    map = new google.maps.Map(
+    var map = new google.maps.Map(
         document.getElementById('map'),
         {
             center: {lat: 0, lng: 0}, zoom: 1,
@@ -158,6 +173,20 @@ function createMap() {
     );
     map.mapTypes.set("styled_map", styledMapType);
     map.setMapTypeId("styled_map");
+    map.setZoom(3);
+
+    return map;
+}
+
+function setFocus(map) {
+    function setCenter(position) {
+        let location = {lat: position.coords.latitude, lng: position.coords.longitude}
+        map.setCenter(location);
+        map.setZoom(11);
+    }
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(setCenter);
+    }
 }
 
 // retrieves reporters from server and places corresponding markers
@@ -180,7 +209,7 @@ async function placeMarkers() {
         let latitude = parseFloat(reports[i].latitude);
         let longitude = parseFloat(reports[i].longitude);
         let location = {lat: latitude, lng: longitude};
-        console.log(location);
+
         let marker = new google.maps.Marker({
             position: new google.maps.LatLng(location),
             map: map,
@@ -188,26 +217,30 @@ async function placeMarkers() {
             animation: google.maps.Animation.DROP,
         })
 
-        var infoWindow = new google.maps.InfoWindow();
+        var infoWindow = new google.maps.InfoWindow({maxWidth: 400});
 
         //Attach click event to the marker.
         google.maps.event.addListener(marker, "click", function (e) {
             //Wrap the content inside an HTML DIV in order to set height and width of InfoWindow.
             var description = reports[i].description;
             var contents = "<div style='font-weight: bold '>" + reports[i].title + "</div><br>";
-            contents += "<div style = 'width:100%;min-height:40px'>" + description.substring(0,Math.min(100,description.length)) + "....</div>";
-            contents += '<img src= "' + reports[i].imageURL +  '"style = "width:100%"></a><div><button  onclick = "DeleteMarker(' + reports[i].entryID + ')" >Delete</button><a href="/details-page/details.html?entryID=' + reports[i].entryID + '"><button >Details</button></div></a>';
+            contents += "<div style = 'width:100%;min-height:40px'>" + description.substring(0, Math.min(100, description.length)) + "...</div>";
+            contents += '<img src= "' + reports[i].imageURLs[0] + '" style = "width:100%"></a>' +
+                '<div>' +
+                '<a href="/details-page/details.html?entryID=' + reports[i].entryID + '">' +
+                '<button >Details</button>' +
+                '</a>' +
+                '<button onclick = "deleteMarker(' + reports[i].entryID + ')" style="float: right">Delete</button>' +
+                '</div>';
             infoWindow.setContent(contents);
             infoWindow.open(map, marker);
-
-        })       
-
+        })
         marker.report = reports[i];
         markers.push(marker);
     }
 }
 
-async function DeleteMarker(id) {
+async function deleteMarker(id) {
     await fetch('/delete?' + new URLSearchParams({entryID: id}), {method: "DELETE"})
     alert("Report Deleted");
     placeMarkers();
@@ -215,8 +248,10 @@ async function DeleteMarker(id) {
 
 function initialize() {
     fillDateTimes();
-    createMap();
+    map = createMap();
+    setFocus(map);
     placeMarkers();
 }
 
+window.deleteMarker = deleteMarker;
 window.initialize = initialize
