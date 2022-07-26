@@ -174,8 +174,8 @@ async function placeMarkers() {
     const reports = await fetchedJSON.json();
 
     for (let i = 0; i < reports.length; i++) {
-        let latitude = parseInt(reports[i].latitude);
-        let longitude = parseInt(reports[i].longitude);
+        let latitude = parseFloat(reports[i].latitude);
+        let longitude = parseFloat(reports[i].longitude);
         let location = {lat: latitude, lng: longitude};
         
         let marker = new google.maps.Marker({
@@ -200,7 +200,7 @@ async function placeMarkers() {
     }
 }
 
-window.createMap = createMap
+window.initialize = initialize
 
 function initialize() {
     fillDateTimes();

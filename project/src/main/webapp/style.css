@@ -12,6 +12,7 @@
     border: thin solid rgb(174, 219, 245);
     height: 500px;
     width: 500px;
+    margin: auto;
 }
 
 html,
@@ -25,7 +26,7 @@ h1 {
     color: rgb(63, 63, 209);
 }
 
-  .block {
+.block {
     display: block;
     width: 100%;
     border: none;
@@ -34,5 +35,20 @@ h1 {
     font-size: 16px;
     cursor: pointer;
     text-align: center;
-  }
+}
+
+#panel-container {
+    width: 100%;
+    overflow: hidden;
+}
+
+#left-panel {
+    width: 50%;
+    float: left;
+
+}
+
+#right-panel {
+    margin-left: 50%;
+}
 
