@@ -95,6 +95,7 @@ function initialize() {
     placeMarkers();
 }
 
+window.placeMarkers = placeMarkers;
 window.deleteMarker = deleteMarker;
 window.initialize = initialize
 

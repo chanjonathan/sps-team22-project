@@ -161,7 +161,7 @@ function resetEdit() {
     newInput.setAttribute("name", "images");
     uploadContainer.appendChild(newInput);
 
-    imagesContainer.scrollLeft = imagesContainer.scrollWidth;
+    imagesContainer.scrollLeft = 100000;
 }
 
 function toggleMode() {
